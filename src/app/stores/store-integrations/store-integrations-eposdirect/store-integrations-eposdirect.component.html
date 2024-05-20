@@ -1,0 +1,152 @@
+<div class="card list mb-0">
+  <div class="card-body pt-1 py-0">
+    <div class="row">
+      <div class="col-xl-4 col-lg-4 mt-3">
+        <img class="eposdirectimg" src="/assets/img/epos-direct.png">
+        <app-help-icon [helpPageName]="helpUrl"></app-help-icon>
+      </div>
+      <div class="col-xl-8 col-lg-8">
+        <ng-container class="row"
+          *ngIf="eposDirectSection === 'epos-direct-dashboard' then eposDirectDashboard else eposDirectLogin">
+        </ng-container>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #eposDirectDashboard>
+  <div class="row">
+    <div class="italic col-lg-12 mb-3">
+      {{ 'admin.store.setting.integrations.connectWithYourPOS' | translate }}
+    </div>
+    <div class="col-lg-12">
+      <div class="d-flex align-items-center justify-content-between p-0">
+        <button type="button" class="btn btn-primary mt-2" (click)="eposDirectSection = 'epos-direct-login';">
+          <i class="fa fa-link mr-2 link" title="link"></i>{{'admin.store.setting.connect' | translate}}
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #eposDirectLogin>
+  <ng-container class="row" *ngIf="eposDirectSection === 'epos-direct-login'; else eposDirectConnected">
+    <div class="row">
+      <div class="col-xl-12 col-lg-12 mt-2 mt-lg-0">
+        <div class="row">
+          <div class="col-lg-12">
+            {{ 'admin.store.setting.eposDirect.enterEposDirectCredentials' | translate }}
+          </div>
+        </div>
+        <div class="row mt-4">
+          <div class="col-lg-12">
+            <form [formGroup]="eposDirectCredentialsForm">
+              <div class="row mb-4">
+                <label class="col-xl-3 col-lg-3 col-md-12 col-sm-12 required" for="url">
+                  {{ 'admin.store.setting.integrations.URL' | translate }}
+                </label>
+                <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12">
+                  <input type="text" class="form-control" formControlName="EPOS_DIRECT_URL" id="url" maxlength="255" />
+                </div>
+              </div>
+              <div class="row mb-4">
+                <label class="col-xl-3 col-lg-3 col-md-12 col-sm-12 required" for="username">
+                  {{ 'admin.store.setting.integrations.username' | translate }}
+                </label>
+                <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12">
+                  <input type="text" class="form-control" formControlName="EPOS_DIRECT_USERNAME" id="username"
+                    maxlength="100" />
+                </div>
+              </div>
+              <div class="row mb-4">
+                <label class="col-xl-3 col-lg-3 col-md-12 col-sm-12 required" for="password">
+                  {{ 'admin.store.setting.integrations.password' | translate }}
+                </label>
+                <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12">
+                  <input type="password" class="form-control" formControlName="EPOS_DIRECT_PASSWORD" id="password"
+                    maxlength="100" />
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12"></div>
+      <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12">
+        <div class="float-right">
+          <button type="button" class="btn btn-primary" (click)="connectToEposDirect()"
+            [disabled]="this.eposDirectCredentialsForm.invalid">
+            <i class="fa fa-link mr-2 link" title="link"></i>{{'admin.store.setting.connect' | translate}}
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </ng-container>
+
+</ng-template>
+
+<ng-template #eposDirectConnected>
+  <div class="row">
+    <div class="col-xl-12 col-lg-12 mt-2 mt-lg-0">
+      <div class="row">
+        <div class="col-lg-12">
+          <form [formGroup]="eposDirectCredentialsForm">
+            <div class="row mb-4">
+              <label class="col-xl-3 col-lg-3 col-md-12 col-sm-12 required">
+                {{ 'admin.store.setting.integrations.URL' | translate }}
+              </label>
+              <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12">
+                <p>{{this.eposDirectCredentialsForm.controls.EPOS_DIRECT_URL.value}}</p>
+              </div>
+            </div>
+            <div class="row mb-4">
+              <label class="col-xl-3 col-lg-3 col-md-12 col-sm-12 required" for="secretUrl">
+                {{ 'admin.store.setting.integrations.username' | translate }}
+              </label>
+              <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12">
+                <p>{{this.eposDirectCredentialsForm.controls.EPOS_DIRECT_USERNAME.value}}</p>
+              </div>
+            </div>
+            <div class="row mb-4">
+              <label class="col-xl-3 col-lg-3 col-md-12 col-sm-12 required" for="secretUrl">
+                {{ 'admin.store.setting.integrations.password' | translate }}
+              </label>
+              <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12">
+                <p>{{maskedPassword}}</p>
+              </div>
+            </div>
+            <div class="row mb-4">
+              <label class="col-xl-3 col-lg-3 col-md-12 col-sm-12 required" for="secretUrl">
+                {{ 'admin.store.enabled' | translate }}
+              </label>
+              <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12">
+                <label>{{'admin.global.no'|translate}}</label> &nbsp;
+                <label class="switch pt-1 mb-0">
+                  <input type="checkbox" formControlName="EPOS_DIRECT_ENABLED" id="EPOS_DIRECT_CONNECTED"
+                    (change)="toggleEposDirect()" />
+                  &nbsp;<span class="slider round"></span>
+                </label>&nbsp;
+                <label>{{'admin.global.yes'|translate}}</label> &nbsp;
+              </div>
+            </div>
+          </form>
+
+          <div class="col-lg-12">
+            <div class="float-right">
+              <button type="button" class="btn btn-danger mt-3" (click)="disconnectToEposDirect()">
+                <img src="assets/img/link-slash-solid.svg" class="mr-2 slashIcon" alt="">{{'admin.store.disconnect' | translate}}
+              </button>
+            </div>
+          </div>
+
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+</ng-template>

@@ -1,0 +1,213 @@
+<div class="standalone-payment theme-interface">
+    <div class="store-info position-relative mx-auto pl-3 pt-2 theme-light">
+        <a href="#" class="close-details d-flex m-1 arrow-icon position-absolute container-theme-light-icons round-background" (click)="onGoBack($event)">
+            <i class="fa fa-arrow-left m-auto"></i>
+        </a>
+        <div class="text-center font-size-header font-weight-bold theme-light-header">{{'public.standalonepayment.paymentpage.title' |
+            translate}}</div>
+        <div class="store-title d-block m-1 mt-3 text-center pb-2 font-size-primary theme-light-subtitle">
+            {{(selectedStore$ | async)?.name}} <span *ngIf="(selectedStore$ | async)?.description">|</span>
+            {{(selectedStore$ | async)?.description}}
+        </div>
+        <app-store-catalog-language-selector [haveBackground]="false"></app-store-catalog-language-selector>
+    </div>
+    <div *ngIf="error" class="mx-auto p-3 mb-0 pl-4 order-paid">
+        <div class="font-size-primary text-unselectable">{{'public.standalonepayment.paymentpage.voucherError' |
+            translate}}</div>
+    </div>
+
+    <div class="d-flex w-100 justify-content-center py-3" *ngIf="paymentData?.storeLogo">
+        <img [src]="paymentData.storeLogo" class="logo"/>
+    </div>
+    <div *ngIf="errorOrders" class="mx-auto p-3 mb-0 pl-4 order-paid">
+        <div class="font-size-primary text-unselectable">{{'public.standalonepayment.paymentpage.orderError' |
+            translate}}</div>
+    </div>
+    <div *ngIf="!error" class="mx-auto my-2 font-weight-bold order-location-info">
+        <div *ngIf="(order?.location && showTable)" class="mx-3 theme-color-header">
+            <span *ngIf="storeLocationType === LocationType.ROOM" class="font-size-header">
+                {{'public.checkout.yourRoom' | translate}}
+            </span>
+            <span *ngIf="storeLocationType === LocationType.LOCATION" class="font-size-header">
+                {{'public.checkout.yourLocation' | translate}}
+            </span>
+            <span *ngIf="storeLocationType === LocationType.TABLE" class="font-size-header">
+                {{'public.checkout.yourTable' | translate}}
+            </span>
+            <i class="fas fa-map-marker-alt mr-1 theme-color-icon"></i> <span class="font-size-primary">{{order?.location}}</span>
+        </div>
+        <div *ngIf="(order?.orderToken && showOrderToken)" class="my-2 mx-3">
+            <span class="font-size-header">
+                {{'public.thankyou.yourOrderNumber' | translate}}
+            </span>
+            <span class="font-size-primary">{{" " + order?.orderToken}}</span>
+        </div>
+    </div>
+    <div class="content mx-auto">
+        <div *ngIf="isAmountReferenceOrder"
+            class="mx-auto p-3 mb-0 pl-4 d-flex justify-content-between mt-2 mb-2 font-weight-bold">
+            <span>{{'public.standalonepayment.paymentpage.amount' | translate}}</span>
+            <span>{{paymentData.formattedAmountReference}}</span>
+        </div>
+    </div>
+    <div *ngIf="!error && !isAmountReferenceOrder && !errorOrders" class="card-body order-details mx-auto">
+        <div class="content mx-auto pt-md-4">
+            <div class="item-list px-lg-3" *ngIf="orderItems.length">
+                <ng-container *ngFor="let item of orderItems; last as isLastItem">
+                    <div class="item-wrapper d-flex flex-row mb-4"
+                        [ngClass]="(!shouldDisplayTotal() && isLastItem) ? 'no-border-bottom' : ''">
+                        <div class="qty theme-color-header" *ngIf="item.hierarchyLevel === 'PARENT'">
+                            <span>{{item.quantity}} x</span>
+                        </div>
+                        <div class="item flex-fill mb-3">
+                            <div class="p-0 mb-0 item-name">
+                                <span class="theme-color-header font-weight-bold">{{item.itemName}}</span>
+                                <span class="text-nowrap" *ngIf="paymentData && item.offerPrice && isShowParentItemPrice(item)">(
+                                    {{item.offerPrice | formatPrice:
+                                    paymentData.locale:paymentData.currencyIsoCode:paymentData.currencySymbol}}
+                                    )</span>
+                            </div>
+                            <div class="item-specs p-0 mb-0" *ngIf="item.priceDescription">
+                                <span>{{item.priceDescription}}</span>
+                            </div>
+                            <ng-container>
+                                <div class="item-specs p-0 mb-0" *ngIf="paymentData && item.discountValue">
+                                    <span class="discount">{{'public.global.discount' | translate}} (-
+                                        {{item.discountValue | formatPrice:
+                                        paymentData.locale:paymentData.currencyIsoCode:paymentData.currencySymbol}}
+                                        )</span>
+                                    <span class="discount-percentage"
+                                        *ngIf="item.discountType==='PERCENTILE'">-{{item.discountValue}}%</span>
+                                </div>
+                                <div class="item-specs p-0 mb-0" *ngIf="paymentData && item.childOrderItems?.length">
+                                    <div *ngFor="let childItem of item.childOrderItems">
+                                        <div>
+                                            <span class="theme-color-header font-weight-bold">
+                                                {{childItem.quantity > 1 ? childItem.quantity + ' x' : ''}}
+                                                {{childItem.itemName}}
+                                            </span>
+                                            <span *ngIf="childItem.offerPrice">( {{childItem.offerPrice | formatPrice:
+                                                paymentData.locale:paymentData.currencyIsoCode:paymentData.currencySymbol}}
+                                                )</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </ng-container>
+                            <div class="item-specs p-0 mb-0" *ngIf="item.comment">
+                                <span>"{{item.comment}}"</span>
+                            </div>
+                        </div>
+                        <div class="price text-right"
+                            *ngIf="item.hierarchyLevel === 'PARENT' || item.hierarchyLevel === 'RULE'">
+                            <div [ngClass]="{'striked':item.totalDiscountedPrice}"
+                                *ngIf="paymentData && item.totalNonDiscountedPrice !== 0">
+                                {{item.totalNonDiscountedPrice | formatPrice:
+                                paymentData.locale:paymentData.currencyIsoCode:paymentData.currencySymbol}}</div>
+                            <div *ngIf="paymentData && item.totalDiscountedPrice && item.totalDiscountedPrice > 0">
+                                {{item.totalDiscountedPrice | formatPrice:
+                                paymentData.locale:paymentData.currencyIsoCode:paymentData.currencySymbol}}
+                            </div>
+                        </div>
+                    </div>
+                </ng-container>
+                <div class="cart-total-wrapper d-flex flex-row"
+                    *ngIf="paymentData && order.deliveryFee && shouldDisplayTotal()">
+                    <div class="total flex-fill theme-color-header">{{'public.checkout.deliveryFee' | translate}}</div>
+                    <div class="price-normal text-right">{{order.deliveryFee | formatPrice:
+                        paymentData.locale:paymentData.currencyIsoCode:paymentData.currencySymbol}}</div>
+                </div>
+                <div class="cart-total-wrapper d-flex flex-row"
+                    *ngIf="paymentData && order.voucherDiscount && shouldDisplayTotal()">
+                    <div class="total discount theme-color-header" [ngClass]="{'flex-fill': order.voucherDiscountType !== 'PERCENTILE'}">
+                        {{'public.global.discount' | translate}}
+                        <span class="font-weight-normal pr-1">[{{order.voucherCode}}]</span>
+                        <span class="font-weight-normal">(- {{order.voucherDiscount | formatPrice:
+                            paymentData.locale:paymentData.currencyIsoCode:paymentData.currencySymbol}})</span>
+                    </div>
+                    <div class="total flex-fill discount-percentage" *ngIf="order.voucherDiscountType === 'PERCENTILE'">
+                        -{{order.voucherDiscountPercentage}}%
+                    </div>
+                    <div class="price-normal text-right">- {{order.voucherDiscount | formatPrice:
+                        paymentData.locale:paymentData.currencyIsoCode:paymentData.currencySymbol}}</div>
+                </div>
+                <div class="cart-total-wrapper mb-3 d-flex flex-row" *ngIf="paymentData && shouldDisplayTotal()">
+                    <div class="total flex-fill theme-color-header">{{'public.checkout.total' | translate}}</div>
+                    <div class="price text-right theme-color-header"
+                        *ngIf="paymentData && order.formattedTotalDiscountedPrice; else showNonDiscountedPrice">
+                        {{order.totalDiscountedPrice | formatPrice:
+                        paymentData.locale:paymentData.currencyIsoCode:paymentData.currencySymbol}}
+                    </div>
+                    <ng-template #showNonDiscountedPrice>
+                        <div class="price text-right theme-color-header">
+                            {{order.totalNonDiscountedPrice | formatPrice:
+                            paymentData.locale:paymentData.currencyIsoCode:paymentData.currencySymbol}}
+                        </div>
+                    </ng-template>
+                </div>
+            </div>
+            <!-- <div class="option-wrapper" *ngIf="order.comment">
+        <div class="variant-wrapper my-2">
+            <div class="px-lg-3 my-3 store-note section-title font-weight-bold">{{'admin.store.note'|translate}}
+            </div>
+            <div class="mx-3 row">
+                <span class="col-md-12 pl-0">{{ order.comment }}</span>
+            </div>
+        </div>
+    </div> -->
+        </div>
+        <div class="print-space"></div>
+    </div>
+    <app-standalone-payment-paid-amount *ngIf="!error"></app-standalone-payment-paid-amount>
+    <app-standalone-payment-divide-amount *ngIf="(paymentData && isAmountRemaining)" [paymentData]="paymentData"
+        [currencySymbol]="currencySymbol"></app-standalone-payment-divide-amount>
+    <app-standalone-payment-tip *ngIf="(paymentData && isAmountRemaining)" [paymentData]="paymentData"
+        [currencySymbol]="currencySymbol"></app-standalone-payment-tip>
+    <app-standalone-payment-information *ngIf="(paymentData && isAmountRemaining)" [paymentData]="paymentData">
+    </app-standalone-payment-information>
+    <div *ngIf="isAmountRemaining"
+        class="add-to-cart-wrapper d-flex flex-column w-100 mx-auto py-1 pt-3 px-1 font-size-primary text-unselectable">
+        <div class="sticky-terms text-center my-1 px-1 font-size-secondary">{{'public.checkout.termsAndPolicy' |
+            translate}}
+            <a href="https://www.gonnaorder.com/terms-of-use/" target="_blank">{{'public.checkout.termsOfUse' |
+                translate}}</a>
+            {{'public.checkout.acceptTerms.and' | translate}}
+            <a href="https://www.gonnaorder.com/privacy/" target="_blank">{{'public.checkout.privacyPolicy' |
+                translate}}</a>
+        </div>
+        <a href="#" class="button dark d-block text-center py-3 mx-2 text-unselectable" id="proceed-payment"
+            appPreventDoubleClick [throttleTime]="5000" (click)="proceedToPayment($event)">
+            {{'public.payment.proceedToPayment' | translate}}
+        </a>
+    </div>
+    <div *ngIf="!isAmountRemaining && !error && !errorOrders" class="mx-auto p-3 mb-0 pl-4 border-top order-paid">
+        <div class="font-size-header font-weight-bold">{{'public.global.thankYou' | translate}}!</div>
+        <div class="font-size-primary text-unselectable">{{'public.standalonepayment.paymentpage.orderPaid' |
+            translate}}</div>
+    </div>
+</div>
+<form #jccForm class="checkout mx-2" action="{{jccServerLink}}"
+  class="d-none" [hidden]="true"
+  method="POST">
+  <div class="variant-wrapper d-flex flex-column justify-content-start align-items-start mx-3 my-2"
+    style="max-width: 100%;">
+    <input type="hidden" name="Version" value="{{jccRequestJSON?.version}}">
+    <input type="hidden" name="MerID" value="{{jccRequestJSON?.merchantId}}">
+    <input type="hidden" name="AcqID" value="{{jccRequestJSON?.acquirerId}}">
+    <input type="hidden" name="MerRespURL" value="{{jccRequestJSON?.responseUrl}}">
+    <input type="hidden" name="MerCallbackURL" value="{{jccRequestJSON?.callbackUrl}}">
+    <input type="hidden" name="PurchaseAmt" value="{{jccRequestJSON?.formattedPurchaseAmount}}">
+    <input type="hidden" name="PurchaseCurrency" value="{{jccRequestJSON?.currency}}">
+    <input type="hidden" name="PurchaseCurrencyExponent" value="{{jccRequestJSON?.currencyExponent}}">
+    <input type="hidden" name="OrderID" value="{{jccRequestJSON?.orderId}}">
+    <input type="hidden" name="CaptureFlag" value="{{jccRequestJSON?.captureFlag}}">
+    <input type="hidden" name="Signature" value="{{jccRequestJSON?.signature}}">
+    <input type="hidden" name="SignatureMethod" value="{{jccRequestJSON?.signatureMethod}}">
+  </div>
+</form>
+
+<!-- PAY WITH TRUSTPAYMENTS -->
+<app-trustpayment #trustpaymentComponent> </app-trustpayment>
+
+<app-globalpay></app-globalpay>
+<app-rms></app-rms>
+<app-apcopay #apcopayComponent></app-apcopay>

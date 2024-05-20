@@ -1,0 +1,71 @@
+@import "bootstrap/scss/functions";
+@import "bootstrap/scss/variables";
+@import "bootstrap/scss/mixins";
+
+.card-header {
+  display: flex;
+}
+
+.customPicker {
+  display: flex;
+  justify-content: space-between;
+  @include media-breakpoint-down(sm){
+    display: block;
+  }
+}
+
+
+#createReservation {
+  display: flex;
+  width: 15%;
+  border-radius: 4px;
+  background: #273773;
+  color: white;
+  cursor: pointer;
+}
+
+#plusSign {
+  margin-left: 1%;
+}
+
+#tabSelection {
+
+}
+
+// css example
+span {
+  content: "\002B";
+}
+
+#resrvationContent {
+  width: 100%;
+  display: flex;
+  margin-top: 6%;
+  padding-left: 4%;
+  gap: 5%;
+}
+
+
+#tableContainer
+{
+  width: 100%;
+  overflow-x: auto;
+  font-family: SANS-SERIF;
+  font-size: 16px;
+  font-weight: 400;
+}
+.datepikercustome{
+  @include media-breakpoint-down(sm){
+    width: 100% !important;
+    margin-bottom: 10px;
+  }
+}
+.createReservations{
+@include media-breakpoint-down(sm){
+  width: 100% !important;
+  margin-bottom: 10px;
+  .btn{
+    width: 100% !important;
+  }
+}
+}

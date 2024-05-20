@@ -1,0 +1,15 @@
+@import "bootstrap/scss/functions";
+@import "bootstrap/scss/variables";
+@import "bootstrap/scss/mixins";
+@import "src/scss/globals";
+.ml-20 {
+  margin-left: 23px;
+}
+@include media-breakpoint-down(lg) {
+  .container{
+    max-width: 100%!important;
+  }
+}
+
+
+

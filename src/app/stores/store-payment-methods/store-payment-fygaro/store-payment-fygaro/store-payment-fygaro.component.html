@@ -1,0 +1,149 @@
+<div class="card list mb-0">
+  <div class="card-body py-0">
+    <div class="row">
+      <div class="col-xl-3 marginlogo col-lg-5">
+        <a href="https://www.fygaro.com/">
+          <img src="assets/img/payment_logos/fygaro.png" class="pr-2" width="100%"
+               style="max-width: 150px">
+          <app-help-icon [helpPageName]="helpUrl"></app-help-icon>
+        </a>
+      </div>
+      <div class="col-xl-9 col-lg-7">
+        <button *ngIf="!showFields && !fygaroConnected" class="btn btn-primary"
+                (click)="onFygaroClicked()"><i
+          class="fa fa-link mr-2 link"
+          title="link"></i>{{'admin.store.setting.connect' | translate}}</button>
+        <form class="form-group" [formGroup]="fygaroForm" *ngIf="showFields && !fygaroConnected">
+          <div class="row">
+            <div class="col-md-2">
+              {{'admin.store.payment.fygaroCheckoutUrl' | translate}}
+            </div>
+            <div class="col-md-5">
+              <input type="text" formControlName="FYGARO_CHECKOUT_URL" class="form-control"
+                     maxlength="255">
+              <div class="invalid-feedback d-block"
+                   *ngIf="getControl('FYGARO_CHECKOUT_URL').errors?.required && getControl('FYGARO_CHECKOUT_URL').touched">
+                <span>
+                  {{'admin.global.field.required'|translate}}</span>
+              </div>
+            </div>
+          </div>
+          <div class="row mt-3">
+            <div class="col-md-2">
+              {{'admin.store.payment.fygaroPaymentApiKey' | translate}}
+            </div>
+            <div class="col-md-5">
+              <input type="text" formControlName="FYGARO_PAYMENT_API_KEY" class="form-control"
+                     maxlength="100">
+              <div class="invalid-feedback d-block"
+                   *ngIf="getControl('FYGARO_PAYMENT_API_KEY').errors?.required && getControl('FYGARO_PAYMENT_API_KEY').touched">
+                <span>
+                  {{'admin.global.field.required'|translate}}</span>
+              </div>
+            </div>
+          </div>
+          <div class="row mt-3">
+            <div class="col-md-2">
+              {{'admin.store.payment.fygaroPaymentApiSecret' | translate}}
+            </div>
+            <div class="col-md-5">
+              <input type="password" class="form-control" formControlName="FYGARO_PAYMENT_API_SECRET"
+                     maxlength="100">
+              <div class="invalid-feedback d-block"
+                   *ngIf="getControl('FYGARO_PAYMENT_API_SECRET').errors?.required && getControl('FYGARO_PAYMENT_API_SECRET').touched">
+                <span>
+                  {{'admin.global.field.required'|translate}}</span>
+              </div>
+            </div>
+          </div>
+            <div class="row mt-3">
+              <div class="col-md-2">
+                {{'admin.store.payment.fygaroHookApiKey' | translate}}
+              </div>
+              <div class="col-md-5">
+                <input type="text" formControlName="FYGARO_HOOK_API_KEY" class="form-control"
+                       maxlength="100">
+                <div class="invalid-feedback d-block"
+                     *ngIf="getControl('FYGARO_HOOK_API_KEY').errors?.required && getControl('FYGARO_HOOK_API_KEY').touched">
+                  <span>
+                    {{'admin.global.field.required'|translate}}</span>
+                </div>
+              </div>
+            </div>
+            <div class="row mt-3">
+              <div class="col-md-2">
+                {{'admin.store.payment.fygaroHookApiSecret' | translate}}
+              </div>
+              <div class="col-md-5">
+                <input type="password" class="form-control" formControlName="FYGARO_HOOK_API_SECRET"
+                       maxlength="100">
+                <div class="invalid-feedback d-block"
+                     *ngIf="getControl('FYGARO_HOOK_API_SECRET').errors?.required && getControl('FYGARO_HOOK_API_SECRET').touched">
+                  <span>
+                    {{'admin.global.field.required'|translate}}</span>
+                </div>
+              </div>
+          </div>
+          <div class="row mt-3">
+            <div class="col-md-2">
+            </div>
+            <div class="col-md-5 d-flex flex-row-reverse">
+              <button class="btn btn-primary" (click)="connect()">
+                <i class="fa fa-link mr-2 link"
+                   title="link"></i>{{'admin.store.setting.connect' | translate}}
+              </button>
+            </div>
+          </div>
+        </form>
+        <div *ngIf="fygaroConnected">
+          <div class="row">
+            <div class="col-md-2">{{'admin.store.payment.fygaroCheckoutUrl'|translate}}</div>
+            <div class="col-md-4">{{fygaroCheckoutUrl}}</div>
+          </div>
+          <div class="row mt-3">
+            <div class="col-md-2">{{'admin.store.payment.fygaroPaymentApiKey'|translate}}</div>
+            <div class="col-md-4">{{fygaroPaymentApiKey}}</div>
+          </div>
+          <div class="row mt-3">
+            <div class="col-md-2">{{'admin.store.payment.fygaroPaymentApiSecret'|translate}}</div>
+            <div class="col-md-4">{{fygaroPaymentApiSecret}}</div>
+          </div>
+          <div class="row mt-3">
+            <div class="col-md-2">{{'admin.store.payment.fygaroHookApiKey'|translate}}</div>
+            <div class="col-md-4">{{fygaroHookApiKey}}</div>
+          </div>
+          <div class="row mt-3">
+            <div class="col-md-2">{{'admin.store.payment.fygaroHookApiSecret'|translate}}</div>
+            <div class="col-md-4">{{fygaroHookApiSecret}}</div>
+            <div class="col-md-2">
+              <button class="btn btn-danger d-flex" (click)="disconnect()">
+                <img src="assets/img/link-slash-solid.svg" class="mr-2" width="26px" alt="">
+                {{'admin.store.disconnect'|translate}}
+              </button>
+            </div>
+          </div>
+          <div class="row mt-3">
+            <div class="col-md-2">
+              <div class="form-group">
+                <label class="form-check-label">{{'admin.store.enabled'|translate}}</label>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label>{{'admin.global.no'|translate}}</label>&nbsp;
+                <label class="switch pt-1 mb-0">
+                  <input type="checkbox" id="enableFygaroPaymentCreditCard"
+                         [(ngModel)]="fygaroEnabled"
+                         (ngModelChange)="toggleFygaroPayments($event)"
+                         [disabled]="!fygaroConnected"/>
+                  &nbsp;<span class="slider round"></span>
+                </label>&nbsp;
+                <label>{{'admin.global.yes'|translate}}</label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

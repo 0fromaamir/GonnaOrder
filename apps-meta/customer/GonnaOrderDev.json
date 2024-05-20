@@ -1,0 +1,15 @@
+{
+  "appName": "GonnaOrderDev",
+  "appDescription": "Customer ordering app for GonnaOrder powered stores(dev)",
+  "type": "CUSTOMER",
+  "tag": "DEV",
+  "bundleId": "com.gonnaorder.godev",
+  "appleId": "1566767814",
+  "storeAlias": "",
+  "iconUrl": "resources/assets/mobile-apps/customer/GonnaOrder/icon.png",
+  "iconBackgroundUrl": "resources/assets/mobile-apps/customer/GonnaOrder/icon-background.png",
+  "iconForegroundUrl": "resources/assets/mobile-apps/customer/GonnaOrder/icon-foreground.png",
+  "splashUrl": "resources/assets/mobile-apps/customer/GonnaOrder/splash.png",
+  "splashBackgroundColor": "#273773",
+  "googleServiceInfoUrl": "resources/assets/mobile-apps/customer/GonnaOrder/dev/GoogleService-Info.plist"
+}

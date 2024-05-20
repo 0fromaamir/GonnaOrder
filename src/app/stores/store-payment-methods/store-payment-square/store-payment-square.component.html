@@ -1,0 +1,105 @@
+<div class="card list mb-0">
+    <div class="card-body py-0">
+        <div class="row">
+            <div class="col-xl-4 marginlogo col-lg-5">
+                <img src="assets/img/payment_logos/square.svg" class="pr-2" width="100%" style="max-width: 110px">
+                <app-help-icon [helpPageName]="helpUrl"></app-help-icon>
+            </div>
+            <div class="col-xl-8 col-lg-7">
+                <button class="btn btn-primary" (click)="connectSquareClicked()"
+                    *ngIf="!connectSquareForm && !squareConnected"><i class="fa fa-link mr-2 link" title="link"></i>{{'admin.store.setting.connect'|translate}}</button>
+                <form [formGroup]="squareForm" *ngIf="connectSquareForm && !squareConnected">
+
+                    <div class="row mb-4">
+                        <div class="col-md-3">
+                            {{'admin.store.applicationId'|translate}}
+                        </div>
+                        <div class="col-md-6">
+                            <input type="text" autocomplete="off" formControlName="SQUARE_APPLICATION_ID"
+                                class="form-control" maxlength="100">
+                            <div class="invalid-feedback" *ngIf="getControl('SQUARE_APPLICATION_ID').errors?.required">
+                                <span>
+                                    {{'admin.global.field.required'|translate}}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row mb-4">
+                        <div class="col-md-3">
+                            {{'admin.store.accessToken'|translate}}
+                        </div>
+                        <div class="col-md-6">
+                            <input type="text" autocomplete="off" formControlName="SQUARE_ACCESS_TOKEN" maxlength="100"
+                                class="form-control">
+                            <div class="invalid-feedback" *ngIf="getControl('SQUARE_ACCESS_TOKEN').errors?.required">
+                                <span>
+                                    {{'admin.global.field.required'|translate}}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row mb-4">
+                        <div class="col-md-3">
+                            {{'admin.store.locationId'|translate}}
+                        </div>
+                        <div class="col-md-6">
+                            <input type="text" formControlName="SQUARE_LOCATION_ID" maxlength="100"
+                                class="form-control">
+                            <div class="invalid-feedback" *ngIf="getControl('SQUARE_LOCATION_ID').errors?.required">
+                                <span>
+                                    {{'admin.global.field.required'|translate}}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-4">
+                        <div class="col-md-3">
+                        </div>
+                        <div class="col-md-6 d-flex flex-row-reverse">
+                            <button class="btn btn-primary" (click)="connect()">
+                                <i class="fa fa-link mr-2 link" title="link"></i>
+                                {{'admin.store.setting.connect'|translate}}
+                            </button>
+                        </div>
+                    </div>
+                </form>
+                <div *ngIf="squareConnected">
+                    <div class="row mb-4">
+                        <div class="col-md-3">{{'admin.store.accountID'|translate}}</div>
+                        <div class="col-md-6">{{this.squareApplicationId}}</div>
+                    </div>
+                    <div class="row mb-4">
+                        <div class="col-md-3">{{'admin.store.accessToken'|translate}}</div>
+                        <div class="col-md-6">{{this.squareAccessToken}}</div>
+                    </div>
+                    <div class="row mb-4">
+                        <div class="col-md-3">{{'admin.store.locationId'|translate}}</div>
+                        <div class="col-md-6">{{this.squareLocationId}}</div>
+                        <div class="col-md-2">
+                            <button class="btn btn-danger d-flex" (click)="disconnect()">
+                                <img src="assets/img/link-slash-solid.svg" class="mr-2 slashIcon" alt="">{{'admin.store.disconnect'|translate}}
+                            </button>
+                        </div>
+                    </div>
+                    <div class="row mb-4">
+                        <div class="col-md-3">
+                            <div class="form-group mb-3 mb-md-0">
+                                <label class="form-check-label">{{'admin.store.enabled'|translate}}</label>
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            <div class="form-group mb-0">
+                                <label>{{'admin.global.no'|translate}}</label>&nbsp;
+                                <label class="switch pt-1 mb-0">
+                                    <input type="checkbox" [(ngModel)]="squareEnabled"
+                                        (ngModelChange)="toggleSquarePayments($event)" />
+                                    &nbsp;<span class="slider round"></span>
+                                </label>&nbsp;
+                                <label>{{'admin.global.yes'|translate}}</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

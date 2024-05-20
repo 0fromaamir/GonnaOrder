@@ -1,0 +1,126 @@
+<div class="animated fadeIn">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="card list">
+          <div class="card-body py-3">
+            <form [formGroup]="settingsForm" class="form-horizontal my-3">
+              <!-- Name -->
+              <div class="form-group row mb-2">
+                <label
+                  class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-4 m-0 form-header">{{'admin.global.name'|translate}}</label>
+                <div class="d-flex flex-md-row flex-sm-column flex-column col-xl-4 col-lg-4 col-md-4 col-sm-6 col-6">
+                  <div class="form-group mr-0 mr-sm-5">
+                    <label class="radio-container" for="PICKUP_SELECTION_NAME_HIDDEN">
+                      {{'admin.store.settingsHidden'|translate}}
+                      <input type="radio" value="HIDDEN" formControlName="PICKUP_NAME_SELECTION"
+                        id="PICKUP_SELECTION_NAME_HIDDEN" (change)="onSubmit()" />
+                      <span class="checkmark"></span>
+                    </label>
+                  </div>
+                  <div class="form-group mr-0 mr-sm-5">
+                    <label class="radio-container" for="PICKUP_SELECTION_NAME_OPTIONAL">
+                      {{'admin.store.settingsOptional'|translate}}
+                      <input type="radio" value="OPTIONAL" formControlName="PICKUP_NAME_SELECTION"
+                        id="PICKUP_SELECTION_NAME_OPTIONAL" (change)="onSubmit()" />
+                      <span class="checkmark"></span>
+                    </label>
+                  </div>
+                  <div class="form-group mr-0 mr-sm-5">
+                    <label class="radio-container" for="PICKUP_SELECTION_NAME_MANDATORY">
+                      {{'admin.store.settingsMandatory'|translate}}
+                      <input type="radio" value="MANDATORY" formControlName="PICKUP_NAME_SELECTION"
+                        id="PICKUP_SELECTION_NAME_MANDATORY" (change)="onSubmit()" />
+                      <span class="checkmark"></span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+  
+              <!-- Email -->
+              <div class="form-group row mb-2">
+                <label
+                  class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-4 m-0 form-header">{{'admin.global.email'|translate}}</label>
+                <div class="d-flex flex-md-row flex-sm-column flex-column col-xl-4 col-lg-4 col-md-4 col-sm-6 col-6">
+                  <div class="form-group mr-0 mr-sm-5">
+                    <label class="radio-container" for="PICKUP_EMAIL_OPTIONAL_HIDDEN">
+                      {{'admin.store.settingsHidden'|translate}}
+                      <input type="radio" value="HIDDEN" formControlName="PICKUP_EMAIL_SELECTION"
+                        id="PICKUP_EMAIL_OPTIONAL_HIDDEN" (change)="onSubmit()" />
+                      <span class="checkmark"></span>
+                    </label>
+                  </div>
+                  <div class="form-group mr-0 mr-sm-5">
+                    <label class="radio-container" for="PICKUP_EMAIL_OPTIONAL_OPTIONAL">
+                      {{'admin.store.settingsOptional'|translate}}
+                      <input type="radio" value="OPTIONAL" formControlName="PICKUP_EMAIL_SELECTION"
+                        id="PICKUP_EMAIL_OPTIONAL_OPTIONAL" (change)="onSubmit()" />
+                      <span class="checkmark"></span>
+                    </label>
+                  </div>
+                  <div class="form-group mr-0 mr-sm-5">
+                    <label class="radio-container" for="PICKUP_EMAIL_OPTIONAL_MANDATORY">
+                      {{'admin.store.settingsMandatory'|translate}}
+                      <input type="radio" value="MANDATORY" formControlName="PICKUP_EMAIL_SELECTION"
+                        id="PICKUP_EMAIL_OPTIONAL_MANDATORY" (change)="onSubmit()" />
+                      <span class="checkmark"></span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+  
+              <!-- Phone -->
+              <div class="form-group row mb-2">
+                <label
+                  class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-4 m-0 form-header">{{'admin.global.phone'|translate}}</label>
+                <div class="d-flex flex-md-row flex-sm-column flex-column col-xl-4 col-lg-4 col-md-4 col-sm-6 col-6">
+                  <div class="form-group mr-0 mr-sm-5">
+                    <label class="radio-container" for="PICKUP_TEL_OPTIONAL_HIDDEN">
+                      {{'admin.store.settingsHidden'|translate}}
+                      <input type="radio" value="HIDDEN" formControlName="PICKUP_TEL_SELECTION"
+                        id="PICKUP_TEL_OPTIONAL_HIDDEN" (change)="onSubmit()" />
+                      <span class="checkmark"></span>
+                    </label>
+                  </div>
+                  <div class="form-group mr-0 mr-sm-5">
+                    <label class="radio-container" for="PICKUP_TEL_OPTIONAL_OPTIONAL">
+                      {{'admin.store.settingsOptional'|translate}}
+                      <input type="radio" value="OPTIONAL" formControlName="PICKUP_TEL_SELECTION"
+                        id="PICKUP_TEL_OPTIONAL_OPTIONAL" (change)="onSubmit()" />
+                      <span class="checkmark"></span>
+                    </label>
+                  </div>
+                  <div class="form-group mr-0 mr-sm-5">
+                    <label class="radio-container" for="PICKUP_TEL_OPTIONAL_MANDATORY">
+                      {{'admin.store.settingsMandatory'|translate}}
+                      <input type="radio" value="MANDATORY" formControlName="PICKUP_TEL_SELECTION"
+                        id="PICKUP_TEL_OPTIONAL_MANDATORY" (change)="onSubmit()" />
+                      <span class="checkmark"></span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Show Address -->
+              <div class="form-group row mb-4">
+                <label
+                  class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-4 m-0 form-header">{{'admin.store.settingspickupdisplaypickupAddress'|translate}}
+                  <app-help-icon [helpPageName]="helpUrl"></app-help-icon></label>
+  
+                <div class="d-flex flex-md-row flex-sm-column flex-column col-xl-4 col-lg-4 col-md-4 col-sm-6 col-6">
+                  <div class="form-group mx-2 my-0">
+                    <label>{{'admin.store.settingspickupHide'|translate}}</label>&nbsp;
+                    <label class="switch pt-1 mb-0 locationAddress">
+                      <input type="checkbox" formControlName="DELIVERY_NO_LOCATION_SHOW_ADDRESS"
+                        id="DELIVERY_NO_LOCATION_SHOW_ADDRESS" (change)="onSubmit()" />
+                      &nbsp;<span class="slider round showlocationAddress"></span>
+                    </label>&nbsp;
+                    <label>{{'admin.store.settingspickupShow'|translate}}</label>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

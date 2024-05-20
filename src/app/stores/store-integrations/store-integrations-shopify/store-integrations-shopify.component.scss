@@ -1,0 +1,9 @@
+.shopifyimg {
+    max-width: 200px;
+}
+:host {
+    form label.required:after {
+        color: red;
+        content: " *";
+    }
+}

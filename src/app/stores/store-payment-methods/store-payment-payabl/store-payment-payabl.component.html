@@ -1,0 +1,86 @@
+<div class="card list mb-0">
+  <div class="card-body py-0">
+    <div class="row">
+      <div class="col-xl-4 marginlogo col-lg-5">
+        <img src="assets/img/payment_logos/payabl.svg" class="pr-2" width="100%" style="max-width: 140px">
+        <app-help-icon [helpPageName]="helpUrl"></app-help-icon>
+      </div>
+      <div class="col-xl-8 col-lg-7">
+        <button class="btn btn-primary" (click)="connectPayablClicked()"
+          *ngIf="!connectPayablForm && !payablConnected"><i class="fa fa-link mr-2 link"
+            title="link"></i>{{'admin.store.setting.connect' | translate}}</button>
+        <form [formGroup]="payablForm" *ngIf="connectPayablForm && !payablConnected">
+
+          <div class="row mb-4">
+            <div class="col-md-3">
+              {{'admin.store.payment.merchantId'|translate}}
+            </div>
+            <div class="col-md-6">
+              <input type="text" autocomplete="off" formControlName="PAYABL_MERCHANT_ID" class="form-control"
+                maxlength="100">
+              <div class="invalid-feedback" *ngIf="getControl('PAYABL_MERCHANT_ID').errors?.required">
+                <span>
+                  {{'admin.global.field.required'|translate}}</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="row mb-4">
+            <div class="col-md-3">
+              {{'admin.store.payment.secret'|translate}}
+            </div>
+            <div class="col-md-6">
+              <input type="text" autocomplete="off" formControlName="PAYABL_MERCHANT_SECRET" maxlength="100"
+                class="form-control">
+              <div class="invalid-feedback" *ngIf="getControl('PAYABL_MERCHANT_SECRET').errors?.required">
+                <span>
+                  {{'admin.global.field.required'|translate}}</span>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-3">
+            </div>
+            <div class="col-md-6 d-flex flex-row-reverse">
+              <button class="btn btn-primary" (click)="connect()">
+                <i class="fa fa-link mr-2 link" title="link"></i>{{'admin.store.setting.connect'|translate}}
+              </button>
+            </div>
+          </div>
+        </form>
+        <div *ngIf="payablConnected">
+          <div class="row mb-4">
+            <div class="col-md-4">{{'admin.store.payment.merchantId'|translate}}</div>
+            <div class="col-md-4">{{this.payablMerchantId}}</div>
+          </div>
+          <div class="row mb-4">
+            <div class="col-md-4">{{'admin.store.payment.secret'|translate}}</div>
+            <div class="col-md-4">{{this.payablMerchantSecret}}</div>
+            <div class="col-md-2">
+              <button class="btn btn-danger d-flex" (click)="disconnect()">
+                <img src="assets/img/link-slash-solid.svg" class="mr-2 slashIcon" alt="">{{'admin.store.disconnect'|translate}}
+              </button>
+            </div>
+          </div>
+          <div class="row mb-4">
+            <div class="col-md-2">
+              <div class="form-group mb-3 mb-md-0">
+                <label class="form-check-label">{{'admin.store.enabled'|translate}}</label>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group mb-0">
+                <label>{{'admin.global.no'|translate}}</label>&nbsp;
+                <label class="switch pt-1 mb-0">
+                  <input type="checkbox" [(ngModel)]="payablEnabled" (ngModelChange)="togglePayablPayments($event)" />
+                  &nbsp;<span class="slider round"></span>
+                </label>&nbsp;
+                <label>{{'admin.global.yes'|translate}}</label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

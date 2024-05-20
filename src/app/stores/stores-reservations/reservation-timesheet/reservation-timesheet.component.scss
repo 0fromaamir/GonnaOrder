@@ -1,0 +1,139 @@
+#tableContainer
+{
+  width: 100%;
+  overflow-x: auto;
+  font-family: SANS-SERIF;
+  font-size: 16px;
+  font-weight: 400;
+}
+.square {
+  width: 35px;
+  height: 35px;
+  background-color: white;
+  border: 1.3px solid rgb(210,215,219);
+  margin-bottom: -1px;
+}
+td{
+margin-bottom: -4px;
+margin: 20px;
+}
+thead{
+  height: 50px;
+}
+th:nth-child(n+3){
+  text-align: left;
+  left:-2px;
+}
+th:nth-child(1)
+{
+  padding: 15px;
+  border-left: 1.3px solid rgb(210,215,219);
+  border-bottom: 1.3px solid rgb(210,215,219);
+  border-top: 1.3px solid rgb(210,215,219);
+}
+th:nth-child(2) {
+  padding: 15px;
+  border-right: 1.3px solid rgb(210,215,219);
+  border-bottom: 1.3px solid rgb(210,215,219);
+  border-top: 1.3px solid rgb(210,215,219);
+}
+
+table td:nth-child(1), table th:nth-child(1){
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  border: 1.3px solid rgb(210,215,219);
+ 
+}
+
+table td:nth-child(2), table th:nth-child(2) {
+  position: sticky;
+  left: 70px;
+  z-index: 2;
+  border-right: 1.3px solid rgb(210,215,219);
+  border-bottom: 1.3px solid rgb(210,215,219);
+  border-top: 1.3px solid rgb(210,215,219);
+}
+
+table, td {
+  border: 1.3px solid rgb(210,215,219);
+  border-collapse: collapse;
+  padding: 0px;
+}
+th:first-child, th:nth-child(2), td:first-child, td:nth-child(2) {
+  border-right: none;
+  border-left: none;
+  background-color:#F0F3F5;
+  text-align: center;
+}
+.hallOfSquares{
+  display: flex;
+  position: relative;
+  // top: -0.8px;
+  cursor: pointer;
+}
+.header-bottom{
+  margin-bottom: -4px;
+}
+.hours{
+  width: 138px;
+}
+.max-cell{
+  border-right: 1px solid #ddd;
+}
+.overlay {
+  display: flex;
+  position: absolute;
+  border: 1px solid white;
+  height: 34.5px;
+  background-color:var(--primary-brand-color);
+}
+.reserve-text{
+  padding-top: 4px;
+  padding-right: 7px;
+  padding-left: 7px;
+  padding-bottom: 7px;
+  color:white;
+  transform: rotate(0deg);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 90%;
+  display: block;
+}
+
+.reserve-number
+{
+  padding-top: 4px;
+  color: white;
+  margin-right: 13px;
+}
+#greenLine {
+  border-style: hidden;
+  height: 100%;
+  width: 3px;
+  background-color: var(--secondary-brand-color) !important;
+  z-index: 1;
+  top: -1px;
+  bottom: 0;
+}
+#thMax{
+  border-right: 1px solid #ddd;
+}
+
+#tdTableId{
+  color: rgb(39,55,115);
+}
+
+#tdColspan{
+  border-style:hidden; bottom:-10px;
+}
+#greenLineIcon{
+  background: transparent;
+  top: 1px;
+  font-size: 13px;
+  z-index: 1;
+  margin-top: -0.45%;
+  color: var(--secondary-brand-color) !important;
+  border-color: transparent;
+}

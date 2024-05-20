@@ -1,0 +1,44 @@
+<div class="information-section mx-auto content" *ngIf="(paymentData)">
+    <div class="section-title p-3 mb-0 pl-4 font-size-primary font-weight-bold theme-light">
+        {{'public.standalonepayment.paymentpage.yourInformation' | translate}}</div>
+    <div class="mx-auto">
+        <form class="mx-4 my-4" [formGroup]="personalInfoForm">
+            <div class="row">
+                <div class="form-group mb-0 col-md-12">
+                    <div class="input-group">
+                        <input type="text" class="form-control"
+                            [class.populated]="getControl('name')?.value?.length > 0"
+                            [class.is-invalid]="(getControl('name').invalid && (getControl('name').dirty || getControl('name').touched))"
+                            autocomplete="off" formControlName="name"
+                            maxlength="200" id="name" trim="blur" (keyup)='onNameChange()'/>
+                        <label for="#name" class="no-cursor placeholder font-size-primary"
+                            (click)="checkoutService.focusField($event)">
+                            Name(Optional)
+                        </label>
+                        <div class="invalid-feedback font-size-secondary">
+                            <div *ngIf="getControl('name').errors?.maxlength">
+                                {{'public.payment.errors.valueNotValid' | translate}}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <div class="amount-info mx-4 my-4">
+            <div class="amount-item">
+                <span>{{'public.standalonepayment.paymentpage.subTotalSelected' | translate}}</span>
+                <span *ngIf="(paymentData.formattedAmountSelected)">{{paymentData.amountSelected | formatPrice:
+                    paymentData.locale:paymentData.currencyIsoCode:paymentData.currencySymbol}}</span>
+            </div>
+            <div class="amount-item">
+                <span>{{'public.standalonepayment.paymentpage.tips' | translate}}</span>
+                <span *ngIf="(paymentData.formattedAmountTip)">{{paymentData.amountTip | formatPrice:
+                    paymentData.locale:paymentData.currencyIsoCode:paymentData.currencySymbol}}</span>
+            </div>
+            <div class="amount-item font-weight-bold theme-color-header">
+                <span>{{'public.checkout.total'|translate}}</span>
+                <span *ngIf="(paymentData.formattedAmountTotal)">{{paymentData.amountTotal | formatPrice:
+                    paymentData.locale:paymentData.currencyIsoCode:paymentData.currencySymbol}}</span>
+            </div>
+        </div>
+    </div>
+</div>

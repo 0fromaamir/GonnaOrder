@@ -1,0 +1,15 @@
+{
+  "appName": "GoAdmin",
+  "appDescription": "GonnaOrder Admin App",
+  "type": "ADMIN",
+  "tag": "PROD",
+  "bundleId": "com.gonnaorder.goadmin",
+  "appleId": "1542398114",
+  "storeAlias": "",
+  "iconUrl": "resources/assets/mobile-apps/admin/GoAdmin/icon.png",
+  "iconBackgroundUrl": "resources/assets/mobile-apps/admin/GoAdmin/icon-background.png",
+  "iconForegroundUrl": "resources/assets/mobile-apps/admin/GoAdmin/icon-foreground.png",
+  "splashUrl": "resources/assets/mobile-apps/admin/GoAdmin/splash.png",
+  "splashBackgroundColor": "#FFFFFF",
+  "googleServiceInfoUrl": "resources/assets/mobile-apps/admin/GoAdmin/prod/GoogleService-Info.plist"
+}

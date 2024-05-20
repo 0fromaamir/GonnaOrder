@@ -1,0 +1,44 @@
+<div class="opentime-selector-container d-flex flex-wrap justify-content-center align-items-center"
+    (click)="onCheckOutsideClose()" [ngClass]="{'hide': !open}">
+    <div class="selection-container p-4 position-absolute">
+        <div class="header-container d-flex flex-wrap">
+            <div class="w-100">
+                <div class="text-center justify-content-center font-size-title font-weight-bold">
+                    <div *ngIf="isClosedForOrdering">
+                        <span>{{'public.store.currently.closed' | translate}}</span><br>
+                        <span>{{'public.store.dashboard.placeOrderInOpeningTimes' | translate}}</span>
+                    </div>
+                    <i class="far fa-clock p-2" style="color:black"></i>{{'public.global.opentimelist' | translate}}
+                    <span class="float-right position-absolute closebutton text-decoration-underline">
+                        Close<i class="fas fa-times pl-2"></i>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="opentime-container container py-2">
+            <div *ngFor="let day of openTimeSchedule">
+                <div *ngIf="day.items.length > 0" class="row font-size-primary py-2">
+                    <div class="col-day font-size-primary">{{day.title | translate}}</div>
+                    <div class="col-time row">
+                        <div class="col-sm-6 text-center time-item font-size-primary" *ngFor="let item of day.items">
+                            <ng-container *ngIf="!item.time24h">
+                                {{item.startTime}} - {{item.endTime}}
+                            </ng-container>
+                            <ng-container *ngIf="item.time24h">
+                                {{'public.global.time24h' | translate}}
+                            </ng-container>
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="day.items.length == 0" class="row font-size-primary py-2">
+                    <div class="col-day font-size-primary">{{day.title | translate}}</div>
+                    <div class="col-time row">
+                        <div class="col-sm-6 text-center time-item font-size-primary">
+                            {{'public.global.closed' | translate}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

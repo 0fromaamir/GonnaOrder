@@ -1,0 +1,36 @@
+@import "bootstrap/scss/functions";
+@import "bootstrap/scss/variables";
+@import "bootstrap/scss/mixins";
+a:hover {
+cursor: pointer;
+}
+.sort-icon{
+    font-size: 20px;
+    color: rgb(196, 196, 201);
+    cursor: pointer;
+    margin-left: 10px;
+}
+.fa-sort-up{
+    color: rgb(31, 31, 196);
+}
+.fa-sort-down{
+    color: rgb(31, 31, 196);
+} 
+#email-error.invalid-feedback {
+    display: block !important;
+  }
+  .search-field{
+    padding-right: 0!important;
+  
+  }
+
+  @include media-breakpoint-down(md){
+    .email label{
+        padding-right: 0;
+    }
+  }
+  
+
+
+ 
+  

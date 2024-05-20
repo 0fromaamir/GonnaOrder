@@ -1,0 +1,171 @@
+<div class="card list mb-0">
+    <div class="card-body py-0">
+        <div class="row">
+            <div class="col-xl-4 col-lg-4">
+                <img class="sunsoft" src="/assets/img/sunsoft.png">
+                <app-help-icon [helpPageName]="helpUrl"></app-help-icon>
+            </div>
+            <div class="col-xl-8 col-lg-8 mt-0 mt-md-n2">
+                <ng-container class="row"
+                    *ngIf="sunSoftSection === 'sunsoft-dashboard' then sunSoftDashboard else sunSoftLogin">
+                </ng-container>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-template #sunSoftDashboard>
+    <div class="row">
+        <div class="italic col-lg-12 mb-3">
+            {{'admin.store.setting.integrations.connectWithYourPOS'|translate}}
+        </div>
+        <div class="col-lg-12">
+            <div class="d-flex align-items-center justify-content-between p-0">
+                <button type="button" class="btn btn-primary mt-2" (click)="sunSoftSection = 'sunsoft-login';">
+                    <i class="fa fa-link mr-2 link" title="link"></i>{{'admin.store.setting.connect' | translate}}
+                </button>
+            </div>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #sunSoftLogin>
+    <ng-container class="row" *ngIf="sunSoftSection === 'sunsoft-login'; else sunSoftConnected">
+        <div class="row">
+            <div class="col-xl-12 col-lg-12 mt-2 mt-lg-0">
+                <div class="row">
+                    <div class="col-lg-12">
+                        {{'admin.store.setting.integrations.connectWithYourPOS'|translate}}
+                    </div>
+                </div>
+                <div class="row mt-4">
+                    <div class="col-lg-12">
+                        <form [formGroup]="sunSoftForm">
+                            <div class="row mb-4">
+                                <label class="col-xl-3 col-lg-3 col-md-12 col-sm-12 required" for="url">
+                                    {{ 'admin.store.setting.integrations.URL' | translate }}
+                                </label>
+                                <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12">
+                                    <input type="text" class="form-control" formControlName="SUNSOFT_BASE_URL" id="url"
+                                        maxlength="255" />
+                                </div>
+                            </div>
+                            <div class="row mb-4">
+                                <label class="col-xl-3 col-lg-3 col-md-12 col-sm-12 required" for="username">
+                                    {{ 'admin.store.setting.integrations.username' | translate }}
+                                </label>
+                                <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12">
+                                    <input type="text" class="form-control" formControlName="SUNSOFT_USERNAME"
+                                        id="username" maxlength="100" />
+                                </div>
+                            </div>
+                            <div class="row mb-4">
+                                <label class="col-xl-3 col-lg-3 col-md-12 col-sm-12 required" for="password">
+                                    {{ 'admin.store.setting.integrations.password' | translate }}
+                                </label>
+                                <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12">
+                                    <input type="password" class="form-control" formControlName="SUNSOFT_PASSWORD"
+                                        id="password" maxlength="128" />
+                                </div>
+                            </div>
+                            <div class="row mb-4">
+                                <label class="col-xl-3 col-lg-3 col-md-12 col-sm-12 required" for="device">
+                                    {{'admin.store.setting.integrations.deviceInfo'|translate}}
+                                </label>
+                                <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12">
+                                    <input type="text" class="form-control" formControlName="SUNSOFT_DEVICE" id="device"
+                                        maxlength="128" />
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xl-2 col-lg-3 col-md-12 col-sm-12"></div>
+            <div class="col-xl-10 col-lg-9 col-md-12 col-sm-12">
+                <div class="float-right">
+                    <button type="button" class="btn btn-primary" (click)="connectToSunsoft()"
+                        [disabled]="this.sunSoftForm.invalid">
+                        <i class="fa fa-link mr-2 link" title="link"></i>{{'admin.store.setting.connect' | translate}}
+                    </button>
+                </div>
+            </div>
+        </div>
+
+    </ng-container>
+
+</ng-template>
+
+<ng-template #sunSoftConnected>
+    <div class="row">
+        <div class="col-xl-12 col-lg-12 mt-2 mt-lg-0">
+            <div class="row mb-4">
+                <div class="col-lg-12">
+                    <form [formGroup]="sunSoftForm">
+                        <div class="row">
+                            <label class="col-xl-3 col-lg-3 col-md-12 col-sm-12 required">
+                                {{ 'admin.store.setting.integrations.URL' | translate }}
+                            </label>
+                            <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12">
+                                <p>{{this.sunSoftForm.controls.SUNSOFT_BASE_URL.value}}</p>
+                            </div>
+                        </div>
+                        <div class="row mb-4">
+                            <label class="col-xl-3 col-lg-3 col-md-12 col-sm-12 required" for="secretUrl">
+                                {{ 'admin.store.setting.integrations.username' | translate }}
+                            </label>
+                            <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12">
+                                <p>{{this.sunSoftForm.controls.SUNSOFT_USERNAME.value}}</p>
+                            </div>
+                        </div>
+                        <div class="row mb-4">
+                            <label class="col-xl-3 col-lg-3 col-md-12 col-sm-12 required" for="secretUrl">
+                                {{ 'admin.store.setting.integrations.password' | translate }}
+                            </label>
+                            <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12">
+                                <p>{{maskedPassword}}</p>
+                            </div>
+                        </div>
+                        <div class="row mb-4">
+                            <label class="col-xl-3 col-lg-3 col-md-12 col-sm-12 required" for="secretUrl">
+                                {{'admin.store.setting.integrations.deviceInfo'|translate}}
+                            </label>
+                            <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12">
+                                <p>{{this.sunSoftForm.controls.SUNSOFT_DEVICE.value}}</p>
+                            </div>
+                        </div>
+                        <div class="row mb-4">
+                            <label class="col-xl-3 col-lg-3 col-md-12 col-sm-12 required" for="secretUrl">
+                                {{ 'admin.store.enabled' | translate }}
+                            </label>
+                            <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12">
+                                <label>{{'admin.global.no'|translate}}</label> &nbsp;
+                                <label class="switch pt-1 mb-0">
+                                    <input type="checkbox" formControlName="SUNSOFT_ENABLED" id="SUNSOFT_CONNECTED"
+                                        (change)="toggleSunsoft()" />
+                                    &nbsp;<span class="slider round"></span>
+                                </label>&nbsp;
+                                <label>{{'admin.global.yes'|translate}}</label> &nbsp;
+                            </div>
+                        </div>
+                    </form>
+
+                    <div class="col-lg-12">
+                        <div class="float-right">
+                            <button type="button" class="btn btn-danger mt-3" (click)="disconnectToSunsoft()">
+                                <img src="assets/img/link-slash-solid.svg" class="mr-2 slashIcon"
+                                    alt="">{{'admin.store.disconnect' | translate}}
+                            </button>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</ng-template>

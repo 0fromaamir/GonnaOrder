@@ -1,0 +1,26 @@
+.borderArrows{
+  border-style: none;
+  background-color: white;
+}
+#calendarArea{
+  margin-top: 6%;
+}
+#customDateBody{
+  display: flex;
+}
+.datepickArea{
+  align-items: center;
+  display: flex;
+}
+#calendarArea .datepickArea{
+  margin-top: 0%;
+}
+
+.hide-element {
+  width: 0 !important;
+  max-width: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  visibility: hidden;
+}

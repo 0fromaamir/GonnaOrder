@@ -1,0 +1,21 @@
+.wedeliverimg {
+    max-width: 200px;
+}
+
+:host {
+    form label.required:after {
+        color: red;
+        content: " *";
+    }
+}
+
+div.is-invalid {
+    .invalid-feedback {
+        display: block !important;
+    }
+}
+
+.img-flex-delivery {
+    max-height: 4.5rem;
+    width: auto;
+}

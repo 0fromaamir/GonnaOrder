@@ -1,0 +1,10 @@
+<div class="inline-loading d-flex w-100 h-100" [ngClass]="overlay ? 'overlay-loading' : 'inline-loading'"
+    *ngIf="showLoading">
+    <div class="d-flex flex-column w-100 text-center align-self-center panel-contente">
+        <div class="lds-ripple mx-auto">
+            <div></div>
+            <div></div>
+        </div>
+        <div *ngIf="!hideText" class="loading-message">{{'public.load.loadingMessage' | translate}}</div>
+    </div>
+</div>

@@ -1,0 +1,17 @@
+{
+  "appName": "Tim's Thai",
+  "appDescription": "Enjoy homemade style authentic Thai and Asian cuisine",
+  "type": "TEMPLATE",
+  "tag": "PROD",
+  "bundleId": "com.gonnaorder.timsthai",
+  "appleId": "1623338289",
+  "storeAlias": "tims-thai",
+  "iconUrl": "resources/assets/mobile-apps/template/Timsthai/icon.png",
+  "iconBackgroundUrl": "resources/assets/mobile-apps/template/Timsthai/icon-background.png",
+  "iconForegroundUrl": "resources/assets/mobile-apps/template/Timsthai/icon-foreground.png",
+  "splashUrl": "resources/assets/mobile-apps/template/Timsthai/splash.png",
+  "splashBackgroundColor": "#4D4D4F",
+  "googleServiceInfoUrl": "resources/assets/mobile-apps/template/Timsthai/GoogleService-Info.plist",
+  "defaultDeeplinkAppAndroidUrl": "https://play.google.com/store/apps/details?id=com.gonnaorder.timsthai",
+  "defaultDeeplinkAppIOSUrl": "https://apps.apple.com/nl/app/gonnaorder/id1623338289?l=en"
+}	

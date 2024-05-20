@@ -1,0 +1,31 @@
+<div class="col-12 right-col">
+  <div class="card list">
+    <div class="card-header">
+      <div>{{'admin.store.settings.catalog.title'|translate}}<app-help-icon
+          [helpPageName]="catalogHelpPage"></app-help-icon>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="row pt-3 pl-3 mb-3">
+        <button type="button" class="rounded-0 btn btn-outline-primary mr-0" value="Catalog" [routerLink]="catalogUrl"
+          [class.btnChange]="isButtonActive()">
+          {{'admin.catalog.title.catalog'|translate}}
+        </button>
+        <button type="button" class="rounded-0 btn btn-outline-primary" routerLink="option-groups" value="Option Groups"
+          routerLinkActive="btnChange">
+          {{'admin.catalog.title.optionGroups'|translate}}
+        </button>
+        <button type="button" class="rounded-0 btn btn-outline-primary" routerLink="top" value="Top-Level Categories"
+          routerLinkActive="btnChange" *ngIf="!isStandardUser">
+          {{'admin.catalog.title.topLevelCategories'|translate}}
+        </button>
+        <button type="button" class="rounded-0 btn btn-outline-primary" routerLink="station" value="Station"
+          routerLinkActive="btnChange" *ngIf="!isStandardUser">
+          <i class="fas fa-solid fa-kitchen-set mr-2"></i>
+          {{'admin.store.catalog.station.stations' | translate }}
+        </button>
+      </div>
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>

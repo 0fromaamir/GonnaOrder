@@ -1,0 +1,121 @@
+<app-header (locale)="onLocaleChange($event)"></app-header>
+<div class="app-body pt-1 mt-1">
+  <main class="main d-flex align-items-center">
+    <div class="container pt-0"
+      [ngClass]="{'pt-1':(invalidCredentials$ | async)||((userVerified || partnerVerified ) && !(invalidCredentials$ | async))||(userPasswordReset && !(invalidCredentials$ | async))||(emailUpdated && !(invalidCredentials$ | async))||(userInvited && !(invalidCredentials$ | async))}">
+      <div class="alert-wrapper w-100 justify-content-center">
+        <div class="container px-md-5 text-center">
+          <div class="d-flex flex-row alert-flex-row w-100 px-2 px-sm-5">
+            <div class="d-flex w-100">
+              <div role="alert" class="alert w-100 alert-danger" *ngIf="invalidCredentials$ | async">
+                <strong>{{'admin.alerts.headerError' | translate}}</strong>
+                {{'admin.alerts.invalidCredentials' | translate}}
+              </div>
+              <div role="alert" class="alert w-100 alert-danger" *ngIf="socialAccountLoginFailed$ | async">
+                <strong>{{'admin.alerts.headerError' | translate}}</strong>
+                {{'admin.alerts.socialAccountLoginFailed' | translate}}
+              </div>
+              <div role="alert" class="alert w-100 alert-success"
+                *ngIf="(userVerified || partnerVerified ) && !(invalidCredentials$ | async)">
+                <strong>{{'admin.alerts.headerSuccess' | translate}}</strong>
+                {{'admin.alerts.accountActivated' | translate}}
+              </div>
+              <div role="alert" class="alert w-100 alert-success"
+                *ngIf="userPasswordReset && !(invalidCredentials$ | async)">
+                <strong>{{'admin.alerts.headerSuccess' | translate}}</strong>
+                {{'admin.alerts.passwordChanged' | translate}}
+              </div>
+              <div role="alert" class="alert w-100 alert-success"
+                *ngIf="emailUpdated && !(invalidCredentials$ | async)">
+                <strong>{{'admin.alerts.headerSuccess' | translate}}</strong>
+                {{'admin.alerts.emailChanged' | translate}}
+              </div>
+              <div role="alert" class="alert w-100 alert-success" *ngIf="userInvited && !(invalidCredentials$ | async)">
+                <strong>{{'admin.alerts.headerSuccess' | translate}}</strong>
+                {{'admin.alerts.userInvitationSuccessfull' | translate:storeNameTraslationToken}}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="d-flex flex-row">
+        <div class="card mx-auto">
+          <div class="card-body card_width px-4 px-md-5 py-3 py-md-5 shadow-no-mobile shadow mx-auto"
+            (keyup.enter)="loginAction()">
+            <div class="card-content">
+              <h1 class="text-blue mb-3">{{'admin.global.login' | translate}}</h1>
+              
+              <div *ngIf="!helper.isMobileApp()">
+                <iframe id="user-login" [src]="userLoginSrc" class="login-iframe" frameBorder="0" scrolling="no"></iframe>
+
+                <div>
+                  <div class="or-separator">
+                    <span>OR</span>
+                  </div>
+                </div>
+              </div>
+              
+
+              <form [formGroup]="loginForm" class="pb-0">
+                <div class="row">
+                  <div class="col mb-1"
+                    [ngClass]="{'mb-3':username.touched && username.errors && username.errors.required}">
+                    <mat-form-field appearance="outline" class="mat-form-field-custom">
+                      <mat-label>{{'admin.global.email' | translate}}
+                      </mat-label>
+                      <input matInput formControlName="username" id="login-email-field">
+                      <mat-error *ngIf="username.touched && username.errors && username.errors.required">
+                        {{'admin.global.field.required' | translate}}.
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+                  <div class="w-100"></div>
+                  <div class="col"
+                  [ngClass]="{'mb-3': (password.touched && password.errors && password.errors.required) || (password.touched && password.errors && password.errors.minlength)}">
+                    <mat-form-field appearance="outline" class="mat-form-field-custom">
+                      <mat-label>{{'admin.global.password' | translate}}</mat-label>
+                      <input matInput [type]="hide ? 'password' : 'text'" formControlName="password" type="password"
+                        id="login-password-field">
+                      <mat-error *ngIf="password.touched && password.errors && password.errors.required">
+                        {{'admin.global.field.required' | translate}}.
+                      </mat-error>
+                      <mat-error *ngIf="password.touched && password.errors && password.errors.minlength">
+                        {{'admin.global.field.minLength' | translate:{minLength :
+                        password.errors.minlength.requiredLength} }}.
+                      </mat-error>
+                      <mat-error *ngIf="password.touched && password.errors && password.errors.maxlength">
+                        {{'admin.global.field.maxLength' | translate:{maxLength :
+                        password.errors.maxlength.requiredLength} }}.
+                      </mat-error>
+                      <button type="button" mat-icon-button matSuffix (click)="hide = !hide"
+                        [attr.aria-label]="hide ? 'Show password' : 'Hide password'" class="pwdicon-top"
+                        [attr.aria-pressed]="hide">
+                        <mat-icon>{{ hide ? 'visibility_off' : 'visibility' }}</mat-icon>
+                      </button>
+                    </mat-form-field>
+                  </div>
+                </div>
+                <div class="d-flex flex-row mb-2 mb-xs-0 justify-content-end">
+                  <button type="button" class="btn btn-link px-0 forgetPassword"
+                    (click)="goToForgotPassword()">{{'admin.login.forgetPassword' | translate}}</button>
+                </div>
+                <div class="d-flex flex-row justify-content-center">
+                  <button type="button" class="btn btn-primary w-100 py-3 font-weight-bold" id="login-submit-button"
+                    (click)="loginAction()">
+                    {{'admin.global.login' | translate}}
+                  </button>
+                </div>
+
+                <div class="pt-2 d-flex flex-row">
+                  <div class="d-flex btn-pre-text text-dark-blue">{{'admin.login.noAccount' | translate}}</div>
+                  <button type="button" class="d-flex btn btn-link px-0"
+                    (click)="goToRegistration()">{{'admin.login.signUp' | translate}}</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>

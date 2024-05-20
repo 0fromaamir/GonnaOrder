@@ -1,0 +1,23 @@
+@import "bootstrap/scss/functions";
+@import "bootstrap/scss/variables";
+@import "bootstrap/scss/mixins";
+@import "../../../../scss/globals";
+
+.store-info {
+  max-width: 992px;
+  background-color: #F2F0EE;
+  @include media-breakpoint-down(md) {
+    max-width: 992px;
+  }
+  h1 {
+    font-size: 1.125em;
+    color: #000;
+  }
+  .store-title {
+    font-size: 1.000em;
+    color: #444;
+  }
+  .disclaimer {
+    font-size: 0.675em;
+  }
+}

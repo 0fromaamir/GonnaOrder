@@ -1,0 +1,58 @@
+<div class="page-header-container">
+    <div *ngIf="(selectedStore$ | async)?.settings?.IMAGE; else templateNoHero" class="position-relative">
+        <div class="hero" #heroHeader>
+            <img [src]="(selectedStore$ | async)?.settings?.IMAGE">
+        </div>
+        <div class="d-none d-sm-flex row m-0">
+            <div [style.width]="backgroundMargin + 'px'" class="h-100" [style.background-color]="logoBackgrondColor">
+            </div>
+            <div class="h-100" style="width: 100px;"
+                [ngStyle]="{background: 'linear-gradient(to right, ' + logoBackgrondColor + ' 0%, transparent 2500%)'}">
+            </div>
+            <div class="h-100" style="width: 40vw; max-width: 700px;"
+                [ngStyle]="{background: 'linear-gradient(to right, ' + logoBackgrondColor + ' -4%, transparent 96%)'}">
+            </div>
+        </div>
+        <div class="row m-0 align-items-center logo-container">
+            <img class="logo mt-sm-0" *ngIf="selectedStore?.settings?.LOGO && selectedStore?.settings?.IMAGE"
+                [src]="(selectedStore$ | async)?.settings?.LOGO" [style.margin-top]="'-' + logoMargin + 'px'"
+                crossorigin="anonymous">
+            <span class="store-information mt-2 mt-sm-0">
+                <div *ngIf="selectedStore && selectedStore.name" [ngClass]="{'font-white': isDark}"
+                    class="pb-1 font-size-header font-weight-bold">
+                    {{selectedStore.name}}
+                </div>
+                <div class="py-1 font-size-primary store-description" [ngClass]="{'font-white': isDark}">
+                    {{selectedStore?.description}}</div>
+                <div *ngIf="openTimeSchedule"
+                    class="pt-1 mb-2 d-flex align-items-center open-time space-nowrap font-size-primary font-weight-bold"
+                    (click)="onOpenTimeModal($event)" style="cursor: pointer;">
+                    <i class="far fa-clock pr-2" [ngClass]="{'font-white': isDark}"></i>
+                    <span [ngClass]="{'font-white': isDark}">{{'public.global.opentimelist' | translate}}</span>
+                </div>
+            </span>
+        </div>
+        <app-store-catalog-language-selector [haveBackground]="true"></app-store-catalog-language-selector>
+    </div>
+
+    <ng-template #templateNoHero>
+        <div class="store-info position-relative mx-auto" #noHeroHeader>
+            <div class="py-4 pl-4 theme-light">
+                <div class="store-title d-flex flex-column m-1">
+                    <div class="font-size-header font-weight-bold pb-1">{{(selectedStore$ | async)?.name}}</div>
+                    <div class="font-size-primary py-1">{{(selectedStore$ | async)?.description}}</div>
+                    <div *ngIf="openTimeSchedule"
+                        class="pt-1 d-flex align-items-center open-time space-nowrap font-size-primary font-weight-bold"
+                        (click)="onOpenTimeModal($event)" style="cursor: pointer;">
+                        <i class="far fa-clock pr-2 text-dark"></i>
+                        <span>{{'public.global.opentimelist' | translate}}</span>
+                    </div>
+                </div>
+            </div>
+            <app-store-catalog-language-selector></app-store-catalog-language-selector>
+        </div>
+    </ng-template>
+</div>
+
+<app-open-time-modal [openTimeModal]="openTimeModal"
+    [isClosedForOrdering]="isClosedForOrdering()"></app-open-time-modal>

@@ -1,0 +1,62 @@
+<div class="col-lg-12">
+  <div class="card list">
+    <div class="card-header">
+      {{'admin.printer.printersList'|translate}}
+    </div>
+    <div class="card-body">
+      <div class="col-lg-12 mb-4 d-flex justify-content-end">
+        <div>
+          <button type="button" class="btn btn-primary" (click)="registerPrinter()">
+            <i class="fas fa-plus-circle fa-print" style="font-size: 20px;"></i>
+            <span class="d-sm-inline-block d-md-inline-block d-lg-inline-block d-xl-inline-block ml-1">{{'admin.printer.registerPrinter'|translate}}</span>
+          </button>
+        </div>
+      </div>
+      <div *ngIf="isIOS()" class="d-flex mb-1 justify-content-start">
+        <span class="d-sm-inline-block d-md-inline-block d-lg-inline-block d-xl-inline-block ml-1">{{'admin.printer.airPrinter.support' | translate}}</span>
+      </div>
+      <div id='printer-list' class="mb-2">
+        <div class="card border-top" *ngIf="!(printers$ | async).data.length">
+          {{ 'admin.printer.noPrinter' | translate }}
+        </div>
+        <div class="d-flex col-sm-12 border-top card" style="cursor: pointer;" *ngFor="let printer of (printers$ | async).data" >
+          <div class="row">
+            <span class="mr-auto">{{ printer.name }}</span>
+            <button class="btn btn-primary btn-sm submit-btn mr-3" (click)="testPrint(printer)">
+              {{ 'admin.printer.testPrint' | translate }}
+            </button>
+            <label class="switch mr-2">
+              <input type="checkbox" [checked]="printer.enabled" (change)="togglePrinterAuto($event,printer)" />
+              &nbsp;<span class="slider round"></span>
+            </label>
+            <button mat-fab class="printer-delete-btn" (click)="onPrinterRemoveClick(printer)">
+              <mat-icon color="accent">delete</mat-icon>
+            </button>
+          </div>  
+        </div>
+      </div>
+      <app-pager
+        [totalPagesCount]="(printers$ | async).totalPages"
+        [page]="(printers$ | async).paging.page"
+        [size]="(printers$ | async).paging.size"
+        (paginate)="paginate($event)"
+      >
+      </app-pager>
+    </div>
+  </div>
+</div>
+
+<ng-template #unregisterPrinter>
+  <div mat-dialog-title class="text-blue col-lg-12 mat-dialog-title">{{'admin.printer.unregisterPrinter'|translate}}</div>
+  <div mat-dialog-content class="col-lg-12 mb-4">
+    {{ 'admin.printer.confirmUnregister' | translate }}
+  </div>
+  <div mat-dialog-actions class="col-lg-12">
+    <div class="float-right">
+      <button (click)="onCancelClick()" type="button" class="btn btn-cancel mr-3">{{'admin.global.cancel' | translate}}</button>
+      <button class="btn btn-primary submit-btn ml-15" (click)="onPrinterRemove()">
+        {{'admin.global.remove' | translate}}
+      </button>
+    </div>
+  </div>
+</ng-template>

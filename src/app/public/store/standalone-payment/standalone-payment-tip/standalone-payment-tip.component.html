@@ -1,0 +1,39 @@
+<div class="tip-component mx-auto my-3">
+    <div class="section-title p-3 mb-0 pl-4 font-size-primary font-weight-bold theme-light">
+        {{'public.standalonepayment.paymentpage.addTipPercentage' | translate}}</div>
+    <div class="tip-button-wrapper">
+        <div class="tip-sec mx-2 my-4">
+            <div class="d-flex">
+                <a href="#" class="button text-center py-2 mx-2 text-unselectable" appPreventDoubleClick
+                    [throttleTime]="5000" *ngFor="let item of paymentData?.possibleTips"
+                    [ngClass]="(paymentData?.tipPercentage === item?.tipPercentage * 100 && showCustomAmount === false) ? 'dark' : 'border rounded'"
+                    (throttledClick)="ontipBtnClick(item.tipPercentage * 100)">
+                    <div>{{item.tipPercentage * 100}}%</div>
+                    <div>{{item.tipAmount | formatPrice:
+                        paymentData.locale:paymentData.currencyIsoCode:paymentData.currencySymbol}}</div>
+                </a>
+            </div>
+            <div class="d-flex my-2">
+                <a href="#" class="button text-center py-2 mx-2 text-unselectable" appPreventDoubleClick
+                    [ngClass]="((paymentData?.tipPercentage === undefined || paymentData?.tipPercentage === 0) && paymentData?.amountTip === 0 && showCustomAmount === false) ? 'dark' : 'border rounded'"
+                    [throttleTime]="5000" (throttledClick)="ontipBtnClick(0)">
+                    <div>0%</div>
+                    <div>{{'public.standalonepayment.paymentpage.noTip' | translate}}</div>
+                </a>
+                <a href="#" class="button text-center py-2 mx-2 text-unselectable" appPreventDoubleClick
+                    (throttledClick)="onCustomBtnClick($event)"
+                    [ngClass]="((paymentData?.tipPercentage === 0 || paymentData?.tipPercentage === undefined) && paymentData?.amountTip !== 0) || showCustomAmount ? 'dark' : 'border rounded'"
+                    [throttleTime]="5000">
+                    <span>{{'public.standalonepayment.paymentpage.others' | translate}}</span>
+                </a>
+                <form [formGroup]="tipAmountForm" class="form-wrapper mx-2 my-auto" [ngClass]="(showCustomAmount) ? 'show' : 'hide'">
+                    <div class="price-input item-wrapper mx-2">
+                        <span>{{currencySymbol}}</span>
+                        <input type="text" name="specificAmount" formControlName="specificAmount" class="form-control"
+                            id="var-specific-amount" (keyup)='onCustomAmountChange()' [textMask]="{mask: amountMask}"/>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

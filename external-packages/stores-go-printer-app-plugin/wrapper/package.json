@@ -1,0 +1,19 @@
+{
+  "name": "bluetooth-serial",
+  "version": "1.0.0",
+  "description": "GonnaOrder Bluetooth Serial Plugin for AutoPrinting",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rigasp/stores-go-printer-app-plugin.git"
+  },
+  "author": "rigasp",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/rigasp/stores-go-printer-app-plugin/issues"
+  },
+  "homepage": "https://github.com/rigasp/stores-go-printer-app-plugin#readme"
+}

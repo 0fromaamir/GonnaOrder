@@ -1,0 +1,52 @@
+<div class="row">
+  <div class="col-12">
+    <button type="button" class="btn btn-primary px-4" (click)="goToCategory('add')">
+      {{'admin.store.catalog.addTopLevelCategory'|translate}}
+    </button>
+  </div>
+  <div class="col-12">
+    <table class="table table-responsive-sm lg" *ngIf="categories && categories.length">
+      <thead>
+        <tr>
+          <th></th>
+          <th>{{'admin.global.name'|translate}}</th>
+          <th>{{'admin.global.description'|translate}}</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let category of categories; let i = index" class="cursor-pointer">
+          <td (click)="goToCategory('edit', category)">
+            <img *ngIf="category.standardImage" src="{{ category.standardImage }}"/>
+          </td>
+          <td (click)="goToCategory('edit', category)">{{category.name}}</td>
+          <td (click)="goToCategory('edit', category)">{{category.shortDescription}}</td>
+          <td>
+            <a
+              [ngClass]="{
+                invisible: i === categories.length - 1
+              }"
+              class="actionLink"
+              matTooltip="{{
+                'admin.store.common.tooltip.movedown.Option' | translate
+              }}"
+              (click)="savePosition('DOWN', i)"
+            >
+              <i class="fas fa-arrow-down"></i>
+            </a>
+            <a
+              [ngClass]="{ invisible: i === 0 }"
+              class="actionLink ml-2"
+              matTooltip="{{
+                'admin.store.common.tooltip.moveup.Option' | translate
+              }}"
+              (click)="savePosition('UP', i)"
+            >
+              <i class="fas fa-arrow-up"></i>
+            </a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

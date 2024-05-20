@@ -1,0 +1,232 @@
+<div #yourInfoWrapper>
+
+    <div class="option-wrapper">
+      <div class="variant-wrapper my-2 my-md-0">
+        <div class="p-3 section-title mt-3 mt-md-0 mb-3 font-size-heading pl-4 theme-light"
+          *ngIf="!checkoutService.showChoices()">
+          {{'public.checkout.title.addressDelivery' | translate}}
+        </div>
+        <app-customer-login></app-customer-login>
+        <!-- FORM -->
+        <div
+          class="expandable-content-wrapper">
+          <form class="mx-3" [formGroup]="personalInfoForm">
+            <!-- Your name -->
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group mx-2">
+                  <div class="input-group mb-4">
+                    <input
+                      type="text"
+                      class="form-control"
+                      [ngClass]="{'is-invalid': checkoutService.isInvalid(getControl('name')), 'populated': !!getControl('name').value}"
+                      autocomplete="name"
+                      [formControl]="getControl('name')"
+                      maxlength="200"
+                      id="name"
+                      (change)="addOrderMeta('customerName', 'name', 'personalInfoForm')"
+                      trim="blur"
+                      appPreventEnter
+                    />
+                    <label for="#name" class="placeholder font-size-primary" (click)="checkoutService.focusField($event)">{{'public.checkout.fullName' | translate}} *</label>
+                    <div class="invalid-feedback font-size-secondary" *ngIf="checkoutService.showErrors(getControl('name'))">
+                      <span *ngIf="getControl('name').errors.required">{{'public.checkout.errors.fieldRequired' | translate}}.</span>
+                      <span *ngIf="!getControl('name').errors.required && (getControl('name').errors.whitespace || getControl('name').errors.minlength || getControl('name').errors.maxlength)">{{'public.payment.errors.valueNotValid' | translate}}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Street -->
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group mx-2">
+                  <div #igTextarea  class="input-group mb-4">
+                    <input
+                      #street
+                      type="text"
+                      class="form-control"
+                      [ngClass]="{'is-invalid': (checkoutService.isInvalid(getControl('street')) || checkoutService.isNotDeliverableAddress()), 'populated': !!getControl('street').value}"
+                      [attr.autocomplete]="getControl('street').value ? 'none' : 'street-address'"
+                      [formControl]="getControl('street')"
+                      maxlength="128"
+                      placeholder=""
+                      (change)="addOrderMeta('customerStreet', 'street', 'personalInfoForm')"
+                      (focus)="helper.focusTextArea(igTextarea); initiateGoogleApi();"
+                      (focusout)="onFocusOutEvent()"
+                      trim="blur"
+                      appPreventEnter
+                    />
+                    <label for="#street" class="placeholder font-size-primary" (click)="checkoutService.focusField($event)">{{'public.checkout.streetAddress' | translate}} *</label>
+                    <div class="invalid-feedback font-size-secondary" *ngIf="checkoutService.showErrors(getControl('street'))">
+                      <span *ngIf="getControl('street').errors.required">{{'public.checkout.errors.fieldRequired' | translate}}.</span>
+                      <span *ngIf="!getControl('street').errors.required && (getControl('street').errors.whitespace || getControl('street').errors.maxlength)">{{'public.payment.errors.valueNotValid' | translate}}</span>
+                    </div>
+                    <div class="invalid-feedback font-size-secondary" *ngIf="!getControl('street').errors && checkoutService.isNotDeliverableAddress()">
+                      <span>{{'public.payment.errors.addressNotAvailable' | translate}}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Floor - only if required -->
+            <div class="row" *ngIf="deliveryFloorRequired()">
+              <div class="col-md-12">
+                <div class="form-group mx-2">
+                  <div class="input-group mb-4">
+                    <input
+                      type="text"
+                      class="form-control"
+                      [ngClass]="{'is-invalid': checkoutService.isInvalid(getControl('floor')), 'populated': !!getControl('floor').value}"
+                      [formControl]="getControl('floor')"
+                      maxlength="50"
+                      id="floor"
+                      (change)="addOrderMeta('customerFloor', 'floor', 'personalInfoForm')"
+                      trim="blur"
+                      appPreventEnter
+                    />
+                    <label for="#floor" class="placeholder font-size-primary" (click)="checkoutService.focusField($event)">{{'public.checkout.floor' | translate}} *</label>
+                    <div class="invalid-feedback font-size-secondary" *ngIf="checkoutService.showErrors(getControl('floor'))">
+                      <span *ngIf="getControl('floor').errors.required">{{'public.checkout.errors.fieldRequired' | translate}}.</span>
+                      <span *ngIf="!getControl('floor').errors.required && (getControl('floor').errors.whitespace || getControl('floor').errors.maxlength)">{{'public.payment.errors.valueNotValid' | translate}}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Zip / Postal code -->
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group mx-2">
+                  <div class="input-group mb-4">
+                    <input
+                      type="text"
+                      class="form-control"
+                      [ngClass]="{'is-invalid': (checkoutService.isInvalid(getControl('zip')) || (getControl('zip').value && checkoutService.isNotDeliverablePostCode())), 'populated': !!getControl('zip').value}"
+                      [attr.autocomplete]="getControl('street').value ? 'none' : 'postal-code'"
+                      [formControl]="getControl('zip')"
+                      maxlength="16"
+                      id="zip"
+                      trim="blur"
+                      appPreventEnter
+                    />
+                    <label for="#zip" class="placeholder font-size-primary" (click)="checkoutService.focusField($event)">{{'public.checkout.zip' | translate}} *</label>
+                    <div class="invalid-feedback font-size-secondary" *ngIf="checkoutService.showErrors(getControl('zip'))">
+                      <span *ngIf="getControl('zip').errors.required">{{'public.checkout.errors.fieldRequired' | translate}}.</span>
+                      <span *ngIf="!getControl('zip').errors.required && (getControl('zip').errors.whitespace || getControl('zip').errors.maxlength)">{{'public.payment.errors.valueNotValid' | translate}}</span>
+                    </div>
+                    <div class="invalid-feedback font-size-secondary" *ngIf="!getControl('zip').errors && checkoutService.isNotDeliverablePostCode()">
+                      <span>{{'public.payment.errors.zipNotAvailable' | translate}}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Town / City -->
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group mx-2">
+                  <div class="input-group mb-4">
+                    <input
+                      type="text"
+                      class="form-control"
+                      [ngClass]="{'is-invalid': checkoutService.isInvalid(getControl('town')), 'populated': !!getControl('town').value}"
+                      [attr.autocomplete]="getControl('street').value ? 'none' : 'address-level2'"
+                      [formControl]="getControl('town')"
+                      maxlength="64"
+                      id="town"
+                      (change)="addOrderMeta('customerTown', 'town', 'personalInfoForm')"
+                      (focusout)="onFocusOutEvent()"
+                      trim="blur"
+                      appPreventEnter
+                    />
+                    <label for="#town" class="placeholder font-size-primary" (click)="checkoutService.focusField($event)">{{'public.checkout.town' | translate}} *</label>
+                    <div class="invalid-feedback font-size-secondary" *ngIf="checkoutService.showErrors(getControl('town'))">
+                      <span *ngIf="getControl('town').errors.required">{{'public.checkout.errors.fieldRequired' | translate}}.</span>
+                      <span *ngIf="!getControl('town').errors.required && (getControl('town').errors.whitespace || getControl('town').errors.maxlength)">{{'public.payment.errors.valueNotValid' | translate}}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Email -->
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group mx-2">
+                  <div class="input-group mb-4">
+                    <input
+                      type="text"
+                      class="form-control"
+                      [ngClass]="{'is-invalid': (checkoutService.isInvalid(getControl('email')) || getControl('email').errors?.email), 'populated': !!getControl('email').value}"
+                      autocomplete="email"
+                      [formControl]="getControl('email')"
+                      maxlength="200"
+                      id="email"
+                      (change)="addOrderMeta('customerEmail', 'email', 'personalInfoForm')"
+                      trim="blur"
+                      appPreventEnter
+                      [attr.disabled] = "auth.isUserLoggedIn() ? true : null"
+                      />
+                    <label
+                      for="#email"
+                      class="placeholder font-size-primary"
+                      (click)="checkoutService.focusField($event)"
+                      *ngIf="!isAdminOrderCaptureUpdate"
+                    >{{'public.checkout.email' | translate}} *</label>
+                    <label
+                      *ngIf="isAdminOrderCaptureUpdate"
+                      for="#email"
+                      class="placeholder font-size-primary"
+                      (click)="checkoutService.focusField($event)"
+                  >{{'public.checkout.email' | translate}} {{'public.global.optional' | translate}}</label>
+                    <div class="invalid-feedback font-size-secondary" *ngIf="(checkoutService.showErrors(getControl('email')) || getControl('email').errors?.email)">
+                      <span *ngIf="getControl('email').errors.required">{{'public.checkout.errors.fieldRequired' | translate}}.</span>
+                      <span *ngIf="!getControl('email').errors.required && (getControl('email').errors.email || getControl('email').errors.whitespace || getControl('email').errors.minLength || getControl('email').errors.maxlength)">{{'public.payment.errors.valueNotValid' | translate}}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Phone Number -->
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group mx-2">
+                  <app-phone-input
+                    [id]="'phone'"
+                    [countryCode]="countryCode()"
+                    [formControl]="getControl('phone')"
+                    [invalidSubmit]="checkoutService.invalidSubmit()"
+                    [required]="true"
+                    (inputChange)="addOrderMeta('customerPhoneNumber', 'phone', 'personalInfoForm');"
+                    (change)="addOrderMeta('customerPhoneNumber', 'phone', 'personalInfoForm');"
+                    >
+                  </app-phone-input>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+        <!-- FORM END -->
+      </div>
+    </div>
+
+  <div class="form-group row ml-4" *ngIf="auth.isUserLoggedIn() && checkoutService.isShowOnlyDeliveryToAddress()">
+    <div class="loading-screen d-flex justify-content-center align-items-center w-100" *ngIf=" customerDetailsChanged() && customerDetailsUpdateStatus === 'LOADING'">
+      <div class="d-flex flex-column text-center">
+        <div class="lds-ripple mx-auto"><div></div><div></div></div>
+        <div class="loading-message">{{'public.load.loadingMessage' | translate}}</div>
+      </div>
+    </div>
+    <div class="font-size-secondary" *ngIf=" customerDetailsChanged() && customerDetailsUpdateStatus !== 'LOADING'">
+      <input class="checkbox" type="checkbox" (throttledClick)="updateCustomerDetails()" appPreventDoubleClick [throttleTime]="3000" />
+      <span> {{'public.checkout.saveCustomerDetailsForFuture' | translate}}</span>
+    </div>
+    <div class="input-group valid-feedback font-size-secondary" *ngIf="customerDetailsUpdateStatus === 'SUCCESS'">
+      <span> {{'public.checkout.customerDetailsUpdateSuccess' | translate}}</span>
+    </div>
+    <div class="input-group invalid-feedback font-size-secondary" *ngIf="customerDetailsUpdateStatus === 'FAILED'">
+      <span> {{'public.checkout.errors.customerDetailsUpdateFailed' | translate}}</span>
+    </div>
+  </div> 
+
+</div>

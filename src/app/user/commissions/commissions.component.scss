@@ -1,0 +1,34 @@
+@import "src/scss/variables";
+.pull-right {
+  float: right;
+}
+.submit-btn {
+  margin-right: 10px;
+}
+mat-slider {
+  width: 100%;
+}
+.pull-right {
+  float: right;
+}
+.pull-left {
+  float: left;
+}
+
+::ng-deep .mat-accent .mat-slider-thumb {
+  background-color: $secondary-brand-colour;
+}
+::ng-deep .mat-accent .mat-slider-thumb-label {
+  background-color: $secondary-brand-colour;
+}
+::ng-deep .mat-accent .mat-slider-track-fill {
+  background-color: $secondary-brand-colour;
+}
+.cursor-pointer{
+  cursor: pointer;
+}
+.copyUrlIcon {
+  cursor: pointer;
+  font-size: 20px;
+  color: $primary-brand-colour;
+}

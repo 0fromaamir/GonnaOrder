@@ -1,0 +1,221 @@
+<div class="loading-screen d-flex justify-content-center align-items-center w-100 v-70"
+  *ngIf="!isCreateCategory && categoryStatus !== 'LOADED'">
+  <div class="d-flex flex-column text-center">
+    <div class="lds-ripple mx-auto">
+      <div></div>
+      <div></div>
+    </div>
+  </div>
+</div>
+<div class="col-sm-12 right-col" id="categoryDetails"
+  *ngIf="(!isCreateCategory && (category$ | async)) || isCreateCategory">
+  <div class="card list" *ngIf="isCreateCategory || categoryStatus === 'LOADED'">
+    <div class="col-lg-12 mb-4 d-flex align-items-center justify-content-between p-0">
+      <a title="{{'admin.store.catalog.backToCatalog'|translate}}" class="btn back-button btn-primary"
+        [routerLink]="['/manager/stores/'+storeId+'/catalog'+(isTopLevelCategory ? '/top' : '')]"
+        [queryParams]="{selectedId: categoryId}">
+        <i class="fas fa-arrow-left mr-2"></i> <span
+          class="d-none d-md-inline-block d-lg-inline-block d-xl-inline-block ml-1">{{'admin.store.catalog.backToCatalog'|
+          translate}}</span>
+      </a>
+    </div>
+    <div class="card-header">
+      <span *ngIf="isCreateCategory">{{'admin.store.catalog.category.createCategory'|translate}}</span>
+      <span *ngIf="!isCreateCategory">{{'admin.store.catalog.category.category'|translate}} {{(category$ |
+        async).name}}</span>
+      <app-help-icon [helpPageName]="storeCategoryHelpPage"></app-help-icon>
+    </div>
+    <div class="card-body categoryDetails">
+      <div class="row">
+        <div class="col-lg-12">
+          <app-catalog-language></app-catalog-language>
+          <form [formGroup]="categoryForm">
+            <div class="row">
+              <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="form-group">
+                  <label class="col-xl-2 col-lg-3 col-md-12 col-sm-12 required"
+                    for="offerName">{{'admin.global.name'|translate}}</label>
+                  <div class="input-group col-xl-10 col-lg-9 col-md-12 col-sm-12">
+                    <input type="text" class="form-control"
+                      [class.is-invalid]="getControl('name').invalid && (getControl('name').dirty || getControl('name').touched)"
+                      placeholder="{{'admin.global.name'|translate}}" autocomplete="off" formControlName="name"
+                      id="offerName" maxlength="50" />
+                    <div class="invalid-feedback" *ngIf="getControl('name').errors"><span
+                        *ngIf="getControl('name').errors.required || getControl('name').errors.whitespace">{{'admin.global.field.required'|translate}}</span>
+                      <span
+                        *ngIf="getControl('name').errors.minlength">{{'admin.global.field.minLength'|translate:{minLength:
+                        getControl('name').errors.minlength.requiredLength} }}</span>
+                      <span
+                        *ngIf="getControl('name').errors.maxlength">{{'admin.global.field.maxLength'|translate:{maxLength:
+                        getControl('name').errors.maxlength.requiredLength} }}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group m-0">
+                  <label class="col-xl-2 col-lg-3 col-md-12 col-sm-12"
+                    for="shortDesc">{{'admin.store.catalog.description.shortDescription'|translate}}</label>
+                  <div class="input-group col-xl-10 col-lg-9 col-md-12 col-sm-12">
+                    <input type="text" class="form-control"
+                      [class.is-invalid]="getControl('shortDescription').invalid && (getControl('shortDescription').dirty || getControl('shortDescription').touched)"
+                      placeholder="{{'admin.store.catalog.description.shortDescription'|translate}}" autocomplete="off"
+                      formControlName="shortDescription" id="shortDesc" maxlength="200" (input)="onShortDescriptionChange($event.target.value)"/>
+                    <div class="invalid-feedback" *ngIf="getControl('shortDescription').errors"><span
+                        *ngIf="getControl('shortDescription').errors.maxlength">{{'admin.global.field.maxLength'|translate:{maxLength:
+                        getControl('shortDescription').errors.maxlength.requiredLength} }}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-12 col-md-12 col-sm-12 text-right mb-2 counter" [ngClass]="{ 'text-danger': isMaxLengthReached() }">
+                {{ characterCountShort }}/200
+               </div>
+            </div>
+            <div class="row" *ngIf="!isTopLevelCategory">
+              <div class="form-group col-sm-12">
+                <label for="sellable"
+                  class="col-xl-2 col-lg-3 col-md-12 col-sm-12 required">{{'admin.store.catalog.sellable.isVisible'|translate}}</label>
+                <div class="input-group col-xl-10 col-lg-9 col-md-12 col-sm-12">{{'admin.global.no'|translate}} &nbsp;
+                  <mat-slide-toggle formControlName="sellable">{{'admin.global.yes'|translate}}
+                  </mat-slide-toggle>
+                </div>
+              </div>
+            </div>
+            <div class="row" *ngIf="!isTopLevelCategory">
+              <div class="form-group col-lg-12">
+                <label for="sellable" class="col-xl-2 col-lg-3 col-md-12 col-sm-12 hideInSmallScreen"></label>
+                <div class="input-group col-xl-4 col-lg-6 col-md-12 col-sm-12"
+                  *ngIf="getControl('sellable').value == 'true' || getControl('sellable').value == true">
+                  <select class="form-control mb-2 mb-md-0" onchange="this.dataset.chosen = this.value"
+                    formControlName="scheduleId" id="availability" [ngClass]="{'default-option' : scheduleId == 0}"
+                    (change)="selectScheduleIdHandler($event)">
+                    <option value="0">{{'admin.store.catalog.availability.allTimeAvailability'|translate}}</option>
+                    <option *ngFor="let item of scheduleList" value="{{ item.id }}">{{ item.name }}</option>
+                  </select>
+                </div>
+                <!-- <a *ngIf="getControl('sellable').value == 'true' || getControl('sellable').value == true" class="col-lg-6 col-md-12 col-sm-12 actionLink addTimeRestrictionLink" (click)="openRestrictionDialog()">{{'admin.store.catalog.addRestriction'|translate}}</a> -->
+                <button type="button" class="btn btn-primary btn-class ml-md-3"
+                  *ngIf="getControl('sellable').value == 'true' || getControl('sellable').value == true"
+                  (click)="gotoAddSchedule()">{{'admin.store.addNewSchedule'|translate}}</button>
+              </div>
+            </div>
+            <!--STATION SELECTION-->
+            <div class="row" *ngIf="!isTopLevelCategory">
+              <div class="form-group col-lg-12">
+                <label for="stationId"
+                  class="col-xl-2 col-lg-3 col-md-12 col-sm-12">{{'admin.store.catalog.station.stations'|translate}}</label>
+                <div class="input-group col-xl-4 col-lg-6 col-md-12 col-sm-12">
+                  <select class="form-control mb-2 mb-md-0" onchange="this.dataset.chosen = this.value"
+                    formControlName="stationId" id="stationId" [ngClass]="{'default-option' : stationId == null}"
+                    (change)="selectStationHandler($event)">
+                    <option value="null">{{'admin.catalog.title.selectStation'|translate}}</option>
+                    <option *ngFor="let item of stations" value="{{ item.stationId }}">{{ item.name }}</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <!--STATION SELECTION END-->
+            <!--TOP LEVEL CATEGORY SELECTION-->
+            <div class="row" *ngIf="!isTopLevelCategory">
+              <div class="form-group col-lg-12">
+                <label for="topLevelCategoryId"
+                  class="col-xl-2 col-lg-3 col-md-12 col-sm-12">{{'admin.catalog.title.topLevelCategory'|translate}}</label>
+                <div class="input-group col-xl-4 col-lg-6 col-md-12 col-sm-12">
+                  <select class="form-control mb-2 mb-md-0" onchange="this.dataset.chosen = this.value"
+                    formControlName="topLevelCategoryId" id="topLevelCategoryId"
+                    [ngClass]="{'default-option' : topLevelCategoryId == null}"
+                    (change)="selectTopLevelCategoryHandler($event)">
+                    <option value="null">{{'admin.catalog.title.selectCategory'|translate}}</option>
+                    <option *ngFor="let item of categories" value="{{ item.categoryId }}">{{ item.name }}</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <!--TOP LEVEL CATEGORY SELECTION END-->
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label
+                    class="col-xl-2 col-lg-3 col-md-12 col-sm-12">{{'admin.store.catalog.category.categoryImage'|translate}}</label>
+                  <div class="col-xl-10 col-lg-9 col-md-12 col-sm-12 pl-4 pl-30">
+                    <div class="d-flex">
+                      <div>
+                        <div class="d-inline-flex image-upload" [class.no-image]="!categoryStdImage">
+                          <div class="item-image" [style.background-image]="getImage(image)"
+                            *ngIf="((categoryImageUrl$ | async) || categoryStdImage) as image;else content"></div>
+                          <ng-template #content>
+                            <div class="item-image img bg-white"></div>
+                          </ng-template>
+                          <div class="opacity-layer"></div>
+                          <i class="fas fa-cloud-upload-alt image-upload-icon"></i>
+                          <span class="d-block text-center">{{'admin.store.catalog.offer.uploadImage'|translate}}</span>
+                          <input id="uploadImage" *ngIf="isStoreOperator==false"
+                            title="{{categoryStdImage ? 'Change Offer Image' : 'Upload Offer Image'}}" type="file"
+                            name="image" (change)="fileUpload($event)" />
+                          <i class="fas fa-times-circle removeIcon"
+                            *ngIf="((categoryImageUrl$ | async) || categoryStdImage) && isStoreOperator==false"
+                            (click)="removeCategoryImage()"></i>
+                        </div>
+                      </div>
+                      <span *ngIf="isStoreOperator==false && ((categoryImageUrl$ | async) || categoryStdImage)"
+                        class="download-image pl-2">
+                        <i class="fas fa-cloud-download-alt font-xl" (click)="downloadImage()"></i>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row" *ngIf="!isTopLevelCategory">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label class="col-xl-2 col-lg-3 col-md-12 col-sm-12"
+                    for="shortDesc">{{'admin.store.externalId'|translate}}</label>
+                  <div class="input-group col-xl-10 col-lg-9 col-md-12 col-sm-12">
+                    <input type="text" class="form-control"
+                      [class.is-invalid]="getControl('externalId').invalid && (getControl('externalId').dirty || getControl('externalId').touched)"
+                      placeholder="{{'admin.store.externalId'|translate}}" autocomplete="off"
+                      formControlName="externalId" id="externalId" maxlength="150" />
+                    <div class="invalid-feedback" *ngIf="getControl('externalId').errors"><span
+                        *ngIf="getControl('externalId').errors.maxlength">{{'admin.global.field.maxLength'|translate:{maxLength:
+                        getControl('externalId').errors.maxlength.requiredLength} }}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row" *ngIf="!isCreateCategory">
+              <div class="col-lg-12">
+                <div>
+                  <app-content-translation [content]="(category$ | async).languageTranslation" [mode]="'CATEGORY'"
+                    (submitEvent)="updateContentItem($event)">
+                  </app-content-translation>
+                </div>
+              </div>
+            </div>
+            <div class="row mt-3">
+              <div class="col-lg-12 mx-md-0">
+                <button type="button" class="btn btn-primary btn-class mb-1" appPreventDoubleClick [throttleTime]="5000"
+                  (click)="onCategorySave()"><i
+                    class="fas fa-save mr-2 pr-1"></i>{{'admin.global.save'|translate}}</button>
+                <button type="button" class="btn btn-primary btn-lr btn-l ml-md-2 my-1 my-md-0"
+                  (click)="onCategorySave('CONTINUE')">{{'admin.global.saveAndContinue'|translate}}</button>
+                <button type="button" class="btn btn-primary btn-lr ml-md-2 my-1 my-md-0"
+                  (click)="onCategorySave('NEW')">{{'admin.global.saveAndNew'|translate}}</button>
+                <a class="actionLink btn-lr btn-l action-btn" title="{{'admin.store.catalog.backToCatalog'|translate}}"
+                  [routerLink]="['/manager/stores/'+storeId+'/catalog'+(isTopLevelCategory ? '/top' : '')]"
+                  [queryParams]="{selectedId: categoryId}">{{'admin.global.cancel'|translate}}</a>
+                <button type="button" *ngIf="!isCreateCategory && (category$ | async)" (click)="deleteCategory()"
+                  title="{{'admin.global.delete'|translate}}" class="btn btn-danger btn-lr float-right"><i
+                    class="fas fa-trash mr-2 pr-1 text-white"></i>{{'admin.global.delete'|translate}}</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,131 @@
+<div class="card list mb-0">
+  <div class="card-body py-0">
+    <div class="row">
+      <div class="col-xl-4 marginlogo col-lg-5">
+        <a href="https://www.apcopay.com">
+          <img src="assets/img/payment_logos/apcopay.svg" class="pr-2" width="100%"
+               style="max-width: 150px">
+          <app-help-icon [helpPageName]="helpUrl"></app-help-icon>
+        </a>
+      </div>
+      <div class="col-xl-8 col-lg-7">
+        <button *ngIf="!showFields && !apcopayConnected" class="btn btn-primary"
+                (click)="onApcopayClicked()"><i
+          class="fa fa-link mr-2 link"
+          title="link"></i>{{'admin.store.setting.connect' | translate}}</button>
+        <form class="form-group" [formGroup]="apcopayForm" *ngIf="showFields && !apcopayConnected">
+          <div class="row mb-4">
+            <div class="col-md-3">
+              {{'admin.store.setting.integrations.profileID' | translate}}
+            </div>
+            <div class="col-md-9">
+              <input type="text" class="form-control" formControlName="APCOPAY_PROFILE_ID"
+                     maxlength="100">
+              <div class="invalid-feedback d-block"
+                   *ngIf="getControl('APCOPAY_PROFILE_ID').errors?.required && getControl('APCOPAY_PROFILE_ID').touched">
+                <span>
+                  {{'admin.global.field.required'|translate}}</span>
+              </div>
+            </div>
+          </div>
+          <div class="row mb-4">
+            <div class="col-md-3">
+              {{'admin.store.payment.secretWord' | translate}}
+            </div>
+            <div class="col-md-9">
+              <input type="text" class="form-control" formControlName="APCOPAY_SECRET_WORD"
+                     maxlength="100">
+              <div class="invalid-feedback d-block"
+                   *ngIf="getControl('APCOPAY_SECRET_WORD').errors?.required && getControl('APCOPAY_SECRET_WORD').touched">
+                <span>
+                  {{'admin.global.field.required'|translate}}</span>
+              </div>
+            </div>
+          </div>
+          <div class="row mb-4">
+            <div class="col-md-3">
+              {{'admin.store.payment.merchantCode' | translate}}
+            </div>
+            <div class="col-md-9">
+              <input type="text" formControlName="APCOPAY_MERCHANT_CODE" class="form-control"
+                     maxlength="255">
+              <div class="invalid-feedback d-block"
+                   *ngIf="getControl('APCOPAY_MERCHANT_CODE').errors?.required && getControl('APCOPAY_MERCHANT_CODE').touched">
+                <span>
+                  {{'admin.global.field.required'|translate}}</span>
+              </div>
+            </div>
+          </div>
+          <div class="row mb-4">
+            <div class="col-md-3">
+              {{'admin.store.payment.merchantPassword' | translate}}
+            </div>
+            <div class="col-md-9">
+              <input type="password" formControlName="APCOPAY_MERCHANT_PASSWORD" class="form-control"
+                     maxlength="100">
+              <div class="invalid-feedback d-block"
+                   *ngIf="getControl('APCOPAY_MERCHANT_PASSWORD').errors?.required && getControl('APCOPAY_MERCHANT_PASSWORD').touched">
+                <span>
+                  {{'admin.global.field.required'|translate}}</span>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-3">
+            </div>
+            <div class="col-md-9 d-flex flex-row-reverse">
+              <button class="btn btn-primary" (click)="connect()">
+                <i class="fa fa-link mr-2 link"
+                   title="link"></i>{{'admin.store.setting.connect' | translate}}
+              </button>
+            </div>
+          </div>
+        </form>
+        <div *ngIf="apcopayConnected">
+          <div class="row mb-4">
+            <div class="col-md-3">{{'admin.store.setting.integrations.profileID'|translate}}</div>
+            <div class="col-md-9">{{apcopayProfileId}}</div>
+          </div>
+          <div class="row mb-4">
+            <div class="col-md-3">{{'admin.store.payment.secretWord'|translate}}</div>
+            <div class="col-md-9">{{apcopaySecretWord}}</div>
+          </div>
+          <div class="row mb-4">
+            <div class="col-md-3">{{'admin.store.payment.merchantCode'|translate}}</div>
+            <div class="col-md-9">{{apcopayMerchantCode}}</div>
+          </div>
+          <div class="row mb-4">
+            <div class="col-md-3">{{'admin.store.payment.merchantPassword'|translate}}</div>
+            <div class="col-md-7">{{apcopayMerchantPassword}}</div>
+            <div class="col-md-2">
+              <button class="btn btn-danger d-flex" (click)="disconnect()">
+                <img src="assets/img/link-slash-solid.svg" class="mr-2" width="26px" alt="">
+                {{'admin.store.disconnect'|translate}}
+              </button>
+            </div>
+          </div>
+          <div class="row mb-4">
+            <div class="col-md-3">
+              <div class="form-group">
+                <label class="form-check-label">{{'admin.store.enabled'|translate}}</label>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label>{{'admin.global.no'|translate}}</label>&nbsp;
+                <label class="switch pt-1 mb-0">
+                  <input type="checkbox" id="enableApcopayPaymentCreditCard"
+                         [(ngModel)]="apcopayEnabled"
+                         (ngModelChange)="toggleApcopayPayments($event)"
+                         [disabled]="!apcopayConnected"/>
+                  &nbsp;<span class="slider round"></span>
+                </label>&nbsp;
+                <label>{{'admin.global.yes'|translate}}</label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

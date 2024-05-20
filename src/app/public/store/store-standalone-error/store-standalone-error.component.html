@@ -1,0 +1,34 @@
+<div class="mx-auto position-relative theme-interface" [style.height]="isPos ? innerHeight + 'px' : '100%'">
+  <div class="overflow-auto" [style.height]="isPos ? innerHeight + 'px' : '100%'">
+    <div class="content-wrapper mx-auto">
+      <div class="store-info position-relative mx-auto pl-3 pt-2 theme-light">
+        <a href="#" class="position-absolute ml-2 arrow-icon header-background round-background container-theme-light-icons"
+          (click)="onGoToDashboard($event)">
+          <i class="fa fa-arrow-left m-auto"></i>
+        </a>
+        <h1 class="text-center font-size-header theme-light-header">{{'public.standalonepayment.paymentFailed.paymentFailed' | translate}}</h1>
+        <div class="store-title d-block m-1 mt-3 text-center pb-2 font-size-primary theme-light-subtitle">
+          {{(selectedStore)?.name}} <span *ngIf="(selectedStore)?.description">|</span> {{(selectedStore)?.description}}
+        </div>
+      </div>
+      <div class="container m-auto  px-0" style="width: fit-content; margin-top: 50px;">
+        <div class="content mx-auto">
+          <span class="mx-auto"><i class="fas fa fa-exclamation-circle m-auto d-table" style="color: #ff0909; font-size: 60px;"></i></span>
+          <div class="pt-3 px-3 description text-center font-size-header text-unselectable">
+            {{ 'public.standalonepayment.paymentFailed.paymentFailed' | translate }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- NEW ORDER BUTTON -->
+  <div class="bottom-wrapper d-flex w-100 position-absolute bg-transparent" style="padding-right: 6px;">
+    <div class="button-wrapper w-100 p-1 mx-auto">
+      <a href="#" (click)="onGoToDashboard($event)"
+        class="button dark d-block text-center py-3 mx-2 mt-2 font-size-primary  text-unselectable">
+        {{'public.standalonepayment.paymentSucces.backToMenu' | translate}}
+      </a>
+    </div>
+  </div>
+  <!-- NEW ORDER BUTTON END -->
+</div>

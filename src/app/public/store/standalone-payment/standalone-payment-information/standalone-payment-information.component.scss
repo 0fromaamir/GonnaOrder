@@ -1,0 +1,15 @@
+@import "../../../../../../node_modules/bootstrap/scss/functions";
+@import "../../../../../../node_modules/bootstrap/scss/variables";
+@import "../../../../../../node_modules/bootstrap/scss/mixins";
+@import "../../../../../scss/globals";
+.information-section {
+    max-width: 992px;
+    .amount-info{
+        display: flex;
+        flex-direction: column;
+        .amount-item{
+            display: flex;
+            justify-content: space-between;
+        }
+    }
+}

@@ -1,0 +1,28 @@
+.tenant-images-container{
+  .background-image {
+    width: 100%;
+    position: relative;
+
+    ::ng-deep .store-images{
+      &.catalog-background {
+      height:40px;
+      width:190px
+     }
+     i.store-images-upload-icon {
+      font-size: 20px;
+     }
+    }
+  }
+  .download-image {
+    cursor: pointer;
+  }
+  .font-xl {
+    font-size: 30px !important;
+  }
+}
+.branding-input {
+  width: 6rem;
+  border-color: #000;
+  cursor: default;
+  outline: #000;
+}

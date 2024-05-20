@@ -1,0 +1,31 @@
+.customized-branding label.brand-heading {
+  padding-left: 50px;
+}
+
+@media(max-width:770px){
+  .customized-branding label.brand-heading {
+    padding-left: 15px;
+  }
+}
+
+.btn-branding, .btn-branding:focus, .btn-branding:hover {
+  border-color: transparent;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  font-weight: bold;
+  outline: none;
+}
+
+.branding-input {
+  width: 6rem;
+  border-color: #000;
+  cursor: default;
+  outline: #000;
+}
+
+.actionLink{
+  cursor: pointer;
+  text-decoration: underline !important;
+}

@@ -1,0 +1,68 @@
+<form [formGroup]="paypalForm">
+  <div class="card list mb-0">
+    <div class="card-body py-0" id="paypalContainer">
+      <div class="row">
+        <div class="col-xl-4 marginlogo col-lg-5">
+          <img src="assets/img/paypalMe.png" class="pr-2" width="100%" style="max-width: 175px;">
+          <app-help-icon [helpPageName]="helpUrlPaypal"></app-help-icon>
+        </div>
+        <div class="col-xl-8 col-lg-7">
+          <button *ngIf="!showFields && !paypalConnected" class="btn btn-primary" (click)="onpaypalClicked()"><i
+              class="fa fa-link mr-2 link" title="link"></i>{{'admin.store.setting.connect' | translate}}</button>
+          <div class="form-group" *ngIf="showFields && !paypalConnected">
+            <div class="row mb-4">
+              <div class="col-md-3">
+                {{'admin.store.payPalmelink'|translate}}
+              </div>
+              <div class="col-md-6">
+                <input type="text" autocomplete="off" formControlName="POST_ORDER_PAYMENT_LINK_PAYPALME_URL"
+                  id="POST_ORDER_PAYMENT_LINK_PAYPALME_URL" class="form-control url-field" maxlength="200"
+                  value="https://paypal.me/" (keyup)="checkPredefault($event)">
+              </div>
+            </div>
+            <div class="row mb-4">
+              <div class="col-md-3">
+              </div>
+              <div class="col-md-6 d-flex flex-row-reverse">
+                <button class="btn btn-primary" (click)="connect()">
+                  <i class="fa fa-link mr-2 link" title="link"></i>{{'admin.store.setting.connect'|translate}}
+                </button>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="paypalConnected">
+            <div class="row mb-4">
+              <div class="col-md-3">{{'admin.store.payPalmelink'|translate}}</div>
+              <div class="col-md-6">{{this.payPalmelink}}</div>
+              <div class="col-md-2">
+                <button class="btn btn-danger d-flex" (click)="disconnect()">
+                  <img src="assets/img/link-slash-solid.svg" class="mr-2 slashIcon" alt="">{{'admin.store.disconnect'|translate}}
+                </button>
+              </div>
+            </div>
+            <div class="row mb-4">
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label class="form-check-label">{{'admin.store.enableWithmelink'|translate}}
+                  </label>&nbsp;
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>{{'admin.global.no'|translate}}</label>&nbsp;
+                  <label class="switch pt-1 mb-0">
+                    <input type="checkbox" id="POST_ORDER_PAYMENT_LINK_PAYPALME_ENABLED"
+                      (change)="togglePaypalMeSwitch($event)"
+                      formControlName="POST_ORDER_PAYMENT_LINK_PAYPALME_ENABLED" />
+                    &nbsp;<span class="slider round"></span>
+                  </label>&nbsp;
+                  <label>{{'admin.global.yes'|translate}}</label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

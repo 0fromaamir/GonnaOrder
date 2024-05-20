@@ -1,0 +1,68 @@
+<div class="col-lg-12 right-col">
+  <div class="card list">
+    <div class="card-header" *ngIf="!isParentStoreList && !cloneCatalogFlag">
+      {{'admin.store.list.storesList'|translate}}
+    </div>
+    <div class="card-header" *ngIf="cloneCatalogFlag">
+      {{'admin.store.catalog.importOtherStore'|translate}}
+    </div>
+      <button type="button" style="width: 100px;"  *ngIf="isParentStoreList && !multistoreStoreFlag && !hideSetupAndShowList"
+      class="btn btn-primary px-4 mr-2"
+        value="MultiSore" (click)="setupMultiStore()"> {{'admin.store.setting.multiStore.setupButton'|translate}}
+      </button>
+    <div [ngClass]="{'card-body':!isParentStoreList}" *ngIf="!isParentStoreList || (isParentStoreList && (multistoreStoreFlag || hideSetupAndShowList))">
+      <div>
+        <div class="col-md-4 col-sm-12 col-xs-12 ml-4 mr-0 mb-3 p-0 form-header" style="font-size: 1rem;color: $blue;"
+         *ngIf="isParentStoreList"> {{'admin.store.setting.multiStore.parentStoreListTitle'|translate}}</div>
+         <div class="row my-3">
+          <div class="col-md-2 col-sm-12 col-xs-12 ml-4 mr-0 p-0 form-header" style="font-size: 1rem;color: $blue;"
+         *ngIf="cloneCatalogFlag"> {{'admin.store.setting.catalog.otherStore'|translate}}</div>
+        <div class="col-md-6 col-sm-12 col-xs-12 p-0" [ngClass]="{'mx-auto':!isParentStoreList && !cloneCatalogFlag}">
+          <Span></Span>
+          <input
+            type="text"
+            [(ngModel)]="aliasName"
+            placeholder="{{'admin.store.list.searchByAlias'|translate}}"
+            class="form-control search-field"
+            (keyup)="searchStore($event)"
+          />
+        </div>
+      </div>
+      </div>
+      <table class="table table-responsive-sm lg">
+        <thead>
+          <tr>
+            <th></th>
+            <th>{{'admin.global.name'|translate}}</th>
+            <th>{{'admin.store.alias'|translate}}</th>
+            <th [hidden]="isParentStoreList">{{'admin.global.subscription.label'|translate}}</th>
+            <th [hidden]="isParentStoreList"></th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngIf="!(stores$ | async)?.data?.length">
+            <td colspan="6">{{'admin.global.noData'|translate}}</td>
+          </tr>
+          <tr *ngFor="let store of (stores$ | async).data" (click)="goToStorePage(store)" title="Go To Order"  class="cursor-pointer">
+            <td ><img *ngIf="store?.settings?.LOGO" [src]="store?.settings?.LOGO" /></td>
+            <td>{{ store.name }}</td>
+            <td class="domain"><span id="myText{{ store.id }}" class="element" data-title="{{ store.aliasName }}">{{ store.aliasName }} 
+            </span><i *ngIf="(tagVisible$ | async)" class="far fa-copy copy copyUrlIcon mr-3 ml-2" 
+            title="copy" (click)="copyTitleURL('myText' + store.id)"></i> <a *ngIf="(tagVisible$ | async)" href="https://{{ store.aliasName }}.gonnaorder.com" target="_blank"><i class="fa fa-external-link-alt mr-1 link" aria-hidden="true" title="go-to-link" (click)="goToLink($event);"></i></a></td>
+            <td [hidden]="isParentStoreList">{{ store.subscription.endDate | localizedDate:'DD MMM YYYY':locale:timezone | async }}</td>
+            <td [hidden]="isParentStoreList"><span *ngIf="(tagVisible$ | async) && store.tag && store.subscription.endDate">{{ store.tag }}</span></td>
+            <td class="text-right"><img src="assets/img/icon-forward.svg" /></td>
+          </tr>
+        </tbody>
+      </table>
+      <app-pager
+        [totalPagesCount]="(stores$ | async).totalPages"
+        [page]="(stores$ | async).paging.page"
+        [size]="(stores$ | async).paging.size"
+        (paginate)="paginate($event)"
+      >
+      </app-pager>
+    </div>
+  </div>
+</div>

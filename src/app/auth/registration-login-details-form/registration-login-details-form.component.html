@@ -1,0 +1,80 @@
+<div class="register-card">
+    <div class="register-content">
+        <h2 class="text-blue text-header mb-2">{{'admin.register.registerHeaderMessage1'| translate:{ name:  whiteLabelName} }}
+            <span class="text-turquoise">{{'admin.register.registerHeaderMessage2'|translate}}</span>
+        </h2>
+        <div *ngIf="!helper.isMobileApp()">
+            <h3 class="text-blue">Register with Social Media</h3>
+            <p class="mb-3">One-click access! Use your existing Google, Facebook, or Apple account to get started instantly.</p>
+            <iframe id="user-login" [src]="userLoginSrc" class="login-iframe" [class.invite]="registerOption === 'invite'" frameBorder="0" scrolling="no"></iframe>
+            <div>
+                <div class="or-separator">
+                    <span>OR</span>
+                </div>
+            </div>
+        </div>
+        <form [formGroup]="registerForm">
+            <div class="row mb-1" [ngClass]="{'mb-xs-cust':!(email.touched && email.errors)}"
+             [ngClass]="{'mb-2':email.touched && email.errors && email.errors.required}">
+                <div class="col-12 ">
+                    <h3 class="text-blue">Register with Email</h3>
+                    <p>Step-by-Step Registration! Enter your email, define a password, and confirm your email to begin.</p>
+                    <mat-form-field appearance="outline" class="full-width">
+                        <mat-label>{{'admin.global.email' | translate}}
+                        </mat-label>
+                        <input matInput formControlName="email" id="register-email-field" autocomplete="email">
+                        <mat-hint>{{'admin.register.emailInfo'|translate}}</mat-hint>
+                        <mat-error *ngIf="email.touched && email.errors && email.errors.required">
+                            {{'admin.global.field.required' | translate}}.
+                        </mat-error>
+                        <mat-error *ngIf="email.touched && email.errors && email.errors.email">
+                            {{'admin.user.details.emailErrorMsgInvaild' | translate}}.
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row mb-0-cust"
+            [ngClass]="{'mb-3': (password.touched && password.errors && password.errors.required) || (password.touched && password.errors && password.errors.minlength)}">
+                <div class="col-12" [ngClass]="{'':password.touched && password.errors}">
+                    <mat-form-field appearance="outline" class="full-width">
+                        <mat-label>{{'admin.global.password' | translate}}</mat-label>
+                        <input matInput [type]="passwordHide ? 'password' : 'text'" formControlName="password"
+                            id="register-password-field" autocomplete="new-password">
+                        <mat-error *ngIf="password.touched && password.errors && password.errors.required">
+                            {{'admin.global.field.required' | translate}}.
+                        </mat-error>
+                        <mat-error *ngIf="password.touched && password.errors && password.errors.minlength">
+                            {{'admin.global.field.minLength' | translate:{minLength : password.errors.minlength.requiredLength}
+                            }}.
+                        </mat-error>
+                        <mat-error *ngIf="password.touched && password.errors && password.errors.maxlength">
+                            {{'admin.global.field.maxLength' | translate:{maxLength : password.errors.maxlength.requiredLength}
+                            }}.
+                        </mat-error>
+                        <button type="button" mat-icon-button matSuffix (click)="passwordHide = !passwordHide"
+                            [attr.aria-label]="passwordHide ? 'Show password' : 'Hide password'" class="pwdicon-top"
+                            [attr.aria-pressed]="passwordHide">
+                            <mat-icon>{{ passwordHide ? 'visibility_off' : 'visibility' }}</mat-icon>
+                        </button>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row my-1">
+                <div [class.align-center]="!registration" class="col-12">
+                    <button type="button" class="btn btn-primary py-3 w-100" (click)="registerFormAction()"
+                        [disabled]="!languageId || languageId <=0" style="font-size: 18px;" id="register-email-submit-button">
+                        {{'admin.register.continue' | translate}}
+                    </button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <mat-label>{{'admin.register.haveAccount' | translate}}&nbsp;<button type=" button"
+                            class="btn btn-link px-0 link-btn" (click)="goToLogin()">{{'admin.global.login' |
+                            translate}}</button>
+                    </mat-label>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

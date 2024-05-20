@@ -1,0 +1,8 @@
+{
+  "extends": "./tsconfig.app.json",
+  "compilerOptions": {
+  },
+  "include": [
+    "src/**/*.d.ts"
+  ]
+}

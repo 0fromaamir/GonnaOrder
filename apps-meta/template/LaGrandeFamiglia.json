@@ -1,0 +1,17 @@
+{
+  "appName": "La Grande Famiglia",
+  "appDescription": "Customer ordering app for LaGrandeFamiglia",
+  "type": "TEMPLATE",
+  "tag": "PROD",
+  "bundleId": "com.gonnaorder.lagrandefamiglia",
+  "appleId": "6496433911",
+  "storeAlias": "lagrandefamiglia",
+  "iconUrl": "resources/assets/mobile-apps/template/LaGrandeFamiglia/icon.png",
+  "iconBackgroundUrl": "resources/assets/mobile-apps/template/LaGrandeFamiglia/icon-background.png",
+  "iconForegroundUrl": "resources/assets/mobile-apps/template/LaGrandeFamiglia/icon-foreground.png",
+  "splashUrl": "resources/assets/mobile-apps/template/LaGrandeFamiglia/splash.png",
+  "splashBackgroundColor": "#000000",
+  "googleServiceInfoUrl": "resources/assets/mobile-apps/template/LaGrandeFamiglia/GoogleService-Info.plist",
+  "defaultDeeplinkAppAndroidUrl": "https://play.google.com/store/apps/details?id=com.gonnaorder.lagrandefamiglia",
+  "defaultDeeplinkAppIOSUrl": "https://apps.apple.com/nl/app/gonnaorder/id6496433911?l=en"
+}

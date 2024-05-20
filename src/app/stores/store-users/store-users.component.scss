@@ -1,0 +1,18 @@
+@import "src/scss/variables";
+.heading {
+  font-size: $header3-font-size;
+  border-radius: 0.25rem !important;
+  border: 0px;
+  color: $primary-brand-colour;
+}
+
+.name-drop-down {
+  select {
+    height: 45px;
+    text-transform: capitalize;
+  }
+
+  .invalid-feedback{
+    display: block !important;
+  }
+}

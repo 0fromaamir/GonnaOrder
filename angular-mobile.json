@@ -1,0 +1,469 @@
+{
+    "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+    "cli": {
+        "analytics": false,
+        "schematicCollections": [
+            "@angular-eslint/schematics"
+        ]
+    },
+    "version": 1,
+    "newProjectRoot": "projects",
+    "projects": {
+        "app": {
+            "projectType": "application",
+            "schematics": {},
+            "root": "",
+            "sourceRoot": "src",
+            "prefix": "app",
+            "architect": {
+                "build": {
+                    "builder": "@angular-devkit/build-angular:browser",
+                    "options": {
+                        "outputPath": "www",
+                        "index": "src/index.html",
+                        "main": "src/main.ts",
+                        "polyfills": "src/polyfills.ts",
+                        "tsConfig": "tsconfig.app.json",
+                        "aot": true,
+                        "assets": [
+                            "src/favicon.ico",
+                            "src/assets",
+                            "src/manifest.webmanifest",
+                            "src/.well-known/apple-developer-merchantid-domain-association",
+                            "src/.well-known/assetlinks.json"
+                        ],
+                        "styles": [
+                            "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
+                            "node_modules/@coreui/icons/css/free.css",
+                            "node_modules/@fortawesome/fontawesome-free/css/all.css",
+                            "node_modules/simple-line-icons/css/simple-line-icons.css",
+                            "node_modules/ngx-toastr/toastr.css",
+                            "src/scss/styles.scss",
+                            "./node_modules/flag-icons/css/flag-icons.min.css"
+                        ],
+                        "stylePreprocessorOptions": {
+                            "includePaths": [
+                                "./node_modules"
+                            ]
+                        },
+                        "allowedCommonJsDependencies": [
+                            "chart.js",
+                            "angular2-text-mask",
+                            "url-regex",
+                            "file-saver",
+                            "dayjs/plugin/isBetween",
+                            "dayjs",
+                            "dayjs/plugin/customParseFormat",
+                            "dayjs/plugin/timezone",
+                            "dayjs/plugin/utc",
+                            "moment",
+                            "print-js",
+                            "rxjs/index"
+                        ],
+                        "scripts": [],
+                        "vendorChunk": true,
+                        "extractLicenses": false,
+                        "buildOptimizer": false,
+                        "sourceMap": true,
+                        "optimization": false,
+                        "namedChunks": true
+                    },
+                    "configurations": {
+                        "production": {
+                            "fileReplacements": [
+                                {
+                                    "replace": "src/environments/environment.ts",
+                                    "with": "src/environments/environment.prod.ts"
+                                },
+                                {
+                                    "replace": "src/app/admin-routing.ts",
+                                    "with": "src/app/admin-routing.empty.ts"
+                                }
+                            ],
+                            "optimization": true,
+                            "outputHashing": "all",
+                            "sourceMap": false,
+                            "namedChunks": false,
+                            "extractLicenses": true,
+                            "vendorChunk": false,
+                            "buildOptimizer": true,
+                            "budgets": [
+                                {
+                                    "type": "initial",
+                                    "maximumWarning": "2mb",
+                                    "maximumError": "5mb"
+                                },
+                                {
+                                    "type": "anyComponentStyle",
+                                    "maximumWarning": "20kb",
+                                    "maximumError": "50kb"
+                                }
+                            ],
+                            "serviceWorker": true,
+                            "ngswConfigPath": "ngsw-config.json"
+                        },
+                        "go": {
+                            "fileReplacements": [
+                                {
+                                    "replace": "src/environments/environment.ts",
+                                    "with": "src/environments/environment.go.prod.ts"
+                                },
+                                {
+                                    "replace": "src/app/admin-routing.ts",
+                                    "with": "src/app/admin-routing.empty.ts"
+                                }
+                            ],
+                            "optimization": true,
+                            "outputHashing": "all",
+                            "sourceMap": false,
+                            "namedChunks": false,
+                            "extractLicenses": true,
+                            "vendorChunk": false,
+                            "buildOptimizer": true,
+                            "budgets": [
+                                {
+                                    "type": "initial",
+                                    "maximumWarning": "2mb",
+                                    "maximumError": "5mb"
+                                },
+                                {
+                                    "type": "anyComponentStyle",
+                                    "maximumWarning": "20kb",
+                                    "maximumError": "50kb"
+                                }
+                            ],
+                            "serviceWorker": true,
+                            "ngswConfigPath": "ngsw-config.json"
+                        },
+                        "goadmin": {
+                            "fileReplacements": [
+                                {
+                                    "replace": "src/environments/environment.ts",
+                                    "with": "src/environments/environment.goadmin.prod.ts"
+                                },
+                                {
+                                    "replace": "src/app/printers/bluetoothSerial.service.ts",
+                                    "with": "src/app/printers/bluetoothSerialReal.service.ts"
+                                }
+                            ],
+                            "optimization": true,
+                            "outputHashing": "all",
+                            "sourceMap": false,
+                            "namedChunks": false,
+                            "extractLicenses": true,
+                            "vendorChunk": false,
+                            "buildOptimizer": true,
+                            "budgets": [
+                                {
+                                    "type": "initial",
+                                    "maximumWarning": "2mb",
+                                    "maximumError": "5mb"
+                                },
+                                {
+                                    "type": "anyComponentStyle",
+                                    "maximumWarning": "20kb",
+                                    "maximumError": "50kb"
+                                }
+                            ],
+                            "serviceWorker": true,
+                            "ngswConfigPath": "ngsw-config.json"
+                        },
+                        "godev": {
+                            "fileReplacements": [
+                                {
+                                    "replace": "src/environments/environment.ts",
+                                    "with": "src/environments/environment.go.ts"
+                                },
+                                {
+                                    "replace": "src/app/admin-routing.ts",
+                                    "with": "src/app/admin-routing.empty.ts"
+                                }
+                            ],
+                            "optimization": true,
+                            "outputHashing": "all",
+                            "sourceMap": false,
+                            "namedChunks": false,
+                            "extractLicenses": true,
+                            "vendorChunk": false,
+                            "buildOptimizer": true,
+                            "budgets": [
+                                {
+                                    "type": "initial",
+                                    "maximumWarning": "2mb",
+                                    "maximumError": "5mb"
+                                },
+                                {
+                                    "type": "anyComponentStyle",
+                                    "maximumWarning": "20kb",
+                                    "maximumError": "50kb"
+                                }
+                            ],
+                            "serviceWorker": true,
+                            "ngswConfigPath": "ngsw-config.json"
+                        },
+                        "gotemplatedev": {
+                            "fileReplacements": [
+                                {
+                                    "replace": "src/environments/environment.ts",
+                                    "with": "src/environments/environment.gotemplate.ts"
+                                },
+                                {
+                                    "replace": "src/app/admin-routing.ts",
+                                    "with": "src/app/admin-routing.empty.ts"
+                                }
+                            ],
+                            "optimization": true,
+                            "outputHashing": "all",
+                            "sourceMap": false,
+                            "namedChunks": false,
+                            "extractLicenses": true,
+                            "vendorChunk": false,
+                            "buildOptimizer": true,
+                            "budgets": [
+                                {
+                                    "type": "initial",
+                                    "maximumWarning": "2mb",
+                                    "maximumError": "5mb"
+                                },
+                                {
+                                    "type": "anyComponentStyle",
+                                    "maximumWarning": "20kb",
+                                    "maximumError": "50kb"
+                                }
+                            ],
+                            "serviceWorker": true,
+                            "ngswConfigPath": "ngsw-config.json"
+                        },
+                        "gotemplate": {
+                            "fileReplacements": [
+                                {
+                                    "replace": "src/environments/environment.ts",
+                                    "with": "src/environments/environment.gotemplate.prod.ts"
+                                },
+                                {
+                                    "replace": "src/app/admin-routing.ts",
+                                    "with": "src/app/admin-routing.empty.ts"
+                                }
+                            ],
+                            "optimization": true,
+                            "outputHashing": "all",
+                            "sourceMap": false,
+                            "namedChunks": false,
+                            "extractLicenses": true,
+                            "vendorChunk": false,
+                            "buildOptimizer": true,
+                            "budgets": [
+                                {
+                                    "type": "initial",
+                                    "maximumWarning": "2mb",
+                                    "maximumError": "5mb"
+                                },
+                                {
+                                    "type": "anyComponentStyle",
+                                    "maximumWarning": "20kb",
+                                    "maximumError": "50kb"
+                                }
+                            ],
+                            "serviceWorker": true,
+                            "ngswConfigPath": "ngsw-config.json"
+                        },
+                        "goadmindev": {
+                            "fileReplacements": [
+                                {
+                                    "replace": "src/environments/environment.ts",
+                                    "with": "src/environments/environment.goadmin.ts"
+                                },
+                                {
+                                    "replace": "src/app/printers/bluetoothSerial.service.ts",
+                                    "with": "src/app/printers/bluetoothSerialReal.service.ts"
+                                }
+                            ],
+                            "optimization": true,
+                            "outputHashing": "all",
+                            "sourceMap": false,
+                            "namedChunks": false,
+                            "extractLicenses": true,
+                            "vendorChunk": false,
+                            "buildOptimizer": true,
+                            "budgets": [
+                                {
+                                    "type": "initial",
+                                    "maximumWarning": "2mb",
+                                    "maximumError": "5mb"
+                                },
+                                {
+                                    "type": "anyComponentStyle",
+                                    "maximumWarning": "20kb",
+                                    "maximumError": "50kb"
+                                }
+                            ],
+                            "serviceWorker": true,
+                            "ngswConfigPath": "ngsw-config.json"
+                        },
+                        "es5": {
+                            "budgets": [
+                                {
+                                    "type": "anyComponentStyle",
+                                    "maximumWarning": "6kb"
+                                }
+                            ],
+                            "tsConfig": "tsconfig-es5.app.json"
+                        }
+                    },
+                    "defaultConfiguration": ""
+                },
+                "serve": {
+                    "builder": "@angular-devkit/build-angular:dev-server",
+                    "options": {
+                        "browserTarget": "app:build",
+                        "proxyConfig": "proxy.conf.json"
+                    },
+                    "configurations": {
+                        "production": {
+                            "browserTarget": "app:build:production"
+                        },
+                        "go": {
+                            "browserTarget": "app:build:go"
+                        },
+                        "gotemplate": {
+                            "browserTarget": "app:build:gotemplate"
+                        },
+                        "goadmin": {
+                            "browserTarget": "app:build:goadmin"
+                        },
+                        "godev": {
+                            "browserTarget": "app:build:godev"
+                        },
+                        "gotemplatedev": {
+                            "browserTarget": "app:build:gotemplatedev"
+                        },
+                        "goadmindev": {
+                            "browserTarget": "app:build:goadmindev"
+                        },
+                        "es5": {
+                            "browserTarget": "app:build:es5"
+                        }
+                    }
+                },
+                "extract-i18n": {
+                    "builder": "@angular-devkit/build-angular:extract-i18n",
+                    "options": {
+                        "browserTarget": "app:build"
+                    }
+                },
+                "test": {
+                    "builder": "@angular-devkit/build-angular:karma",
+                    "options": {
+                        "main": "src/test.ts",
+                        "polyfills": "src/polyfills.ts",
+                        "tsConfig": "tsconfig.spec.json",
+                        "karmaConfig": "karma.conf.js",
+                        "assets": [
+                            "src/favicon.ico",
+                            "src/assets",
+                            "src/manifest.webmanifest"
+                        ],
+                        "styles": [
+                            "./node_modules/bootstrap/dist/css/bootstrap.min.css",
+                            "./node_modules/ngx-bootstrap/datepicker/bs-datepicker.css",
+                            "src/scss/styles.scss"
+                        ],
+                        "scripts": []
+                    }
+                },
+                "e2e": {
+                    "builder": "@angular-devkit/build-angular:protractor",
+                    "options": {
+                        "protractorConfig": "e2e/protractor.conf.js",
+                        "devServerTarget": "app:serve"
+                    },
+                    "configurations": {
+                        "production": {
+                            "devServerTarget": "app:serve:production"
+                        }
+                    }
+                },
+                "lint": {
+                    "builder": "@angular-eslint/builder:lint",
+                    "options": {
+                        "lintFilePatterns": [
+                            "src/**/*.ts",
+                            "src/**/*.html"
+                        ]
+                    }
+                },
+                "ionic-cordova-serve": {
+                    "builder": "@ionic/cordova-builders:cordova-serve",
+                    "options": {
+                        "cordovaBuildTarget": "app:ionic-cordova-build",
+                        "devServerTarget": "app:serve"
+                    },
+                    "configurations": {
+                        "production": {
+                            "cordovaBuildTarget": "app:ionic-cordova-build:production",
+                            "devServerTarget": "app:serve:production"
+                        },
+                        "go": {
+                            "cordovaBuildTarget": "app:ionic-cordova-build:go",
+                            "devServerTarget": "app:serve:go"
+                        },
+                        "gotemplate": {
+                            "cordovaBuildTarget": "app:ionic-cordova-build:gotemplate",
+                            "devServerTarget": "app:serve:gotemplate"
+                        },
+                        "goadmin": {
+                            "cordovaBuildTarget": "app:ionic-cordova-build:goadmin",
+                            "devServerTarget": "app:serve:goadmin"
+                        },
+                        "godev": {
+                            "cordovaBuildTarget": "app:ionic-cordova-build:godev",
+                            "devServerTarget": "app:serve:godev"
+                        },
+                        "gotemplatedev": {
+                            "cordovaBuildTarget": "app:ionic-cordova-build:gotemplatedev",
+                            "devServerTarget": "app:serve:gotemplatedev"
+                        },
+                        "goadmindev": {
+                            "cordovaBuildTarget": "app:ionic-cordova-build:goadmindev",
+                            "devServerTarget": "app:serve:goadmindev"
+                        }
+                    }
+                },
+                "ionic-cordova-build": {
+                    "builder": "@ionic/cordova-builders:cordova-build",
+                    "options": {
+                        "browserTarget": "app:build"
+                    },
+                    "configurations": {
+                        "production": {
+                            "browserTarget": "app:build:production"
+                        },
+                        "go": {
+                            "browserTarget": "app:build:go"
+                        },
+                        "gotemplate": {
+                            "browserTarget": "app:build:gotemplate"
+                        },
+                        "goadmin": {
+                            "browserTarget": "app:build:goadmin"
+                        },
+                        "godev": {
+                            "browserTarget": "app:build:godev"
+                        },
+                        "gotemplatedev": {
+                            "browserTarget": "app:build:gotemplatedev"
+                        },
+                        "goadmindev": {
+                            "browserTarget": "app:build:goadmindev"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "schematics": {
+        "@schematics/angular:component": {
+            "style": "scss"
+        }
+    }
+}

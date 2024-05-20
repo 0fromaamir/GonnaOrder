@@ -1,0 +1,32 @@
+{
+  "name": "cordova-plugin-bluetooth-serial",
+  "version": "0.4.7",
+  "description": "Bluetooth Serial Communication Plugin",
+  "main": "./www/bluetoothSerial.js",
+  "cordova": {
+    "id": "cordova-plugin-bluetooth-serial",
+    "platforms": [
+      "android",
+      "ios",
+      "wp8"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rigasp/stores-go-printer-app-plugin.git"
+  },
+  "keywords": [
+    "cordova",
+    "bluetooth",
+    "serial",
+    "ble",
+    "arduino",
+    "ecosystem:cordova"
+  ],
+  "author": "Rigas <rigasp@gonnaorder.com>",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/rigasp/stores-go-printer-app-plugin/issues"
+  },
+  "homepage": "https://github.com/rigasp/stores-go-printer-app-plugin#readme"
+}

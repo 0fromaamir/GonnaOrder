@@ -1,0 +1,177 @@
+<div class="card list mb-0">
+  <div class="card-body py-0">
+    <div class="row">
+      <div class="col-xl-4 marginlogo col-lg-5">
+        <a href="https://epayworldwide.com">
+          <img src="assets/img/payment_logos/epay.svg" class="pr-2" width="100%"
+               style="max-width: 140px">
+          <app-help-icon [helpPageName]="helpUrl"></app-help-icon>
+        </a>
+      </div>
+
+      <div class="col-xl-8 col-lg-7">
+        <button *ngIf="!showFields && !epayConnected" class="btn btn-primary"
+                (click)="onEpayClicked()"><i
+          class="fa fa-link mr-2 link"
+          title="link"></i>{{'admin.store.setting.connect' | translate}}</button>
+        <form class="form-group" [formGroup]="epayForm" *ngIf="showFields && !epayConnected">
+          <div class="form-group row mb-4">
+            <label
+              class="col-xl-3 col-lg-3 col-md-4 col-sm-4 col-4 form-header">{{'admin.store.paymentType'|translate}}</label>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="radio-container" for="EPAY_PAYMENT_TYPE_ONLINE">
+                  {{'admin.store.online.paymentType'|translate}}
+                  <input type="radio" value="ONLINE" formControlName="EPAY_PAYMENT_TYPE"
+                         id="EPAY_PAYMENT_TYPE_ONLINE" (change)="toggleEpayPhysicalPayments($event)"/>
+                  <span class="checkmark"></span>
+                </label>
+              </div>
+              <div class="form-group">
+                <label class="radio-container" for="EPAY_PAYMENT_TYPE_PHYSICAL">
+                  {{'admin.store.physical.paymentType'|translate}}
+                  <input type="radio" value="PHYSICAL" formControlName="EPAY_PAYMENT_TYPE"
+                         id="EPAY_PAYMENT_TYPE_PHYSICAL" (change)="toggleEpayPhysicalPayments($event)"/>
+                  <span class="checkmark"></span>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <div class="row mb-4">
+            <div class="col-md-3">
+              {{'admin.store.payment.merchantId' | translate}}
+            </div>
+            <div class="col-md-6">
+              <input type="text" formControlName="EPAY_MERCHANT_ID" class="form-control"
+                     maxlength="255">
+              <div class="invalid-feedback d-block"
+                   *ngIf="getControl('EPAY_MERCHANT_ID').errors?.required && getControl('EPAY_MERCHANT_ID').touched">
+                <span>
+                  {{'admin.global.field.required'|translate}}</span>
+              </div>
+            </div>
+          </div>
+          <div class="row mb-4" *ngIf="isOnlinePaymentType()">
+            <div class="col-md-3">
+              {{'admin.store.payment.posId' | translate}}
+            </div>
+            <div class="col-md-6">
+              <input type="text" formControlName="EPAY_POS_ID" class="form-control"
+                     maxlength="100">
+              <div class="invalid-feedback d-block"
+                   *ngIf="getControl('EPAY_POS_ID').errors?.required && getControl('EPAY_POS_ID').touched">
+                <span>
+                  {{'admin.global.field.required'|translate}}</span>
+              </div>
+            </div>
+          </div>
+          <div class="row mb-4" *ngIf="isPhysicalTerminalPaymentType()">
+            <div class="col-md-3">
+              {{'admin.store.payment.terminalId' | translate}}
+            </div>
+            <div class="col-md-6">
+              <input type="text" formControlName="EPAY_TERMINAL_ID" class="form-control"
+                     maxlength="100">
+              <div class="invalid-feedback d-block"
+                   *ngIf="getControl('EPAY_TERMINAL_ID').errors?.required && getControl('EPAY_TERMINAL_ID').touched">
+                <span>
+                  {{'admin.global.field.required'|translate}}</span>
+              </div>
+            </div>
+          </div>
+          <div class="row mb-4">
+            <div class="col-md-3">
+              {{'admin.store.setting.integrations.username' | translate}}
+            </div>
+            <div class="col-md-6">
+              <input type="text" class="form-control" formControlName="EPAY_USERNAME"
+                     maxlength="100">
+              <div class="invalid-feedback d-block"
+                   *ngIf="getControl('EPAY_USERNAME').errors?.required && getControl('EPAY_USERNAME').touched">
+                <span>
+                  {{'admin.global.field.required'|translate}}</span>
+              </div>
+            </div>
+          </div>
+          <div class="row mb-4">
+            <div class="col-md-3">
+              {{'admin.store.setting.integrations.password' | translate}}
+            </div>
+            <div class="col-md-6">
+              <input type="password" formControlName="EPAY_PASSWORD" class="form-control"
+                     maxlength="100">
+              <div class="invalid-feedback d-block"
+                   *ngIf="getControl('EPAY_PASSWORD').errors?.required && getControl('EPAY_PASSWORD').touched">
+                  <span>
+                    {{'admin.global.field.required'|translate}}</span>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-3">
+            </div>
+            <div class="col-md-6 d-flex flex-row-reverse">
+              <button class="btn btn-primary" (click)="connect()">
+                <i class="fa fa-link mr-2 link"
+                   title="link"></i>{{'admin.store.setting.connect' | translate}}
+              </button>
+            </div>
+          </div>
+        </form>
+        <div *ngIf="epayConnected">
+          <div class="row mb-4">
+            <div class="col-md-3">{{'admin.store.paymentType'|translate}}</div>
+            <div class="col-md-6">{{ (isOnlinePaymentType() ? 'admin.store.online.paymentType' : 'admin.store.physical.paymentType') | translate}}</div>
+          </div>
+          <div class="row mb-4">
+            <div class="col-md-3">{{'admin.store.payment.merchantId'|translate}}</div>
+            <div class="col-md-6">{{epayMerchantId}}</div>
+          </div>
+          <div class="row mb-4" *ngIf="isPhysicalTerminalPaymentType()">
+            <div class="col-md-3">{{'admin.store.payment.terminalId'|translate}}</div>
+            <div class="col-md-6">{{epayTerminalId}}</div>
+          </div>
+          <div class="row mb-4" *ngIf="isOnlinePaymentType()">
+            <div class="col-md-3">{{'admin.store.payment.posId'|translate}}</div>
+            <div class="col-md-6">{{epayPosId}}</div>
+          </div>
+          <div class="row mb-4">
+            <div class="col-md-3">{{'admin.store.setting.integrations.username'|translate}}</div>
+            <div class="col-md-6">{{epayUsername}}</div>
+          </div>
+          <div class="row mb-4">
+            <div class="col-md-3">{{'admin.store.setting.integrations.password'|translate}}</div>
+            <div class="col-md-6">{{epayPassword}}</div>
+            <div class="col-md-2">
+              <button class="btn btn-danger d-flex" (click)="disconnect()">
+                <img src="assets/img/link-slash-solid.svg" class="mr-2" width="26px" alt="">
+                {{'admin.store.disconnect'|translate}}
+              </button>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-3">
+              <div class="form-group">
+                <label class="form-check-label">{{'admin.store.enabled'|translate}}</label>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>{{'admin.global.no'|translate}}</label>&nbsp;
+                <label class="switch pt-1 mb-0">
+                  <input type="checkbox" id="enableEpayPaymentCreditCard"
+                         [(ngModel)]="epayEnabled"
+                         (ngModelChange)="toggleEpayPayments($event)"
+                         [disabled]="!epayConnected"/>
+                  &nbsp;<span class="slider round"></span>
+                </label>&nbsp;
+                <label>{{'admin.global.yes'|translate}}</label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

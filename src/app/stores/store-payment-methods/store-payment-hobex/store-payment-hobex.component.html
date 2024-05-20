@@ -1,0 +1,95 @@
+<div class="card list mb-0">
+  <div class="card-body py-0">
+    <div class="row">
+      <div class="col-xl-4 marginlogo col-lg-5">
+        <a href="https://www.fygaro.com/">
+          <img src="assets/img/payment_logos/hobex.png" class="pr-2" width="100%"
+               style="max-width: 150px">
+          <app-help-icon [helpPageName]="helpUrl"></app-help-icon>
+        </a>
+      </div>
+      <div class="col-xl-8 col-lg-7">
+        <button *ngIf="!showFields && !hobexConnected" class="btn btn-primary"
+                (click)="onFygaroClicked()"><i
+          class="fa fa-link mr-2 link"
+          title="link"></i>{{'admin.store.setting.connect' | translate}}</button>
+        <form class="form-group" [formGroup]="hobexForm" *ngIf="showFields && !hobexConnected">
+          <div class="row">
+            <div class="col-md-2">
+              {{'admin.store.entityId' | translate}}
+            </div>
+            <div class="col-md-5">
+              <input type="text" formControlName="HOBEX_ENTITY_ID" class="form-control"
+                     maxlength="255">
+              <div class="invalid-feedback d-block"
+                   *ngIf="getControl('HOBEX_ENTITY_ID').errors?.required && getControl('HOBEX_ENTITY_ID').touched">
+                <span>
+                  {{'admin.global.field.required'|translate}}</span>
+              </div>
+            </div>
+          </div>
+          <div class="row mt-3">
+            <div class="col-md-2">
+              {{'admin.store.accessToken' | translate}}
+            </div>
+            <div class="col-md-5">
+              <input type="text" formControlName="HOBEX_ACCESS_TOKEN" class="form-control"
+                     maxlength="100">
+              <div class="invalid-feedback d-block"
+                   *ngIf="getControl('HOBEX_ACCESS_TOKEN').errors?.required && getControl('HOBEX_ACCESS_TOKEN').touched">
+                <span>
+                  {{'admin.global.field.required'|translate}}</span>
+              </div>
+            </div>
+          </div>
+          <div class="row mb-4">
+            <div class="col-md-3">
+            </div>
+            <div class="col-md-6 d-flex flex-row-reverse">
+              <button class="btn btn-primary" (click)="connect()">
+                <i class="fa fa-link mr-2 link" title="link"></i>
+                {{'admin.store.setting.connect'|translate}}
+              </button>
+            </div>
+          </div>
+        </form>
+        <div *ngIf="hobexConnected">
+          <div class="row">
+            <div class="col-md-2">{{'admin.store.entityId'|translate}}</div>
+            <div class="col-md-4">{{hobexEntityId}}</div>
+          </div>
+          <div class="row mt-3">
+            <div class="col-md-2">{{'admin.store.accessToken'|translate}}</div>
+            <div class="col-md-4">{{hobexAccessToken}}</div>
+            <div class="col-md-2">
+              <button class="btn btn-danger d-flex" (click)="disconnect()">
+                <img src="assets/img/link-slash-solid.svg" class="mr-2" width="26px" alt="">
+                {{'admin.store.disconnect'|translate}}
+              </button>
+            </div>
+          </div>
+          <div class="row mt-3">
+            <div class="col-md-2">
+              <div class="form-group">
+                <label class="form-check-label">{{'admin.store.enabled'|translate}}</label>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label>{{'admin.global.no'|translate}}</label>&nbsp;
+                <label class="switch pt-1 mb-0">
+                  <input type="checkbox" id="enableHobexPaymentCreditCard"
+                         [(ngModel)]="hobexEnabled"
+                         (ngModelChange)="toggleHobexPayments($event)"
+                         [disabled]="!hobexConnected"/>
+                  &nbsp;<span class="slider round"></span>
+                </label>&nbsp;
+                <label>{{'admin.global.yes'|translate}}</label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

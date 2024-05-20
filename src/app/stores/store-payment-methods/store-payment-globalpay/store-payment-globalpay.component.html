@@ -1,0 +1,95 @@
+<div class="card list mb-0">
+  <div class="card-body py-0">
+    <div class="row">
+      <div class="col-xl-3 marginlogo col-lg-5">
+        <a href="https://www.globalpayments.com/">
+          <img src="assets/globalpay.svg" width="100%" class="pr-2" style="max-width: 200px">
+          <app-help-icon [helpPageName]="helpUrl"></app-help-icon>
+        </a>
+      </div>
+      <div class="col-xl-9 col-lg-7">
+        <button *ngIf="!showFields && !globalPayConnected" class="btn btn-primary" (click)="onGlobalPayClicked()"><i
+            class="fa fa-link mr-2 link" title="link"></i>{{'admin.store.setting.connect' | translate}}</button>
+        <form class="form-group" [formGroup]="globalPayForm" *ngIf="showFields && !globalPayConnected">
+          <div class="row">
+            <div class="col-md-2">
+              {{'admin.store.payment.merchantId' | translate}}
+            </div>
+            <div class="col-md-5">
+              <input type="text" formControlName="GLOBAL_PAY_MERCHANT_ID" class="form-control" maxlength="100">
+              <div class="invalid-feedback"
+                *ngIf="getControl('GLOBAL_PAY_MERCHANT_ID').errors?.required && getControl('GLOBAL_PAY_MERCHANT_ID').touched">
+                <span>
+                  {{'admin.global.field.required'|translate}}</span>
+              </div>
+            </div>
+          </div>
+          <div class="row mt-3">
+            <div class="col-md-2">
+              {{'admin.store.payment.sharedSecret' | translate}}
+            </div>
+            <div class="col-md-5">
+              <input type="password" class="form-control" formControlName="GLOBAL_PAY_SHARED_SECRET" maxlength="100">
+              <div class="invalid-feedback"
+                *ngIf="getControl('GLOBAL_PAY_SHARED_SECRET').errors?.required && getControl('GLOBAL_PAY_SHARED_SECRET').touched">
+                <span>
+                  {{'admin.global.field.required'|translate}}</span>
+              </div>
+            </div>
+          </div>
+          <div class="row mt-3">
+            <div class="col-md-2">
+              {{'admin.store.accountID' | translate}}
+            </div>
+            <div class="col-md-5">
+              <input type="text" class="form-control" formControlName="GLOBAL_PAY_ACCOUNT_ID" maxlength="100">
+              <div class="invalid-feedback"
+                *ngIf="getControl('GLOBAL_PAY_ACCOUNT_ID').errors?.required && getControl('GLOBAL_PAY_ACCOUNT_ID').touched">
+                <span>
+                  {{'admin.global.field.required'|translate}}</span>
+              </div>
+            </div>
+          </div>
+          <div class="row mt-3">
+            <div class="col-md-2">
+            </div>
+            <div class="col-md-5 d-flex flex-row-reverse">
+              <button class="btn btn-primary" (click)="connect()">
+                <i class="fa fa-link mr-2 link" title="link"></i>{{'admin.store.setting.connect' | translate}}
+              </button>
+            </div>
+          </div>
+        </form>
+        <div *ngIf="globalPayConnected">
+          <div class="row">
+            <div class="col-md-2">{{'admin.store.accountID'|translate}}</div>
+            <div class="col-md-4">{{this.globalPayMerchantId}}</div>
+            <div class="col-md-2">
+              <button class="btn btn-danger d-flex" (click)="disconnect()">
+                <img src="assets/img/link-slash-solid.svg" class="mr-2 slashIcon" alt="">{{'admin.store.disconnect'|translate}}
+              </button>
+            </div>
+          </div>
+          <div class="row mt-3">
+            <div class="col-md-2">
+              <div class="form-group">
+                <label class="form-check-label">{{'admin.store.enabled'|translate}}</label>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label>{{'admin.global.no'|translate}}</label>&nbsp;
+                <label class="switch pt-1 mb-0">
+                  <input type="checkbox" id="enableGlobalPayPaymentCreditCard" [(ngModel)]="globalPayEnabled"
+                    (ngModelChange)="toggleGlobalPayPayments($event)" [disabled]="!globalPayConnected" />
+                  &nbsp;<span class="slider round"></span>
+                </label>&nbsp;
+                <label>{{'admin.global.yes'|translate}}</label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

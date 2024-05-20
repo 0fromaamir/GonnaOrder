@@ -1,0 +1,176 @@
+@import "bootstrap/scss/functions";
+@import "bootstrap/scss/variables";
+@import "bootstrap/scss/mixins";
+@import "src/scss/variables";
+
+.login-iframe {
+  width: 100%;
+  height: 50px;
+  padding-left: 20px;
+  padding-right: 20px;
+  margin-top: 5px;
+}
+
+.logout {
+  cursor: pointer;
+}
+
+.login-box {
+  border: 1px solid #4f4f4f;
+  border-radius: 4px;
+  margin-bottom: 16px;
+  margin-left: 24px;
+  margin-right: 24px;
+  padding-top: 16px;
+}
+
+.or-separator {
+  color: $dark-blue;
+  font-size: 16px;
+  width: 100%;
+  text-align: center;
+  border-bottom: 1px solid #aaa;
+  line-height: 0.1em;
+  margin: 14px 0 30px;
+  padding: 0 20px;
+
+  span {
+    background: #fff;
+    padding: 0 10px;
+  }
+}
+
+.email-button {
+  padding-left: 5px;
+  padding-right: 5px;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+  height: 40px;
+  position: relative;
+  width: 100%;
+  cursor: pointer;
+  border: 1px solid #dadce0;
+  border-radius: 4px;
+  min-height: 40px;
+
+  &:hover {
+    box-shadow: none;
+    border-color: #d2e3fc;
+    outline: none;
+    background: rgba(66, 133, 244, 0.04);
+  }
+}
+
+.btn-text {
+  font-weight: 500;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  vertical-align: top;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.25px;
+  white-space-collapse: collapse;
+  text-align: center;
+  -webkit-font-smoothing: antialiased;
+  text-size-adjust: 100%;
+}
+.text-dark{
+  color: #000 !important;
+}
+
+.button-link {
+  font-size: 1.125em;
+  font-weight: bold;
+}
+
+.eye-icon {
+  border: none;
+  background-color: unset;
+  padding: 14px;
+}
+
+.btn-dark {
+  min-height: 56px;
+}
+
+.error-message {
+  color:  #f44336 !important;
+}
+
+.email-login-header {
+  width: 600px;
+
+  @include media-breakpoint-down(md) {
+    width: 442px;
+  }
+
+  @include media-breakpoint-down(sm) {
+    width: 300px;
+  }
+}
+
+.email-login-content {
+  max-width: 600px;
+
+  @include media-breakpoint-down(md) {
+    max-width: 442px;
+  }
+
+  @include media-breakpoint-down(sm) {
+    max-width: 300px;
+  }
+}
+
+.loyality-discount {
+  font-size: 0.875em;
+  color: #444;
+  &::before {
+    content: '';
+    background-image: url(/assets/img/tag.svg);
+    width: 13px;
+    height: 13px;
+    margin-right: 5px;
+    margin-top: 3px;
+  }
+}
+
+.discount-price{
+  color: #FF7200;
+  margin-right: 3px;
+}
+.loyalty-active {
+  border: 1px solid #4F4F4F;
+  border-radius: 4px;
+  margin-bottom: 16px;
+  margin-left: 24px;
+  margin-right: 24px;
+  padding-top: 16px
+}
+
+.border-style {
+  border: 1px solid #4F4F4F;
+}
+
+
+::ng-deep .mat-mdc-dialog-container .mdc-dialog__surface{
+  border-radius: var(--mdc-dialog-container-shape, var(--mdc-shape-medium, 12px)) !important;
+}
+
+.forgetPassword{
+  margin-top:-12px;
+}
+
+.closebutton{
+  top: 20px;
+  right: 20px;
+}
+.mat-mdc-form-field-bottom-align::before{
+  display: inline!important;
+}
+.mat-mdc-error-56{
+  margin-bottom: 0.5rem !important; 
+ }
+

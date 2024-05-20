@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <title></title>
+    <base href="/"/>
+    <meta name="viewport" content="viewport-fit=cover, width=device-width, initial-scale=1, user-scalable=yes"/>
+    <link rel="apple-touch-icon" sizes="57x57" href="assets/img/favicon_assets/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="assets/img/favicon_assets/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="assets/img/favicon_assets/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="assets/img/favicon_assets/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="assets/img/favicon_assets/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="assets/img/favicon_assets/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="assets/img/favicon_assets/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="assets/img/favicon_assets/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/img/favicon_assets/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="assets/img/favicon_assets/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon_assets/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="assets/img/favicon_assets/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/img/favicon_assets/favicon-16x16.png">
+    <link rel="manifest" href="assets/img/favicon_assets/manifest.json">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="assets/img/favicon_assets/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,500,500i,700,700i,900,900i&amp;display=swap&amp;subset=cyrillic,cyrillic-ext,greek,greek-ext,latin-ext,vietnamese" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css?family=Google+Sans:100,300,400,500,700,900,100i,300i,400i,500i,700i,900i" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300;400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons|Material+Icons+Outlined" rel="stylesheet"/>
+    <script src="assets/env.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?libraries=places,drawing&key=AIzaSyDi0CKnhnRClfWA5UC4MKNh55c6D9phWC8&callback=Function.prototype"></script>
+    <!-- Viva Wallet needs jQuery -->
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+    <script src="https://appleid.cdn-apple.com/appleauth/static/jsapi/appleid/1/en_US/appleid.auth.js"></script>
+    <link rel="manifest" href="manifest.webmanifest">
+    <meta name="theme-color" content="#1976d2">
+    <script>
+      function setTitle() {
+          const subdomain = window.location.hostname.split('.')[0];
+          let title;
+          
+          switch (subdomain) {
+              case "admin":
+                  title = "GonnaOrder";
+                  break;
+              case "ordergurus":
+                  title = "Order Gurus";
+                  break;
+              case "iotgo":
+                  title = "iot Go";
+                  break;
+              case "sunsoft":
+                  title = "Amvrosia Go";
+                  break;
+              case "powersoft":
+                  title = "Powersoft Go";
+                  break;
+              case "lucia":
+                  title = "Lucia";
+                  break;
+              case "stcmarketplace":
+                  title = "STC";
+                  break;
+              case "ziramarketplace":
+                  title = "ZIRA";
+                  break;
+              case "gvs":
+                  title = "Global Vending Solutions";
+                  break;
+              case "goagle":
+                  title = "Goagle";
+                  break;
+              case "pluxee":
+                  title = "Pluxee Go";
+                  break;
+              case "payabl":
+                  title = "Payabl Go";
+                  break;
+              case "xo":
+                  title = "XO";
+                  break;
+              case "twinsoft":
+                  title = "Orexsys Go";
+                  break;
+              default:
+              this.document.title = this.selectedStore.name;
+                  break;
+          }
+          document.title = title;
+      }
+      document.addEventListener('DOMContentLoaded', setTitle);
+  </script>
+    <!-- 
+      This is a modification from the code provided by Facebook. At this point, only the script is loaded,
+      but the tracking is not started. The "fbq('init',fbCode);" and "fbq('track', 'PageView');" calls
+      will be performed based on store settings and costumer cookies choice.
+     -->
+    <!-- Meta Pixel Code -->
+    <script>
+      !function(f,b,e,v,n,t,s)
+      {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+      n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+      if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+      n.queue=[];t=b.createElement(e);t.async=!0;
+      t.src=v;s=b.getElementsByTagName(e)[0];
+      s.parentNode.insertBefore(t,s)}(window, document,'script',
+      'https://connect.facebook.net/en_US/fbevents.js');
+    </script>
+    <!-- End Meta Pixel Code -->
+
+    <!-- Disable Back/forward cache (bfcache) to avoid some Angular events not be fired (https://web.dev/bfcache) -->
+    <script>
+      window.addEventListener('unload', e => console.log("Unload event triggered..."));
+    </script>
+  </head>
+  <body class="app">
+   <!-- STRIPE -->
+      <script src="https://js.stripe.com/v3/"></script>
+      <noscript>Please enable JavaScript to continue using this application.</noscript>
+  </body>
+</html>

@@ -1,0 +1,9 @@
+@import "src/scss/variables";
+:host {
+    background-color: #e4e5e6;
+}
+
+a {
+    color: $secondary-brand-colour !important;
+    cursor: pointer !important;
+}

@@ -1,0 +1,75 @@
+<div class="child-showcase-container">
+    <div *ngFor="let selectedStore of childStores; let childStoreIndex = index">
+        <div class="mb-5" [style.height]="'30%'" style="cursor: pointer;">
+            <ng-template #templateNoHeroChild>
+                <div (click)="onChildStoreClick(selectedStore)"
+                    class="store-info position-relative mx-auto py-4 d-flex" [style.height]="'260px'" noHeroHeader>
+                    <div class="store-title d-flex flex-column mt-4 w-100">
+                        <div class="font-size-header font-weight-bold pb-1">{{selectedStore?.name}}</div>
+                        <div class="font-size-primary py-1">{{selectedStore?.description}}</div>
+                    </div>
+                </div>
+                <div *ngIf="selectedStore.openTimeSchedule"
+                    class="pt-1 d-flex align-items-center open-time space-nowrap font-size-primary font-weight-bold"
+                    (click)="onOpenTimeModal($event,selectedStore.openTimeSchedule)"
+                    style="cursor: pointer; transform: translate(24px, -120px);">
+                    <i class="far fa-clock pr-2 text-dark"></i>
+                    <span>{{'public.global.opentimelist' | translate}}</span>
+                </div>
+            </ng-template>
+            <div *ngIf="selectedStore?.settings?.IMAGE; else templateNoHeroChild" class="position-relative">
+                <div (click)="onChildStoreClick(selectedStore)" class="hero" #heroHeader>
+                    <img [src]="selectedStore?.settings?.IMAGE">
+                </div>
+                <div (click)="onChildStoreClick(selectedStore)" class="d-none d-sm-flex row m-0">
+                    <div [style.width]="selectedStore?.backgroundMargin + 'px'" class="h-100"
+                        [style.background-color]="selectedStore?.logoBackgrondColor">
+                    </div>
+                    <div class="h-100" style="width: 100px;"
+                        [ngStyle]="{background: 'linear-gradient(to right, ' + selectedStore?.logoBackgrondColor + ' 0%, transparent 2500%)'}">
+                    </div>
+                    <div class="h-100" style="width: 40vw; max-width: 700px;"
+                        [ngStyle]="{background: 'linear-gradient(to right, ' + selectedStore?.logoBackgrondColor + ' -4%, transparent 96%)'}">
+                    </div>
+                </div>
+                <span class="row m-0 align-items-center logo-container"
+                    (click)="onChildStoreClick(selectedStore)">
+                    <img class="logo mt-sm-0" *ngIf="selectedStore?.settings?.LOGO && selectedStore?.settings?.IMAGE"
+                        [src]="selectedStore?.settings?.LOGO" [style.margin-top]="'-' + logoMargin + 'px'"
+                        crossorigin="anonymous">
+                    <span [ngClass]="{'font-white': selectedStore?.isDark}" class="store-information mt-2 mt-sm-0">
+                        <div *ngIf="selectedStore && selectedStore.name" class="pb-1 font-size-header font-weight-bold">
+                            {{selectedStore.name}}
+                        </div>
+                        <div class="py-1 font-size-primary">
+                            {{selectedStore?.description}}</div>
+                        <div *ngIf="selectedStore.openTimeSchedule"
+                            class="pt-1 mb-2 d-flex align-items-center open-time space-nowrap font-size-primary font-weight-bold"
+                            (click)="onOpenTimeModal($event, selectedStore.openTimeSchedule);$event.stopPropagation()"
+                            style="cursor: pointer;">
+                            <i class="far fa-clock pr-2" [ngClass]="{'font-white': isDark}"></i>
+                            <span>{{'public.global.opentimelist' | translate}}</span>
+                        </div>
+                    </span>
+                </span>
+            </div>
+            <ng-template #templateNoHero>
+                <div class="store-info position-relative mx-auto py-4 theme-light" #noHeroHeader>
+                    <div class="store-title d-flex flex-column m-1">
+                        <div class="font-size-header font-weight-bold pb-1">{{(selectedStore$ | async)?.name}}</div>
+                        <div class="font-size-primary py-1">{{selectedStore?.description}}</div>
+                        <div *ngIf="openTimeSchedule"
+                            class="pt-1 d-flex align-items-center open-time space-nowrap font-size-primary font-weight-bold"
+                            (click)="onOpenTimeModal($event)" style="cursor: pointer;">
+                            <i class="far fa-clock pr-2 text-dark"></i>
+                            <span>{{'public.global.opentimelist' | translate}}</span>
+                        </div>
+                    </div>
+                    <app-store-catalog-language-selector></app-store-catalog-language-selector>
+                </div>
+            </ng-template>
+        </div>
+    </div>
+</div> 
+
+<app-open-time-modal [openTimeModal]="openTimeModal"></app-open-time-modal>

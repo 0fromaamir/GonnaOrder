@@ -1,0 +1,13 @@
+@import "src/scss/variables";
+.switch input:checked + .slider {
+    background-color:gray;
+}
+.switch .slider{
+    background-color: $secondary-brand-colour;
+}
+.locationAddress input:checked + .showlocationAddress {
+    background-color: $secondary-brand-colour;
+}
+.locationAddress .showlocationAddress{
+    background-color:gray;
+}

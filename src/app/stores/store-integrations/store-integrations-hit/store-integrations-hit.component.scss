@@ -1,0 +1,17 @@
+.hitimg {
+  height: 50px;
+  }
+  
+  :host {
+    form label.required:after {
+      color: red;
+      content: " *";
+    }
+  }
+  
+  div.is-invalid {
+    .invalid-feedback {
+      display: block !important;
+    }
+  }
+  

@@ -1,0 +1,143 @@
+<div class="card list mb-0">
+    <div class="card-body py-0">
+        <div class="row">
+            <div class="col-xl-4 col-lg-4">
+                <img class="wedeliverimg" src="/assets/img/woo-delivery.png">
+                <app-help-icon [helpPageName]="helpUrl"></app-help-icon>
+            </div>
+            <div class="col-xl-8 col-lg-8 hr-margin">
+                <ng-container class="row"
+                    *ngIf="wooDeliverySection === 'woo-delivery-dashboard' then wooDeliveryDashboard else wooDeliveryLogin">
+                </ng-container>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-template #wooDeliveryDashboard>
+    <div class="row">
+        <div class="italic col-lg-12 mb-3">
+            {{ 'admin.store.setting.lastMile.lastMileDeliverySoftware' | translate }}
+        </div>
+        <div class="col-lg-12">
+            <div class="d-flex align-items-center justify-content-between p-0">
+                <button type="button" class="btn btn-primary mt-2" (click)="wooDeliverySection = 'woo-delivery-login';">
+                    <i class="fa fa-link mr-2 link" title="link"></i>{{'admin.store.setting.connect' | translate}}
+                </button>
+            </div>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #wooDeliveryLogin>
+    <ng-container class="row" *ngIf="wooDeliverySection === 'woo-delivery-login'; else wooDeliveryConnected">
+        <div class="row">
+            <div class="col-xl-12 col-lg-12 mt-2 mt-lg-0">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <form [formGroup]="wooDeliveryCredentialsForm">
+                            <div class="form-group row mb-4">
+                                <label class="col-xl-3 col-lg-3 col-md-12 col-sm-12" for="merchantId">
+                                    {{ 'admin.store.payment.merchantId' | translate }}
+                                </label>
+                                <div class=" input-group col-xl-9 col-lg-9 col-md-12 col-sm-12">
+                                    <input type="text" class="form-control" formControlName="WOO_DELIVERY_MERCHANT_ID"
+                                        id="merchantId" maxlength="64" />
+                                </div>
+                            </div>
+                            <div class="form-group row mb-4">
+                                <label class="col-xl-3 col-lg-3 col-md-12 col-sm-12 required" for="apiKey">
+                                    {{ 'admin.store.payment.apiKey' | translate }}
+                                </label>
+                                <div class=" input-group col-xl-9 col-lg-9 col-md-12 col-sm-12">
+                                    <input type="text" class="form-control"
+                                        [class.is-invalid]="(getControl('WOO_DELIVERY_API_KEY').invalid  && getControl('WOO_DELIVERY_API_KEY').touched)"
+                                        formControlName="WOO_DELIVERY_API_KEY" id="apiKey" maxlength="64" />
+                                    <div class="invalid-feedback"
+                                        *ngIf="getControl('WOO_DELIVERY_API_KEY').errors && getControl('WOO_DELIVERY_API_KEY').touched">
+                                        <span *ngIf="getControl('WOO_DELIVERY_API_KEY').errors.required">
+                                            {{'admin.global.field.required'|translate}}</span>
+                                    </div>
+                                    <div class="invalid-feedback"
+                                        *ngIf="getControl('WOO_DELIVERY_API_KEY').errors && getControl('WOO_DELIVERY_API_KEY').touched">
+                                        <span *ngIf="getControl('WOO_DELIVERY_API_KEY').errors.whitespace">
+                                            {{'admin.store.setting.integrations.wedeliver.whiteSpaceError' |
+                                            translate}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-2">
+            <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12"></div>
+            <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12">
+                <div class="float-right">
+                    <button type="button" class="btn btn-primary" (click)="connectToWooDelivery()"
+                        [disabled]="this.wooDeliveryCredentialsForm.invalid">
+                        <i class="fa fa-link mr-2 link" title="link"></i>{{'admin.store.setting.connect' | translate}}
+                    </button>
+                </div>
+            </div>
+        </div>
+
+    </ng-container>
+
+</ng-template>
+
+<ng-template #wooDeliveryConnected>
+    <div class="row">
+        <div class="col-xl-12 col-lg-12 mt-2 mt-lg-0">
+            <div class="row">
+                <div class="col-lg-12">
+                    <form [formGroup]="wooDeliveryCredentialsForm">
+                        <div class="row mb-4">
+                            <label class="col-xl-3 col-lg-3 col-md-12 col-sm-12" for="secretUrl">
+                                {{ 'admin.store.payment.merchantId' | translate }}
+                            </label>
+                            <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12">
+                                <p>{{this.wooDeliveryCredentialsForm.controls.WOO_DELIVERY_MERCHANT_ID.value}}</p>
+                            </div>
+                        </div>
+                        <div class="row mb-4">
+                            <label class="col-xl-3 col-lg-3 col-md-12 col-sm-12 required" for="secretUrl">
+                                {{ 'admin.store.payment.apiKey' | translate }}
+                            </label>
+                            <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12">
+                                <p>{{this.wooDeliveryCredentialsForm.controls.WOO_DELIVERY_API_KEY.value}}</p>
+                            </div>
+                        </div>
+                        <div class="row mb-4">
+                            <label class="col-xl-3 col-lg-3 col-md-12 col-sm-12 required" for="secretUrl">
+                                {{ 'admin.store.enabled' | translate }}
+                            </label>
+                            <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12">
+                                <label>{{'admin.global.no'|translate}}</label> &nbsp;
+                                <label class="switch pt-1 mb-0">
+                                    <input type="checkbox" formControlName="WOO_DELIVERY_ENABLED"
+                                        id="WEDELIVER_CONNECTED" (change)="toggleWedeliver()" />
+                                    &nbsp;<span class="slider round"></span>
+                                </label>&nbsp;
+                                <label>{{'admin.global.yes'|translate}}</label> &nbsp;
+                            </div>
+                        </div>
+                    </form>
+
+                    <div class="col-lg-12">
+                        <div class="float-right">
+                            <button type="button" class="btn btn-danger mt-3" (click)="disconnectToWooDelivery()">
+                                <img src="assets/img/link-slash-solid.svg" class="mr-2 slashIcon" alt="">{{'admin.store.disconnect' | translate}}
+                            </button>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</ng-template>

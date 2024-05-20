@@ -1,0 +1,34 @@
+<ng-container *ngIf="isGoApp; else web">
+  <div class="customer app position-relative">
+    <router-outlet></router-outlet>
+    <div class="customer-footer-wrapper overflow-x" id="customer-footer-wrapper" [ngStyle]="{'display' : isKeyboardOpen ? 'none' : 'block'}">
+      <div class="customer-footer d-flex justify-content-between py-3 px-3">
+        <a (click)="onClickPlus()" class="button text-center mr-2">
+          <span [ngClass]="{'material-icons-outlined': !isHomeActive, 'material-icons': isHomeActive}"
+            class="material-icons">home</span>
+          <p>Home</p>
+        </a>
+        <a (click)="OnclickCurrent(storeDetails.storeAlias)" *ngIf="storeDetails" class="text-center">
+          <ng-container>
+            <img [src]="isStoreActive ? '/assets/img/store-filled.svg' : '/assets/img/store-blank.svg'" alt="">
+            <p class="pt-1 storeName">{{ this.storeDetails?.storeName }}</p>
+          </ng-container>
+        </a>
+        <a (click)="OnClickRecents()" class="button text-center ml-2">
+          <span
+            [ngClass]="{'material-icons-outlined': !isRecentsActive, 'material-icons': isRecentsActive}">assignment</span>
+          <p>{{'public.global.recents'| translate}}</p>
+        </a>
+      </div>
+    </div>
+  </div>
+</ng-container>
+<ng-template #web>
+  <div>In public layout...</div>
+  <div *ngIf="subdomain; else directVisitor">You are visiting this app from <span
+      style="color: red">{{subdomain}}</span> subdomain</div>
+  <ng-template #directVisitor>
+    <div>You are visiting the base url (no subdomain)</div>
+  </ng-template>
+  <router-outlet></router-outlet>
+</ng-template>

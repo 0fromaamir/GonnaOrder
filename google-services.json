@@ -1,0 +1,622 @@
+{
+  "project_info": {
+    "project_number": "982274508593",
+    "project_id": "goadmin-d621f",
+    "storage_bucket": "goadmin-d621f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:982274508593:android:1b326d90c2b2a6dbc39210",
+        "android_client_info": {
+          "package_name": "com.bur_ger.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "982274508593-3octjruc3j8ui0sbgo3pq1m5vqbp0olh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.bur_ger.app",
+            "certificate_hash": "c128b3830f0c2377cb7b09ac32b93b0c58ced260"
+          }
+        },
+        {
+          "client_id": "982274508593-goa3et5176t0hno6qv51a83ne6fpei0r.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.bur_ger.app",
+            "certificate_hash": "7315232b6799bb2848f884916745f15f4cfb5005"
+          }
+        },
+        {
+          "client_id": "982274508593-v16snahbv4lvrotqmm252t3fha36b7ev.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.bur_ger.app",
+            "certificate_hash": "c189361fcdf7edd23cd62a6770bf5c5de1803479"
+          }
+        },
+        {
+          "client_id": "982274508593-6e60ig58sqrb1cf5v7fkpkuj6a7iutui.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB3VmbQ_pYjP3sw0fRba-6aOeNLWMu5UN4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "982274508593-6e60ig58sqrb1cf5v7fkpkuj6a7iutui.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "982274508593-8r9hi2v0qgame7phm6gtt3edv6e57sv1.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.gonnaorder.crepashouse"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:982274508593:android:73f76d4669f65e39c39210",
+        "android_client_info": {
+          "package_name": "com.gonnaorder.avlidelivery"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "982274508593-6e60ig58sqrb1cf5v7fkpkuj6a7iutui.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB3VmbQ_pYjP3sw0fRba-6aOeNLWMu5UN4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "982274508593-6e60ig58sqrb1cf5v7fkpkuj6a7iutui.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "982274508593-8r9hi2v0qgame7phm6gtt3edv6e57sv1.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.gonnaorder.crepashouse"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:982274508593:android:ead92135897566a0c39210",
+        "android_client_info": {
+          "package_name": "com.gonnaorder.branco"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "982274508593-6e60ig58sqrb1cf5v7fkpkuj6a7iutui.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB3VmbQ_pYjP3sw0fRba-6aOeNLWMu5UN4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "982274508593-6e60ig58sqrb1cf5v7fkpkuj6a7iutui.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "982274508593-8r9hi2v0qgame7phm6gtt3edv6e57sv1.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.gonnaorder.crepashouse"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:982274508593:android:d14095231c73f0ddc39210",
+        "android_client_info": {
+          "package_name": "com.gonnaorder.crepashouse"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "982274508593-6e60ig58sqrb1cf5v7fkpkuj6a7iutui.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB3VmbQ_pYjP3sw0fRba-6aOeNLWMu5UN4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "982274508593-6e60ig58sqrb1cf5v7fkpkuj6a7iutui.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "982274508593-8r9hi2v0qgame7phm6gtt3edv6e57sv1.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.gonnaorder.crepashouse"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:982274508593:android:eea27ce2d345c710c39210",
+        "android_client_info": {
+          "package_name": "com.gonnaorder.firebasetest"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "982274508593-6e60ig58sqrb1cf5v7fkpkuj6a7iutui.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB3VmbQ_pYjP3sw0fRba-6aOeNLWMu5UN4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "982274508593-6e60ig58sqrb1cf5v7fkpkuj6a7iutui.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "982274508593-8r9hi2v0qgame7phm6gtt3edv6e57sv1.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.gonnaorder.crepashouse"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:982274508593:android:fae46b75bd0fbeccc39210",
+        "android_client_info": {
+          "package_name": "com.gonnaorder.go"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "982274508593-ak28buaig5m0a39j9siqmtbn1mgus71j.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.gonnaorder.go",
+            "certificate_hash": "0318b53353edb2f1568153cb7b7985c58c452a92"
+          }
+        },
+        {
+          "client_id": "982274508593-6e60ig58sqrb1cf5v7fkpkuj6a7iutui.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB3VmbQ_pYjP3sw0fRba-6aOeNLWMu5UN4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "982274508593-6e60ig58sqrb1cf5v7fkpkuj6a7iutui.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "982274508593-8r9hi2v0qgame7phm6gtt3edv6e57sv1.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.gonnaorder.crepashouse"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:982274508593:android:58f9b428084ad0f2c39210",
+        "android_client_info": {
+          "package_name": "com.gonnaorder.goadmin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "982274508593-488mnguap1en0fcm5gc2kka6v0m95bs2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.gonnaorder.goadmin",
+            "certificate_hash": "58c2d3932e847b4f7334361c972e99f92e3bba0f"
+          }
+        },
+        {
+          "client_id": "982274508593-s69qg0jhatvd4nh6tnl952bp98si2t2u.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.gonnaorder.goadmin",
+            "certificate_hash": "cea77bd461371e94f1933e6a031cf3d7de395b96"
+          }
+        },
+        {
+          "client_id": "982274508593-6e60ig58sqrb1cf5v7fkpkuj6a7iutui.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB3VmbQ_pYjP3sw0fRba-6aOeNLWMu5UN4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "982274508593-6e60ig58sqrb1cf5v7fkpkuj6a7iutui.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "982274508593-8r9hi2v0qgame7phm6gtt3edv6e57sv1.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.gonnaorder.crepashouse"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:982274508593:android:96b3afcf2c7b816cc39210",
+        "android_client_info": {
+          "package_name": "com.gonnaorder.goadmindev"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "982274508593-6e60ig58sqrb1cf5v7fkpkuj6a7iutui.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB3VmbQ_pYjP3sw0fRba-6aOeNLWMu5UN4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "982274508593-6e60ig58sqrb1cf5v7fkpkuj6a7iutui.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "982274508593-8r9hi2v0qgame7phm6gtt3edv6e57sv1.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.gonnaorder.crepashouse"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:982274508593:android:61f47f8b8e3fc493c39210",
+        "android_client_info": {
+          "package_name": "com.gonnaorder.godev"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "982274508593-34hnj1m4p3mjq9rpum151hg0eqosh9p9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.gonnaorder.godev",
+            "certificate_hash": "cea77bd461371e94f1933e6a031cf3d7de395b96"
+          }
+        },
+        {
+          "client_id": "982274508593-6e60ig58sqrb1cf5v7fkpkuj6a7iutui.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB3VmbQ_pYjP3sw0fRba-6aOeNLWMu5UN4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "982274508593-6e60ig58sqrb1cf5v7fkpkuj6a7iutui.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "982274508593-8r9hi2v0qgame7phm6gtt3edv6e57sv1.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.gonnaorder.crepashouse"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:982274508593:android:0b7800bdd231e1fec39210",
+        "android_client_info": {
+          "package_name": "com.gonnaorder.lagrandefamiglia"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "982274508593-6e60ig58sqrb1cf5v7fkpkuj6a7iutui.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB3VmbQ_pYjP3sw0fRba-6aOeNLWMu5UN4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "982274508593-6e60ig58sqrb1cf5v7fkpkuj6a7iutui.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "982274508593-8r9hi2v0qgame7phm6gtt3edv6e57sv1.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.gonnaorder.crepashouse"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:982274508593:android:d2d757d488d4f7e8c39210",
+        "android_client_info": {
+          "package_name": "com.gonnaorder.lojamichel"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "982274508593-6e60ig58sqrb1cf5v7fkpkuj6a7iutui.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB3VmbQ_pYjP3sw0fRba-6aOeNLWMu5UN4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "982274508593-6e60ig58sqrb1cf5v7fkpkuj6a7iutui.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "982274508593-8r9hi2v0qgame7phm6gtt3edv6e57sv1.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.gonnaorder.crepashouse"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:982274508593:android:1508bcf8368ba7b3c39210",
+        "android_client_info": {
+          "package_name": "com.gonnaorder.mpotsaris"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "982274508593-6e60ig58sqrb1cf5v7fkpkuj6a7iutui.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB3VmbQ_pYjP3sw0fRba-6aOeNLWMu5UN4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "982274508593-6e60ig58sqrb1cf5v7fkpkuj6a7iutui.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "982274508593-8r9hi2v0qgame7phm6gtt3edv6e57sv1.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.gonnaorder.crepashouse"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:982274508593:android:24d36338949f15f3c39210",
+        "android_client_info": {
+          "package_name": "com.gonnaorder.timsthai"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "982274508593-hld4552p0kid4i1lk724ucde3g0678pn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.gonnaorder.timsthai",
+            "certificate_hash": "7315232b6799bb2848f884916745f15f4cfb5005"
+          }
+        },
+        {
+          "client_id": "982274508593-pjglp6mjk5gt83go2bsjenllpv7i0okb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.gonnaorder.timsthai",
+            "certificate_hash": "e94f8a3f59d400d30bdd563592e8e6e8622a46e9"
+          }
+        },
+        {
+          "client_id": "982274508593-6e60ig58sqrb1cf5v7fkpkuj6a7iutui.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB3VmbQ_pYjP3sw0fRba-6aOeNLWMu5UN4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "982274508593-6e60ig58sqrb1cf5v7fkpkuj6a7iutui.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "982274508593-8r9hi2v0qgame7phm6gtt3edv6e57sv1.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.gonnaorder.crepashouse"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:982274508593:android:f49cd89c9c144c5fc39210",
+        "android_client_info": {
+          "package_name": "com.gonnaorder.trattoriasicily"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "982274508593-6e60ig58sqrb1cf5v7fkpkuj6a7iutui.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB3VmbQ_pYjP3sw0fRba-6aOeNLWMu5UN4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "982274508593-6e60ig58sqrb1cf5v7fkpkuj6a7iutui.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "982274508593-8r9hi2v0qgame7phm6gtt3edv6e57sv1.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.gonnaorder.crepashouse"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:982274508593:android:d488362302dd8782c39210",
+        "android_client_info": {
+          "package_name": "com.indianaroma.customerapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "982274508593-6e60ig58sqrb1cf5v7fkpkuj6a7iutui.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB3VmbQ_pYjP3sw0fRba-6aOeNLWMu5UN4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "982274508593-6e60ig58sqrb1cf5v7fkpkuj6a7iutui.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "982274508593-8r9hi2v0qgame7phm6gtt3edv6e57sv1.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.gonnaorder.crepashouse"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

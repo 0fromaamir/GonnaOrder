@@ -1,0 +1,77 @@
+<div class="animated fadeIn right-col">
+    <div class="card list">
+        <div class="card-header">
+            {{'admin.store.setting.billing' | translate}}
+            <app-help-icon [helpPageName]="updatePricingHelpPage"></app-help-icon>
+        </div>
+    </div>
+    <div class="card-body px-0">
+        <div class="col-lg-12">
+            <form [formGroup]="updatePricingForm">
+              <div class="row mb-2">
+                <div class="col-md-4">
+                  <label for="newPrice">{{'admin.global.subscription.orderPercentageFee' | translate}}</label>
+                </div>
+                <div class="col-md-8 priceContainer d-flex">
+                  <input type="number" formControlName="orderPercentageFee"
+                                      id="orderPercentageFee"
+                                      class="form-control  percentage-field" autocomplete="off" min="0" max="100"
+                                      [class.is-invalid]="getControl('orderPercentageFee').invalid && (getControl('orderPercentageFee').dirty || getControl('orderPercentageFee').touched)" />
+                </div>
+              </div>
+              <div class="row mb-2">
+                <div class="col-md-4">
+                  <label for="newPrice">{{'admin.global.subscription.paymentPercentageFee' | translate}}</label>
+                </div>
+                <div class="col-md-8 priceContainer d-flex">
+                  <input type="number" formControlName="paymentPercentageFee"
+                                      id="paymentPercentageFee"
+                                      class="form-control  percentage-field" autocomplete="off" min="0" max="100"
+                                      [class.is-invalid]="getControl('paymentPercentageFee').invalid && (getControl('paymentPercentageFee').dirty || getControl('paymentPercentageFee').touched)" />
+                </div>
+              </div>
+                <div class="row mb-2">
+                  <div class="col-md-4">
+                    <label for="newPrice">{{'admin.global.subscription.orderFixedFee' | translate}}</label>
+                  </div>
+                  <div class="col-md-8 priceContainer d-flex">
+                    <span class="my-auto mr-1">{{subscriptionCurrency }}</span><app-price-input [allowNegValue]="false" [showCurrencySymbol]="false" [priceFormControl]="getControl('orderFixed')"></app-price-input>
+                  </div>
+                </div>
+                
+                <div class="row mb-2">
+                  <div class="col-md-4">
+                    <label for="newPrice">{{'admin.global.subscription.paymentFixedFee' | translate}}</label>
+                  </div>
+                  <div class="col-md-8 priceContainer d-flex">
+                    <span class="my-auto mr-1">{{subscriptionCurrency }}</span><app-price-input [allowNegValue]="false" [showCurrencySymbol]="false" [priceFormControl]="getControl('paymentFixed')"></app-price-input>
+                  </div>
+                </div>
+                
+                <div class="row mb-2">
+                  <div class="col-md-4">
+                    <label for="newPrice">{{'admin.global.subscription.monthlySubscriptionAmount' | translate}}</label>
+                  </div>
+                  <div class="col-md-8 priceContainer d-flex">
+                    <span class="my-auto mr-1">{{subscriptionCurrency }}</span><app-price-input [allowNegValue]="false" [showCurrencySymbol]="false" [priceFormControl]="getControl('monthlySubscription')"></app-price-input>
+                  </div>
+                </div>
+                <div class="row mb-2">
+                  <div class="col-md-4">
+                    <label for="newPrice">{{'admin.global.subscription.yearlySubscriptionAmount' | translate}}</label>
+                  </div>
+                  <div class="col-md-8 priceContainer d-flex">
+                    <span class="my-auto mr-1">{{subscriptionCurrency }}</span><app-price-input [allowNegValue]="false" [showCurrencySymbol]="false" [priceFormControl]="getControl('yearlySubscription')"></app-price-input>
+                  </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12">
+                      <button class="btn btn-primary" [disabled]="" (click)="updatePrice()"><i
+                        class="fas fa-save mr-2 pr-1"></i>{{'admin.global.save'|translate}}</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,45 @@
+.card {
+    border-top: 1px solid #c8ced3 !important;
+    border-bottom: 0 !important;
+    border-right: 0 !important;
+    border-left: 0 !important;
+    border-radius: 0 !important;
+    
+    padding-top: 0.5rem !important;
+    padding-left: 0.3rem !important;
+    padding-right: 0.3rem !important;
+    padding-bottom: 0.5rem !important;
+    margin-bottom: 0 !important;
+}
+
+.row {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+}
+.green-icon {
+    color: green;
+}
+
+button.printer-delete-btn {
+    background-color: transparent !important;
+    border: none !important;
+}
+
+.mat-dialog-title {
+    display: block;
+    margin: 0px 0px 20px 0px;
+    padding: 0px !important;
+}
+
+.mat-dialog-content {
+    display: block;
+    margin: 0px 0px 20px 0px;
+}
+
+.mat-dialog-actions {
+    display: block;
+}
+
+.btn-sm {
+    height: 32px;
+}

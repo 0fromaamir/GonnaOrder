@@ -1,0 +1,25 @@
+.space-nowrap {
+    white-space: nowrap;
+}
+.hide-element {
+    width: 0 !important;
+    max-width: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    visibility: hidden;
+}
+
+.wishtime {
+  width: 60px !important;
+}
+
+@media (max-width:767px){
+    .wishtime{
+      width: 60px !important;
+    }
+}
+.mat-icon-button {
+    width: 20px !important;
+}
+

@@ -1,0 +1,189 @@
+<div class="animated fadeIn right-col">
+  <div class="card list">
+    <div class="card-header">
+      {{'admin.store.setting.billing' | translate}}
+      <app-help-icon [helpPageName]="subscriptionPurchaseHelpPage"></app-help-icon>
+    </div>
+  </div>
+  <div class="card-body px-0">
+    <div class="col-lg-12">
+      <form [formGroup]="subscriptionPurchaseForm">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="row form-group">
+              <div class="col-md-4">
+                <label>{{'admin.global.subscription.billingDetails.label' | translate}}</label>
+              </div>
+              <div class="col-md-8 pr-1">
+              <div class="input-group">
+                <p>{{ (selectedStore$ | async).name }}</p>
+              </div>
+                <div class="input-group">
+                <p><span *ngIf="(selectedStore$ | async).address.addressLine1">{{ (selectedStore$ | async).address.addressLine1 }},</span> {{ (selectedStore$ | async).address.addressLine2 }}</p>
+              </div>
+              <div class="input-group">
+                <p><span *ngIf="(selectedStore$ | async).address.city">{{ (selectedStore$ | async).address.city }},</span>  <span *ngIf="(selectedStore$ | async).address.region">  {{ (selectedStore$ | async).address.region }},</span>  {{ (selectedStore$ | async).address.country.name }}</p>
+              </div>
+             </div>
+            </div>
+            <div class="row form-group">
+              <div class="col-md-4">
+                <label [class.required]="((selectedStore$ | async).address.country.europeanCountry &&  (selectedStore$ | async).address.country.code !== this.NETHERLANDS)" >{{'admin.global.subscription.vatNumber.label' | translate}} </label>
+              </div>
+              <div class="input-group col-md-8 pr-1">
+                <input type="text" class="form-control" [class.is-invalid]="(getControl('vatNumber').invalid || inValidVat) && (getControl('vatNumber').dirty || getControl('vatNumber').touched)"
+                    [attr.placeholder]="'admin.global.subscription.vat.label' | translate" autocomplete="vatNumber" formControlName="vatNumber" id="vat" maxlength="20" aria-describedby="vatNumberHelpBlock"/>
+                <div class="invalid-feedback" *ngIf="getControl('vatNumber').errors">
+                  <span *ngIf="getControl('vatNumber').errors.minlength">{{ 'admin.global.field.minLength' | translate:{minLength: getControl('vatNumber').errors.minlength.requiredLength} }}</span>
+                  <span *ngIf="getControl('vatNumber').errors.maxlength">{{ 'admin.global.field.maxLength' | translate:{maxLength: getControl('vatNumber').errors.maxlength.requiredLength} }}</span>
+                  <span *ngIf="getControl('vatNumber').errors.required">{{'admin.global.field.required' | translate}}</span>
+                </div>
+                <div class="invalid-feedback" *ngIf="!getControl('vatNumber').errors && inValidVat">
+                  <span *ngIf="inValidVat">{{'admin.global.subscription.vat.invalid'|translate}}</span>
+                </div>
+                <div class="valid-feedback d-block text-black"
+                  *ngIf="inValidVat != null && !inValidVat && !getControl('vatNumber').errors && (getControl('vatNumber').dirty || getControl('vatNumber').touched)  && ((selectedStore$ | async).address.country.code !== NETHERLANDS) ">
+                  {{'admin.global.subscription.vat.valid'|translate}}
+                </div>
+                <small id="vatNumberHelpBlock" class="form-text w-100" *ngIf="(selectedStore$ | async).address?.country.code === 'BE'">
+                  {{ 'admin.store.subscription.vatprompt.sodexobelgium' | translate}}
+                </small>
+                <img src="/assets/img/branding/pluxee/Pluxee-Logo.png" id="sodexo_logo" *ngIf="(selectedStore$ | async).address?.country.code === 'BE'"/>
+                <small id="vatNumberHelpBlock" class="form-text w-100 explanation"
+                  *ngIf="(selectedStore$ | async).address?.country.europeanCountry && (selectedStore$ | async).address?.country.code !== 'BE' && (selectedStore$ | async).address?.country.code !== 'NL'">
+                  {{ 'admin.store.subscription.vatprompt.eu' | translate}}
+                </small>
+              </div>
+            </div>
+
+          </div>
+
+
+          <div class="col-md-6">
+            <div class="row form-group">
+              <div class="col-md-4">
+                <label>{{'admin.global.subscription.price.label' | translate}}</label>
+              </div>
+              <div class="input-group col-md-8">
+                <input type="text" class="form-control" disabled value="{{ (subscriptionPurchase$ | async).price | currency:(subscriptionPurchase$ | async).currency }}" />
+              </div>
+            </div>
+            <div class="row form-group"  *ngIf="(subscriptionPurchase$ | async).discount">
+              <div class="col-md-4">
+                <label>{{'admin.global.discount' | translate}} ({{ (subscriptionPurchase$ | async).discountPercentage }} %)</label>
+              </div>
+              <div class="input-group col-md-8">
+                <input type="text" class="form-control" disabled value="-{{ (subscriptionPurchase$ | async).discount | currency:(subscriptionPurchase$ | async).currency }}" />
+              </div>
+            </div>
+            <div class="row form-group" *ngIf="(selectedStore$ | async).address.country.code == this.NETHERLANDS && (subscriptionPurchase$ | async).vatCharge">
+             <div class="col-md-4">
+                  <label>{{'admin.global.subscription.vat.label' | translate}} ({{ (vatInfo$ | async).percentage * 100 }} %)</label>
+                </div>
+                <div class="input-group col-md-8">
+                  <input type="text" class="form-control" disabled value="{{ (vatInfo$ | async).vatCharge | currency:(subscriptionPurchase$ | async).currency }}" />
+                </div>
+            </div>
+            <div class="row form-group" >
+              <div class="col-md-4">
+                <label>{{'admin.global.subscription.totalPrice.label' | translate}}</label>
+              </div>
+              <div class="input-group col-md-8">
+                <input type="text" class="form-control" disabled value=" {{ ((selectedStore$ | async).address.country.code == this.NETHERLANDS) ? ((subscriptionPurchase$ | async).totalPrice | currency:(subscriptionPurchase$ | async).currency ) : ((subscriptionPurchase$ | async).discountedPrice | currency:(subscriptionPurchase$ | async).currency)}}" />
+              </div>
+            </div>
+            <div class="row form-group">
+              <div class="col-md-4">
+                <label for="voucher">{{'admin.global.voucher.label' | translate}}</label>
+              </div>
+              <div class="input-group col-md-8">
+                <input type="text" class="form-control" [class.is-invalid]="(getControl('voucherCode').invalid || inValidVoucher || reservedVoucher) && (getControl('voucherCode').dirty || getControl('voucherCode').touched)"
+                      [attr.placeholder]="'admin.global.voucher.label' | translate" autocomplete="voucherCode" formControlName="voucherCode" id="voucherCode" maxlength="16" />
+                <div class="invalid-feedback" *ngIf="getControl('voucherCode').errors">
+                  <span *ngIf="getControl('voucherCode').errors.minlength">{{ 'admin.global.field.minLength' | translate:{minLength: getControl('voucherCode').errors.maxlength.requiredLength} }}</span>
+                  <span *ngIf="getControl('voucherCode').errors.maxlength">{{ 'admin.global.field.maxLength' | translate:{maxLength: getControl('voucherCode').errors.maxlength.requiredLength} }}</span>
+                  <span *ngIf="getControl('voucherCode').errors.pattern">{{ 'admin.global.subscription.discountVoucher.patternInvalid' | translate }}</span>
+                </div>
+                <div class="invalid-feedback" *ngIf="!getControl('voucherCode').errors && inValidVoucher">
+                  <span *ngIf="inValidVoucher">{{'admin.global.subscription.discountVoucher.invalid'|translate}}</span>
+                </div>
+                <div class="invalid-feedback" *ngIf="!getControl('voucherCode').errors && reservedVoucher">
+                  <span *ngIf="reservedVoucher">{{'admin.global.subscription.discountVoucher.alreadyReserved'|translate}}</span>
+                </div>
+                <div class="valid-feedback d-block text-black" *ngIf="inValidVoucher != null && !inValidVoucher && !getControl('voucherCode').errors && (getControl('voucherCode').dirty || getControl('voucherCode').touched)">{{'admin.global.subscription.discountVoucher.valid'|translate}}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+       
+        <div class="row">
+          <div class="col-md-6">
+            <div class="row form-group">
+              <div class="col-md-4">
+                <label>{{'admin.store.subscription.billingPeriod' | translate}}</label> 
+              </div>
+              <div class="col-md-8 pr-1">
+            <div class="input-group">
+            <div class="form-group">
+              <label class="radio-container" for="SUBSCRIPTION_TYPE_YEARLY">
+                <span>{{ 'admin.store.subscription.payYearly' | translate:{ amount: (subscriptionPurchase$ | async).yearlyPrice / 12 | currency:(subscriptionPurchase$ | async).currency } }}</span>
+                <input type="radio" value="YEARLY" formControlName="subscriptionType" id="SUBSCRIPTION_TYPE_YEARLY" />
+                <span class="checkmark"></span>
+                <div class="explanation">
+                  {{'admin.store.subscription.billedAnually'|translate}}
+                </div>
+              </label>
+            </div> </div>
+            <div class="input-group">
+            <div class="form-group">
+              <label class="radio-container" for="SUBSCRIPTION_TYPE_MONTHLY">
+                <span>{{ 'admin.store.subscription.payMonthly' | translate:{ amount: (subscriptionPurchase$ | async).monthlyPrice | currency:(subscriptionPurchase$ | async).currency } }}</span>
+                <input type="radio" value="MONTHLY" formControlName="subscriptionType" id="SUBSCRIPTION_TYPE_MONTHLY" />
+                <span class="checkmark"></span>
+              </label>
+            </div> </div>
+            <div class="input-group">
+            <div class="form-group">
+              <label class="chk-container" for="saveCard">
+                <span>{{'admin.store.subscription.saveCard'|translate}}</span>
+                <input
+                  [disableControl]="isSubscriptionTypeMonthly()"
+                  type="checkbox" formControlName="recurringPayment" id="saveCard"/>
+                <span class="checkmark"></span>
+              </label>
+            </div> </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+      </form>
+
+      <div class="row">
+        <div class="col-md-12">
+          <label>
+            {{'admin.continue.accept' | translate}}: <a href="https://www.gonnaorder.com/terms-of-use/"
+              class="text-decoration-underline">{{'admin.global.termsOfUse'|translate}}</a>
+          , <a href="https://gonnaorder.com/privacy/"
+              class="text-decoration-underline">{{'admin.global.privacyPolicy'|translate}}.</a>
+          </label>
+        </div>
+      </div>
+
+      <div class="row mt-3">
+        <div class="col-md-12">
+          <button class="btn btn-primary" (click)="onContinue()" [disabled]="subscriptionPurchaseForm.invalid || !(checkoutEnabled$ | async)">{{'admin.global.subscription.continue' | translate}}</button>
+          <button class="btn btn-primary ml-3 sharePaymentLink" *ngIf="showSharePaymentLinkButton" (click)="onClickSharePaymentLink()" [disabled]="subscriptionPurchaseForm.invalid || !(checkoutEnabled$ | async)"><i class="fa fa-user-lock mr-2 pr-1"></i>{{'admin.global.subscription.sharePaymentLink' | translate}}</button>
+        </div>
+        <div class="col-md-11 text-truncate mt-3" *ngIf="sharePaymentLinkUrl">
+          <div class="d-flex">
+            <i title="Click to copy" class="far fa-copy copyIcon mr-2" (click)="copySharePaymentLinkUrl()"></i><a
+            target="_blank" href="{{sharePaymentLinkUrl}}" class="actionLink">{{sharePaymentLinkUrl}}</a>
+          </div>
+          <div><i>{{'admin.global.subscription.linkValidFor24h'|translate}}</i></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

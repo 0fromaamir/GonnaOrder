@@ -1,0 +1,64 @@
+@import "../store-catalog.common.scss";
+
+#variantOffer {
+  .discount input[type="radio"] {
+    height: 15px;
+    width: 15px;
+    flex: 0 0 auto;
+    margin-right: 10px;
+  }
+
+  .discount label {
+    margin-right: 15px;
+  }
+
+  .priceContainer {
+    .invalid-feedback {
+      display: block !important;
+    }
+  }
+}
+
+.footer {
+  background: #fff !important;
+  padding-top: 10px !important;
+  padding-bottom: 10px !important;
+  width: calc(100% - 340px);
+  position: fixed;
+  bottom: 50px;
+  z-index: 9999;
+}
+
+.footer1 {
+  margin-left: -32px;
+  height: 50px;
+  padding-top: 0px !important;
+  padding-bottom: 4px !important;
+  width: 100% !important;
+  position: fixed;
+  bottom: 0px;
+  z-index: 999;
+}
+.counter{
+  padding-right: 30px;
+ }
+
+@media (max-width: 992px) {
+  .footer {
+    width: calc(100% - 90px) !important;
+  }
+}
+
+@media (max-width: 576px) {
+  .header {
+    width: calc(100% - 0px) !important;
+  }
+
+  .footer {
+    width: calc(100% - 30px) !important;
+  }
+
+  .footer1 {
+    margin-left: 0px;
+  }
+}

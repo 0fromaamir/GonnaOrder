@@ -1,0 +1,17 @@
+{
+  "appName": "Indian Aroma",
+  "appDescription": "Customer ordering app for Indian Aroma",
+  "type": "TEMPLATE",
+  "tag": "PROD",
+  "bundleId": "com.indianaroma.customerapp",
+  "appleId": "1574522377",
+  "storeAlias": "indianaroma",
+  "iconUrl": "resources/assets/mobile-apps/template/IndianAroma/icon.png",
+  "iconBackgroundUrl": "resources/assets/mobile-apps/template/IndianAroma/icon-background.png",
+  "iconForegroundUrl": "resources/assets/mobile-apps/template/IndianAroma/icon-foreground.png",
+  "splashUrl": "resources/assets/mobile-apps/template/IndianAroma/splash.png",
+  "splashBackgroundColor": "#FFFFFF",
+  "googleServiceInfoUrl": "resources/assets/mobile-apps/template/IndianAroma/GoogleService-Info.plist",
+  "defaultDeeplinkAppAndroidUrl": "https://play.google.com/store/apps/details?id=com.gonnaorder.indianaroma",
+  "defaultDeeplinkAppIOSUrl": "https://apps.apple.com/nl/app/gonnaorder/id1668204682?l=en"
+}

@@ -1,0 +1,71 @@
+<ng-container *ngIf="loyaltyEnabled">
+  <ng-container *ngIf="!auth.isUserLoggedIn()">
+    <label class="d-flex w-100 container font-size-primary m-0 mb-1 mt-1 pl-4">
+      {{ 'public.loyalty.prompt' | translate }}
+    </label>
+    <label class="d-flex w-100 container font-size-primary m-0 mb-1 pl-4">
+      <span class="mr-2">
+        <i class="fas fa-trophy theme-color-header"></i>
+      </span>
+      <strong>
+        {{ 'public.loyalty.reward' | translate :
+        {
+        reward: loyaltyAmountReward | formatPrice:
+        selectedStoreLocale:selectedStoreCurrency:selectedStoreCurrencySymbol,
+        amount: loyaltyAmountSpent | formatPrice: selectedStoreLocale:selectedStoreCurrency:selectedStoreCurrencySymbol
+        }
+        }}
+      </strong>
+    </label>
+  </ng-container>
+  <div *ngIf="auth.isUserLoggedIn()" class="loyalty-box mx-4 mb-4 py-2">
+    <div class="row w-100 d-flex font-size-primary mx-0" *ngIf="cusomerLoyaltyStatus != 'FAILED'">
+      <div class="col-lg-6 col-md-6 col-sm-6">
+        <div>
+          <span class="mr-2">
+            <i class="fas fa-trophy theme-color-header"></i>
+          </span>
+          <strong>
+            {{ 'public.loyalty.title' | translate }}
+          </strong>
+        </div>
+        <div>
+          {{ 'public.loyalty.collected' | translate }}
+          <strong [class.loading-text-placeholder]="!customerLoyalty">
+            {{ customerLoyalty?.balance ?? 0
+            | formatPrice: selectedStoreLocale:selectedStoreCurrency:selectedStoreCurrencySymbol }}/{{
+            loyaltyAmountSpent
+            | formatPrice: selectedStoreLocale:selectedStoreCurrency:selectedStoreCurrencySymbol }}
+          </strong>
+        </div>
+        <div>
+          <progress class="loyalty-progress" [value]="customerLoyalty?.balance" [max]="loyaltyAmountSpent"></progress>
+        </div>
+        <div>
+          {{ 'public.loyalty.redeem' | translate }}
+          <strong [class.loading-text-placeholder]="!customerLoyalty">
+            {{ customerLoyalty?.voucherValue ?? 0 | formatPrice:
+            selectedStoreLocale:selectedStoreCurrency:selectedStoreCurrencySymbol }}
+          </strong>
+        </div>
+      </div>
+      <div class="col-lg-6 col-md-6 col-sm-6">
+        <div>
+          {{ 'public.loyalty.voucher' | translate }}: <span [class.loading-text-placeholder]="!customerLoyalty">{{
+            customerLoyalty?.voucherCode ?? 'AAAA-AAAA' }}</span>
+        </div>
+        <div>
+          {{ 'public.loyalty.updatedAt' | translate }}: <span [class.loading-text-placeholder]="!customerLoyalty">{{
+            customerLoyalty?.updatedAt ?? datePlaceholder | date : 'dd MMM yyyy'}}</span>
+        </div>
+        <div>
+          {{ 'public.loyalty.createdAt' | translate }}: <span [class.loading-text-placeholder]="!customerLoyalty">{{
+            customerLoyalty?.createdAt ?? datePlaceholder | date : 'dd MMM yyyy'}}</span>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="cusomerLoyaltyStatus == 'FAILED'" class="w-100 font-size-primary px-2">
+      {{ 'public.loyalty.noPoints' | translate }}
+    </div>
+  </div>
+</ng-container>

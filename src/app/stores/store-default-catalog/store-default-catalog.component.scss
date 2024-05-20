@@ -1,0 +1,43 @@
+.table {
+    td {
+        padding: 6px 0;
+        border: 0 !important;
+    }
+    margin: 0 !important;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+.catalog-images-container{
+  .background-image {
+    width: 100%;
+    position: relative;
+
+    ::ng-deep .store-images{
+      &.catalog-background {
+      height:130px;
+      width:200px
+     }
+    }
+  }
+  .download-image {
+    cursor: pointer;
+  }
+  .font-xl {
+    font-size: 30px !important;
+  }
+}
+
+#tdRadioButtons{
+  margin-top: 7%;
+}

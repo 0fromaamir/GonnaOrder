@@ -1,0 +1,10 @@
+{
+  "name": "GonnaOrder",
+  "integrations": {
+    "capacitor": {
+      "enabled": false
+    },    
+    "cordova": {}
+  },
+  "type": "angular"
+}

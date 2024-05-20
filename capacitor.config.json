@@ -1,0 +1,22 @@
+{
+  "appId": "com.gonnaorder.go",
+  "appName": "GonnaOrder",
+  "webDir": "www",
+  "npmClient": "npm",
+  "cordova": {
+    "preferences": {
+      "ScrollEnabled": "false",
+      "BackupWebStorage": "none",
+      "SplashMaintainAspectRatio": "true",
+      "FadeSplashScreenDuration": "300",
+      "SplashShowOnlyFirstTime": "false",
+      "SplashScreen": "screen",
+      "SplashScreenDelay": "3000",
+      "ShowSplashScreenSpinner": "false"
+    }
+  },
+  "server": {
+    "iosScheme": "ionic",
+    "androidScheme": "ionic"
+  }
+}

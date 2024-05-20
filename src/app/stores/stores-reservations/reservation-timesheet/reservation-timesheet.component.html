@@ -1,0 +1,40 @@
+<table class="table" id="tableReservation">
+  <thead>
+  <tr>
+    <th>{{ 'admin.store.table'|translate }}</th>
+    <th id="thMax">{{ 'admin.store.max'|translate }}</th>
+    <th class="hours" *ngFor="let hour of availableHours">{{ hour }}</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let event of eventData; let j = index">
+    <td class="header-bottom">{{ event.label }}</td>
+    <td class="header-bottom" id="tdTableId">{{ event.maxCapacity }}</td>
+    <td colspan="24" id="tdColspan">
+      <!-- The squares -->
+
+      <div class="hallOfSquares">
+        <div *ngIf="isGreenLineShow">
+          <i id="greenLineIcon" [style.left]="getCurrentTimePosition()-6+'px'" class="fas fa-circle overlay" *ngIf="j==0"></i>
+          <div id="greenLine" class="overlay"  [style.left]="getCurrentTimePosition()+'px'"  #greenLine></div>
+        </div>
+        <div class="square" *ngFor="let square of squares; let i = index" (click)="alertStartTime(i,event.tableId,event.label)"></div>
+        <!-- New overlay div -->
+          <div class="overlay"
+               *ngFor="let reservation of event.reservations"
+               [style.width]="reservedInterval(reservation)+'px'"
+               [style.left]="count15MinsFromZero(reservation)+'px'"
+               [style.display]="!isShowReservation(reservation)? 'none':''"
+               (click)="navigateToDetails(reservation)"
+          >
+            <span class="reserve-text">{{ reservation.name }}</span>
+            <span class="reserve-number">{{ reservation.numberOfPeople }}</span>
+          </div>
+
+      </div>
+
+    </td>
+  </tr>
+  </tbody>
+</table>
+

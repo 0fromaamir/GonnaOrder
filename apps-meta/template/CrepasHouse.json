@@ -1,0 +1,17 @@
+{
+  "appName": "Crepa House",
+  "appDescription": "Customer ordering app for Crepa's House",
+  "type": "TEMPLATE",
+  "tag": "PROD",
+  "bundleId": "com.gonnaorder.crepashouse",
+  "appleId": "6474964413",
+  "storeAlias": "crepashouse",
+  "iconUrl": "resources/assets/mobile-apps/template/CrepasHouse/icon.png",
+  "iconBackgroundUrl": "resources/assets/mobile-apps/template/CrepasHouse/icon-background.png",
+  "iconForegroundUrl": "resources/assets/mobile-apps/template/CrepasHouse/icon-foreground.png",
+  "splashUrl": "resources/assets/mobile-apps/template/CrepasHouse/splash.png",
+  "splashBackgroundColor": "#FFFFFF",
+  "googleServiceInfoUrl": "resources/assets/mobile-apps/template/CrepasHouse/GoogleService-Info.plist",
+  "defaultDeeplinkAppAndroidUrl": "https://play.google.com/store/apps/details?id=com.gonnaorder.crepashouse",
+  "defaultDeeplinkAppIOSUrl": "https://apps.apple.com/nl/app/gonnaorder/id6474964413?l=en"
+}

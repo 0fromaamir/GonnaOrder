@@ -1,0 +1,15 @@
+<div id="mainBody" class="text-center">
+  <span class="float-right position-absolute closebutton text-decoration-underline font-weight-bold"
+    (click)="onYesOrNoPress(true)">Close<i class="fas fa-times pl-2"></i></span>
+  <div>
+    <p id="title" class="p-4">{{'public.global.inActivity'|translate}}</p>
+    <p id="timeLeft">0:{{ timeLeft }} (m:ss)</p>
+    <progress max="45" [value]="timeLeft"></progress>
+    <hr>
+    <div id="buttonsArea">
+      <button (click)="onYesOrNoPress(false)" id="noButton">{{'public.global.no'|translate}}</button>
+      <div class="buttonsDiv"><button class="btn btn-dark px-5 py-1" (click)="onYesOrNoPress(true)"
+          id="yesButton">{{'public.global.yes'|translate}}</button></div>
+    </div>
+  </div>
+</div>

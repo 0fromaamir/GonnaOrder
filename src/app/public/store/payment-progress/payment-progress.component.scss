@@ -1,0 +1,34 @@
+@import "bootstrap/scss/functions";
+@import "bootstrap/scss/variables";
+@import "bootstrap/scss/mixins";
+@import "../../../../scss/globals";
+
+.payment-progress-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 992px;
+
+  @include media-breakpoint-down(md) {
+    max-width: 992px;
+  }
+}
+
+.payment-header {
+  max-width: 992px;
+  background: #F2F0EE;
+  @include media-breakpoint-down(md) {
+    max-width: 992px;
+  }
+  h1 {
+    font-size: 1.125em;
+    color: #000;
+  }
+  .payment-title {
+    font-size: 1.000em;
+    color: #4F4F4F;
+  }
+  .disclaimer {
+    font-size: 0.675em;
+  }
+}

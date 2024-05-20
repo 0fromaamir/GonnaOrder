@@ -1,0 +1,22 @@
+<div class="paid-amount-sec mx-auto my-3" *ngIf="standalonePaymentOrders && standalonePaymentOrders.length > 0">
+    <div class="section-title p-3 mb-0 pl-4 font-size-primary font-weight-bold theme-light">
+        {{'public.standalonepayment.paymentpage.paidAmountSec' | translate}}
+    </div>
+    <div>
+        <div class="amount-info mx-4 my-4">
+            <div class="amount-item" *ngFor="let orderItems of standalonePaymentOrders">
+                <span *ngIf="orderItems.customerName">{{orderItems.customerName}}</span>
+                <span *ngIf="!orderItems.customerName">{{'public.standalonepayment.paymentpage.anonymous' | translate}}</span>
+                <span *ngIf="(orderItems.formattedAmountSelected)">{{orderItems.formattedAmountSelected}}</span>
+            </div>
+            <div class="amount-item borderBottom font-weight-bold theme-color-header">
+                <span>{{'public.standalonepayment.paymentpage.total_paid' | translate}}</span>
+                <span *ngIf="(formattedPaidAmount)">{{formattedPaidAmount}}</span>
+            </div>
+            <div class="amount-item font-weight-bold theme-color-header">
+                <span>{{'public.standalonepayment.paymentpage.remaining_balance' | translate}}</span>
+                <span *ngIf="(formattedRemainingAmount)" [ngClass]="remainingAmount == 0.00 ? 'greenText' : ''">{{formattedRemainingAmount}}</span>
+            </div>
+        </div>
+    </div>
+</div>

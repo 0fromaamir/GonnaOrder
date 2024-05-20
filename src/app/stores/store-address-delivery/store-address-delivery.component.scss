@@ -1,0 +1,15 @@
+::ng-deep .sidebar-lg-show {
+  .cdk-overlay-pane {
+    @media (min-width: 320px) and (max-width: 767px) {
+      width: 80% !important;
+    }
+
+    @media (min-width: 768px) and (max-width: 992px) {
+      width: 60% !important;
+    }
+  }
+}
+
+#map {
+  height: 300px;
+}

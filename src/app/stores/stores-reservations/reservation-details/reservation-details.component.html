@@ -1,0 +1,177 @@
+<div class="col-lg-12 px-0" [ngClass]="isViewScreen ? 'right-col' : ''">
+  <div class="flex-row">
+    <div id="printsection" class="card list mb-0">
+      <div class="print-section">
+        <div class="card-header mb-3" *ngIf="embedDetails">
+          <div id="rservationHelp">{{ 'admin.store.statistics.reservations'|translate }}</div>
+          <app-help-icon [helpPageName]="orderDetailsHelpPage" class="helpIcon"></app-help-icon>
+        </div>
+        <div class="row">
+          <div class="col-md-12 d-flex justify-content-between">
+            <a class="btn btn-primary back-button mb-2 mb-md-3" id="back-btn" *ngIf="embedDetails"
+              (click)="navigateWithState()">
+              <i class="fas fa-arrow-left mr-2"></i>
+              <span
+                class="d-none d-sm-inline-block d-lg-inline-block d-xl-inline-block ml-1 text-white">{{'admin.store.backToReservation'|
+                translate}}</span>
+            </a>
+            <div class="d-block d-md-none buttonsgroup">
+              <button type="button" class="btn btn-primary ml-3" (click)="onDetails(reservation, false)">
+                <i class="fa fas fa-pen"></i>
+                <span
+                  class="d-none d-sm-inline-block d-lg-inline-block d-xl-inline-block ml-1">{{'admin.store.order.changeOrder'|translate}}</span>
+              </button>
+              <button type="button" class="btn btn-primary ml-3 Deletebtn" (click)="onDeleteStatus(reservation.id)">
+                <i class="fa fa-trash"></i>
+                <span
+                  class="d-none d-sm-inline-block d-lg-inline-block d-xl-inline-block ml-1">{{'admin.store.schedule.delete'
+                  |translate}}</span>
+              </button>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div id="" class="card-body pt-0 p-md-3 " [ngClass]="embedDetails ? 'reservation-details' : ''">
+    <div class="col-md-12">
+      <div class="row justify-content-between">
+        <div class=" px-0 px-md-2">
+          <div class="row pl-2">
+
+            <span style="padding: .375rem 0;"><span
+                class=" d-none d-sm-inline-block d-lg-inline-block d-xl-inline-block ml-1" *ngIf="embedDetails">
+                {{'admin.store.id'|translate}}:</span> {{ ' '+reservation.id ?? ''}}</span>
+
+            <span class="ml-4 pl-3" style="width: fit-content; padding: .375rem 0;" [ngClass]="{'d-none': !(reservation.location!=null &&
+            reservation.location.label !=null ? reservation.location.label : '')}"><i class="fa fa-chair"></i>
+              {{reservation.location!=null &&
+              reservation.location.label !=null ? reservation.location.label :
+              ''}}</span>
+            <span class="ml-4 pl-3" style="padding: .375rem 0;"><i class="fa fa-solid fa-user-group"></i>
+              {{reservation.numberOfPeople
+              ??
+              ''}}</span>
+          </div>
+
+        </div>
+
+        <div class="d-flex rightpart pr-0">
+          <button type="button" class="btn btn-primary mr-3 d-none d-md-block"
+            (click)="onDetails(reservation, false)"><i
+              class=" icon fa fa-pencil"></i><span>{{'admin.store.changeDetails' |translate}}</span></button><button
+            type="button" class="Deletebtn btn d-none d-md-block" (click)="onDeleteStatus(reservation.id)"><i
+              class=" icon fa fa-trash"></i><span class="ml-1">{{'admin.store.schedule.delete'
+              |translate}}</span></button>
+        </div>
+      </div>
+    </div>
+    <div class="">
+      <div class="row d-flex my-3 justify-content-between">
+        <div class="col-xl-7 col-md-6">
+          <i class='far fa-calendar'></i> <span class="ml-2"> {{getDateFormat(reservation.arrivalTime)}}</span>
+        </div>
+        <div class="col-md-12 mt-3 mt-md-3 d-block d-md-none justify-content-end">
+          <i class="fa fa-paper-plane"></i> <span class="ml-1">{{'admin.store.requested'| translate}}</span> <span>
+            {{getRequestFormat(reservation.createdAt)}}</span>
+        </div>
+        <div class="col-xl-5 col-md-6 d-none d-md-block text-end">
+          <div class="pl-5 colwidth">
+            <i class="fa fa-paper-plane"></i> <span class="ml-1">{{'admin.store.requested'| translate}}</span> <span>
+              {{getRequestFormat(reservation.createdAt)}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="" class="secondRow row">
+      <div class="col-md-12 mb-3">
+        <i class='far fa-clock'></i><span class="ml-2"> {{'admin.store.schedule.startTime'| translate}}</span>
+        <span class="ml-2"> {{getTimeFormat(reservation.arrivalTime)}}</span>
+      </div>
+    </div>
+    <div class="thirdRow row">
+      <div class="col-md-12 mb-3">
+        <i class='far fa-clock'></i><span class="ml-2"> {{'admin.store.schedule.endTime'| translate}}</span>
+        <span class="ml-2"> {{getTimeFormat(reservation.departureTime)}}</span>
+      </div>
+    </div>
+    <div class="thirdRow row" *ngIf="reservation.name!=null && reservation.name!=''">
+      <div class="col-md-12 mb-3"><i class="fa fa-user"></i><span class="ml-2"> {{reservation.name ?? ''}}</span>
+      </div>
+    </div>
+
+    <div class="row" *ngIf="reservation.phone!=null && reservation.phone.length>5">
+      <div class="col-md-12 mb-3">
+        <i class="fa fa-phone"></i><span class="mx-2"> {{reservation.phone ?? ''}}</span>
+        <a href="https://wa.me/{{reservation.phone ?? ''}}" class="mx-2">
+          <img src="/assets/img/social/whatsapp.svg" alt="" width="25px"></a>
+        <a href="viber://chat/?number={{reservation.phone ?? ''}}">
+          <img src="/assets/img/social/viber-logo.svg" alt="" width="25px"></a>
+      </div>
+    </div>
+    <div class="row" *ngIf="reservation.email!=null && reservation.email!=''">
+      <div class="col-md-12 mb-3">
+        <i class="fa fa-envelope"></i><span class="ml-2"> {{reservation.email ?? ''}}</span>
+      </div>
+    </div>
+    <div class="row" *ngIf="reservation.status!=null">
+      <div class="col-md-12 mb-3">
+        <i class="fa fa-gear"></i><span class="ml-2"> {{'admin.store.status'|translate}} </span><span
+          class="ml-2">{{reservation.status ?? ''}}</span>
+      </div>
+    </div>
+    <!--   *ngIf="embedDetails"-->
+    <div class="containerbtns pr-0">
+      <div>
+        <button type="button" class="btn btn-primary" *ngIf="!embedDetails"
+          (click)="navigateToDetails(reservation)"><img
+            style="margin-right: 5px;font-size: 20px; height: 21px; width: 20px;"
+            src="../../../../assets/img/lucide_view.png" />{{'admin.store.order.viewbutton' |translate}}</button>
+      </div>
+      <div class="rgtbtns">
+        <div class="item mr-3">
+          <button type="button" class="btn greenbtn" (click)="onChangeStatus('Accepted')"><i
+              class="fa fa-check icon"></i>{{'admin.store.accept' |translate}}</button>
+        </div>
+        <div class="item mr-3">
+          <button type="button" class="btn greenbtn" (click)="onDetails(reservation, true)"><i
+              class="fa fa-chair icon"></i>{{'admin.store.assign' |translate}}</button>
+        </div>
+        <div class="item mr-3">
+          <button type="button" class="btn greenbtn" (click)="onChangeStatus('Completed')"><i
+              class="fa fa-check-double icon"></i>{{'admin.store.completed' |translate}}</button>
+        </div>
+        <div class="item">
+          <button type="button" class="btn removebtn" (click)="onChangeStatus('Rejected')"><i
+              class="fa fa-remove icon"></i>{{'admin.store.reject' |translate}}</button>
+        </div>
+      </div>
+    </div>
+    <div class="d-block d-sm-none">
+      <div class="row mb-3">
+        <div class="col-6">
+          <button type="button" class="btn greenbtn w-100" (click)="onChangeStatus('Accepted')"><i
+              class="fa fa-check icon"></i>{{'admin.store.accept' |translate}}</button>
+        </div>
+        <div class="col-6">
+          <button type="button" class="btn greenbtn w-100" (click)="onDetails(reservation, true)"><i
+              class="fa fa-chair icon"></i>{{'admin.store.assign' |translate}}</button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-6">
+          <button type="button" class="btn greenbtn w-100" (click)="onChangeStatus('Completed')"><i
+              class="fa fa-check-double icon"></i>{{'admin.store.completed' |translate}}</button>
+        </div>
+        <div class="col-6">
+          <button type="button" class="btn removebtn w-100" (click)="onChangeStatus('Rejected')"><i
+              class="fa fa-remove icon"></i>{{'admin.store.reject' |translate}}</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

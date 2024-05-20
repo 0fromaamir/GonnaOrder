@@ -1,0 +1,56 @@
+<div #namePrinter class="m-4">
+  <div mat-dialog-title class="text-blue col-lg-12 mat-dialog-title">{{'admin.printer.registerTitle'|translate}}</div>
+  <div mat-dialog-content class="my-3 col-lg-12">
+    <form [formGroup]="printersForm" class="d-flex flex-column">
+      <mat-form-field appearance="standard" class="no-padding-top" *ngIf="printerTypeSelect.value === 'ESC/POS'">
+        <mat-label>{{ 'admin.printer.connectionMethod' | translate }}</mat-label>
+        <mat-select formControlName="printerModeSelect" (selectionChange)="onPrinterModeChange()">
+          <mat-option *ngFor="let printerMode of data.printerModes" [value]="printerMode">
+            {{ (printerMode === 'Bluetooth' ? 'admin.printer.connectionMethodBluetooth' : 'admin.printer.connectionMethodWiFi') | translate }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <div *ngIf="printerTypeSelect.value === 'ESC/POS' && !!printerModeSelect.value">
+        <mat-label class="no-padding-top">{{ 'admin.printer.connectionParameters' | translate }}</mat-label>
+        <mat-form-field appearance="standard" class="no-padding-top" *ngIf="printerModeSelect.value === 'WiFi/Ethernet'">
+          <input matInput type="text" formControlName="connectionParamsIpInput" placeholder="{{'admin.printer.connectionIpOrHostName' | translate}}"/>
+          <mat-error>{{ 'admin.global.field.required' | translate }}</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="standard" class="no-padding-top" *ngIf="printerModeSelect.value === 'WiFi/Ethernet'">
+          <input matInput type="text" formControlName="connectionParamsPortInput" placeholder="{{'admin.printer.connectionPort' | translate}}"/>
+          <mat-error>{{ 'admin.global.field.required' | translate }}</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="standard" class="no-padding-top" *ngIf="printerModeSelect.value === 'Bluetooth'">
+          <mat-label>{{ 'admin.printer.connectionBluetoothMacAddr' | translate }}</mat-label>
+          <mat-select formControlName="connectionParamsBluetoothInput" (click)="listDevices()">
+            <mat-option *ngFor="let btDevice of btDevicesList" [value]="btDevice.address">{{ btDevice.name }}</mat-option>
+          </mat-select>
+          <mat-error>{{ 'admin.global.field.required' | translate }}</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="standard" class="no-padding-top">
+          <mat-label>{{ 'admin.printer.connectionPaperWidth' | translate }}</mat-label>
+          <input matInput type="text" formControlName="connectionParamsPaperWidthInput"/>
+          <mat-error>{{ 'admin.global.field.required' | translate }}</mat-error>
+        </mat-form-field>
+      </div>
+      <mat-form-field appearance="standard" class="no-padding-top">
+        <mat-label>{{ 'admin.printer.printerName' | translate }}</mat-label>
+        <input matInput type="text" formControlName="printerNameInput" #printerName/>
+        <mat-error>{{ 'admin.printer.notEmpty' | translate }}</mat-error>
+      </mat-form-field>
+    </form>
+  </div>
+  <div mat-dialog-actions class="col-lg-12 d-flex justify-content-end">
+    <div class="float-left">
+      <button (click)="onCancelClick()" type="button" class="btn btn-cancel mr-3">{{ 'admin.global.cancel' | translate }}</button>
+      <button class="btn btn-primary submit-btn ml-15" [disabled]="!printersForm.valid" (click)="registerToStore()"
+        *ngIf="printerTestSuccess || printerTypeSelect.value !== 'ESC/POS'">
+        {{ 'admin.global.ok' | translate }}
+      </button>
+      <button class="btn btn-primary submit-btn ml-15" [disabled]="!printersForm.valid" (click)="testPrint()"
+        *ngIf="!printerTestSuccess && printerTypeSelect.value === 'ESC/POS'">
+        {{ 'admin.printer.testPrint' | translate }}
+      </button>
+    </div>
+  </div>
+</div>

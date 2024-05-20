@@ -1,0 +1,86 @@
+<div class="row mb-4 pt-2">
+    <div class="col-lg-12">
+    <app-store-last-mile-wrapper></app-store-last-mile-wrapper>
+    </div>
+</div>
+<hr>
+
+<ng-container *ngIf="selectedStore?.address?.country?.code === 'GR'">
+    <div class="row my-4">
+        <div class="col-lg-12">
+            <app-store-integrations-flex-delivery></app-store-integrations-flex-delivery>
+        </div>
+    </div>
+    <hr>
+</ng-container>
+
+<div class="row my-4">
+    <div class="col-lg-12">
+        <app-store-integrations-instadelivery></app-store-integrations-instadelivery>
+    </div>
+</div>
+
+<hr>
+<div class="row my-4">
+    <div class="col-lg-12">
+        <app-store-integrations-sunsoft></app-store-integrations-sunsoft>
+    </div>
+</div>
+<hr>
+<div class="row my-4">
+    <div class="col-lg-12">
+        <app-store-integrations-twinsoft></app-store-integrations-twinsoft>
+    </div>
+</div>
+<ng-container *ngIf="selectedStore?.address?.country?.code === 'GR'">
+    <hr>
+    <div class="row my-4">
+        <div class="col-lg-12">
+            <app-store-integrations-hit></app-store-integrations-hit>
+        </div>
+    </div>
+</ng-container>
+<ng-container *ngIf="selectedStore?.address?.country?.code === 'CY'">
+    <hr>
+    <div class="row my-4">
+        <div class="col-lg-12">
+            <app-store-integrations-powersoft></app-store-integrations-powersoft>
+        </div>
+    </div>
+</ng-container>
+<hr>
+<div class="row my-4">
+    <div class="col-lg-12 mt-n3">
+        <app-store-integrations-eposnow></app-store-integrations-eposnow>
+    </div>
+</div>
+<hr>
+<div class="row my-4">
+    <div class="col-lg-12">
+        <app-store-integrations-hubrise></app-store-integrations-hubrise>
+    </div>
+</div>
+<hr>
+<div class="row my-4">
+    <div class="col-lg-12 mt-n3">
+        <app-store-integrations-shopify></app-store-integrations-shopify>
+    </div>
+</div>
+<hr>
+<div class="row my-4">
+    <div class="col-lg-12 mt-n3">
+        <app-store-integrations-poster></app-store-integrations-poster>
+    </div>
+</div>
+<hr>
+<div class="row my-4">
+    <div class="col-lg-12 mt-n3">
+        <app-store-integrations-eposdirect></app-store-integrations-eposdirect>
+    </div>
+</div>
+<hr>
+<div class="row my-4">
+    <div class="col-lg-12 mt-n3">
+        <app-store-integrations-custom [storeId]="selectedStore.id"></app-store-integrations-custom>
+    </div>
+</div>

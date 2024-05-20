@@ -1,0 +1,48 @@
+<div class="main-wrapper h-100 d-flex flex-column align-items-center justify-content-around overflow-auto overflow-x">
+  <div class="main-wrapper-content px-2">
+    <div class="d-flex flex-column align-items-center mt-5 w-100">
+      <div class="w-100 font-size-header font-weight-bold pl-3 pb-2">
+        {{ "public.main.typeUrlHeading" | translate }}
+      </div>
+      <div class="w-100 d-flex justify-content-center searchForm">
+        <form [formGroup]="urlInputForm" class="form-horizontal col-12 col-md-12 col-lg-10">
+          <div class="mt-4">
+            <div class="input-group">
+              <input type="url" formControlName="url_input" id="url_input"
+                class="form-control url-field font-size-primary" [matAutocomplete]="auto"
+                placeholder="{{ 'public.main.typeUrl' | translate }}"
+                [class.is-invalid]="getControl('url_input').invalid && (getControl('url_input').dirty || getControl('url_input').touched)" />
+              <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onClickGO()">
+                <mat-option *ngFor="let urlSuggestion of urlSuggestions" [value]="urlSuggestion">
+                  {{ urlSuggestion }}
+                </mat-option>
+              </mat-autocomplete>
+              <button (click)="onClickGO()" type="button" class="searchButton btn bg-transparent"
+                style="margin-left: -35px; z-index: 100;">
+                <i class="fa fa-search text-white p-2" aria-hidden="true"></i>
+              </button>
+            </div>
+            <div class="invalid-feedback font-size-primary"
+              [style.visibility]="getControl('url_input').invalid && (getControl('url_input').dirty || getControl('url_input').touched) ? 'visible' : 'hidden'">
+              <span>{{'public.main.invalidUrl' | translate}}</span>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="d-flex py-4">
+      <hr><span class="d-inline-block m-auto oRfontSize px-1"> OR </span>
+      <hr>
+    </div>
+    <div class="d-flex flex-column align-items-center mb-3 w-100 qRScanner">
+      <div class="qrcode-container d-flex align-items-center justify-content-center col-9 position-relative">
+        <img #qrImage class="img-fluid" src="/assets/img/qrScan.png" width="320px" />
+        <a (click)="onClickCamera()" class="button">
+          <i class="fas fa-camera p-2 position-absolute"
+            style="top: 50%; left: 50%; transform: translate(-50%, -50%);"></i></a>
+      </div>
+      <button class="btn btn-primary px-5 w-100 py-2 mt-4">{{ "public.main.scanQRCode" | translate }}</button>
+
+    </div>
+  </div>
+</div>

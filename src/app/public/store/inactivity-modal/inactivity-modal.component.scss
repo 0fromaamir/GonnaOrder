@@ -1,0 +1,55 @@
+#title {
+  font-family: Roboto;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 19px;
+  letter-spacing: 0em;
+  text-align:left;
+}
+
+#timeLeft {
+  font-family: Roboto;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 16px;
+  letter-spacing: 0em;
+  margin-bottom: -1%;
+
+}
+
+#yesButton {
+  height: 35px;
+  border-radius: 4px;
+  color: white;
+  background: #000000;
+
+}
+
+#noButton {
+  height: 35px;
+  border: none;
+  background: #fff;
+  text-decoration: underline;
+
+}
+#buttonsArea{
+  display: flex;
+  gap: 5%;
+  margin-bottom: 15px;
+  text-align: center;
+  justify-content: end;
+  margin-right: 20px;
+}
+.buttonsDiv{
+  #noButton{
+    width: 25% !important;
+  }
+}
+progress {
+  width: 45%;
+  accent-color: orange;
+}
+
+::ng-deep .mat-mdc-dialog-container .mdc-dialog__surface{
+  border-radius: var(--mdc-dialog-container-shape, var(--mdc-shape-medium, 12px)) !important;
+}

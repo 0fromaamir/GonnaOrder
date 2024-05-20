@@ -1,0 +1,223 @@
+@import "../../node_modules/bootstrap/scss/functions";
+@import "../../node_modules/bootstrap/scss/variables";
+@import "../../node_modules/bootstrap/scss/mixins";
+@import './variables';
+
+@media print {
+  body {
+    min-width: auto !important;
+    max-width: 100% !important;
+  }
+}
+//---- ADMIN BODY ----
+.admin.app {
+  .app-body {
+    @include media-breakpoint-up(lg) {
+      margin-top: $admin-header-lg-height;
+    }
+  }
+  .app-header .navbar-toggler,
+  .app-header .navbar-toggler-icon {
+    &:focus {
+      outline: initial;
+    }
+  }
+  .sidebar {
+    margin-left: -$admin-menu-width;
+    height: calc(100vh - #{$admin-header-height}) !important;
+    background: $admin-gray;
+    @include media-breakpoint-up(lg) {
+      height: calc(100vh - #{$admin-header-lg-height}) !important;
+    }
+    .nav-link {
+      color: $admin-menu-text;
+      &:hover {
+        color: #fff;
+      }
+      &.active {
+        background: $primary-brand-colour;
+        color: #fff;
+        .nav-icon {
+          color: #fff;
+        }
+      }
+      &:hover{
+        background: $primary-brand-colour;
+        color: #fff;
+      }
+    }
+  }
+  .main {
+    margin-left: 0;
+  }
+}
+@include media-breakpoint-up(sm) {
+  body.sidebar-show:not(.sidebar-minimized),
+  body.sidebar-sm-show:not(.sidebar-minimized) {
+    .admin.app .main {
+      margin-left: $admin-menu-width !important;
+    }
+    .sidebar,
+    .sidebar-nav,
+    .sidebar .nav {
+      width: $admin-menu-width !important;
+      z-index: 9999;
+    }
+  }
+  .app.sidebar-sm-show.brand-minimized {
+    .admin.app {
+      .main {
+        margin-left: 45px !important;
+      }
+    }
+  }
+}
+
+.sidebar-minimized {
+  .admin.app {
+    .sidebar,
+    .sidebar-nav,
+    .sidebar .nav {
+      @include media-breakpoint-between(sm, lg) {
+        width: 50px;
+      }
+    }
+  }
+}
+.sidebar-minimized {
+  .sidebar {
+    .sidebar-minimizer {
+      z-index: 9999;
+    }
+  }
+ }
+ .brand-minimized .app-header .navbar-brand {
+  width: 0px !important;
+  .navbar-brand-full {
+    display: none !important;
+  }
+  .navbar-brand-minimized {
+    display: block !important;
+  }
+ }
+
+//---- ADMIN LIST ----
+// visit: https://github.com/rigasp/stores/wiki/Admin-UI-global-styling-for-lists-pages
+.breadcrumb {
+  border-bottom: 0;
+  padding-bottom: 0px !important;
+}
+
+.card.list {
+  border: 0px;
+  .card-header {
+    font-size: $header3-font-size;
+    border-radius: 0.25rem !important;
+    border: 0px;
+    color: $primary-brand-colour;
+  }
+  .card-header-background-none{
+    background-color: unset !important;
+  }
+  .card-body {
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+    .table thead th {
+      border: 0px;
+    }
+    .table-striped tbody tr:nth-of-type(odd) {
+      background-color: #fff;
+    }
+    .table tbody tr.grayed {
+      background-color: #f0f3f5;
+    }
+    .table th {
+      border-top: 0px;
+    }
+    .table thead th {
+      border-bottom: 0px;
+    }
+  }
+}
+
+.b-header{
+  font-size: 18px;
+  padding: 0.75rem 0;
+  color: var(--primary-brand-color);
+}
+
+//---- ADMIN BUTTONS ----
+.btn:focus,
+.btn.focus {
+  box-shadow: initial;
+}
+.btn-primary:focus,
+.btn-primary.focus {
+  box-shadow: initial;
+}
+
+
+//---- POPUP OVERLAY ----
+.cdk-global-scrollblock {
+    position: relative  !important;
+    width: 100%;
+    overflow-y: auto;
+    top: 0 !important;
+    left: 0 !important;
+}
+.cdk-overlay-container{
+  z-index: 9999;
+}
+
+
+//---- ADMIN CONTENT WRAPPER ----
+@include media-breakpoint-down(xs) {
+  .main .container-fluid {
+   padding: 0 !important;
+  }
+}
+
+.max-width-100 {
+  max-width: 100%;
+}
+
+@include media-breakpoint-down(sm){
+.sidebar-show .main::before, .aside-menu-show .main::before {
+    position: fixed;
+  }
+  .sidebar-minimized .sidebar .nav-item:hover {
+    overflow: hidden !important;
+    width: 50px !important;
+  }
+}
+
+.btn{
+    font-size: $input-font-size!important;
+}
+.mat-expansion-panel-header{
+  font-size: $input-font-size!important;
+}
+
+.app-header .navbar-brand {
+  position: relative !important;
+  left: 0
+}
+
+.sidebar-minimized .sidebar .sidebar-nav {
+  overflow: visible !important;
+}
+
+
+@media (hover: hover)  and (pointer: fine){
+  .sidebar-minimized .sidebar .nav-item:hover {
+    overflow: visible !important;
+    width: 250px !important;
+  }
+}
+
+@media not all and (hover: hover) and (pointer: fine) {
+  .sidebar-minimized .sidebar .nav-item {
+    overflow: hidden !important;
+    width: 50px !important;
+  }
+}

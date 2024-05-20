@@ -1,0 +1,81 @@
+<div class="card list mb-0">
+    <div class="card-body py-4">
+      <div class="row">
+        <div class="col-xl-9 col-lg-7">
+          <form class="form-group" [formGroup]="loyaltyForm">
+            <h3 class="text-blue font-size-popup-title mb-4">{{'admin.store.settings.loyalty.newUserDiscount'|translate}}</h3>
+            <div class="form-group row mb-3">
+              <label class="col-xl-4 col-lg-4 col-md-4 col-sm-12 required" for="voucherId">{{'admin.store.settings.loyalty.newUserDiscountLabel'|translate}}</label>
+              <div class="col-xl-8 col-lg-8 col-md-8 col-sm-12">
+                <select 
+                class="form-control" 
+                onchange="this.dataset.chosen = this.value" 
+                [ngClass]="{'default-option' : voucherId == null}"
+                [class.is-invalid]="getControl('voucherId').invalid && (getControl('voucherId').dirty || getControl('voucherId').touched)" 
+                formControlName="voucherId" 
+                id="voucherId" 
+                (change)="onVoucherChange($event)"
+            >
+                <option value="null">{{'admin.global.pleaseSelect'|translate}}</option>
+                <option *ngFor="let voucher of voucherList" [value]="voucher.id" [selected]="voucher.id === voucherId">{{ voucher.code }}</option>
+              </select>
+                  <div class="explanation mt-2">{{'admin.store.settings.loyalty.message' | translate}}</div>
+              </div>
+            </div>
+            <button *ngIf="!showFields && !loyaltyEnabled" class="btn btn-primary" (click)="onClicked()"><i
+              class="fa fa-link mr-2 link" title="link"></i>{{'admin.store.settings.loyalty.button'|translate}}</button>
+            <div *ngIf="showFields && !loyaltyEnabled">
+              <h3 class="text-blue font-size-popup-title mb-4">{{'admin.store.settings.loyalty.loyaltyScheme'|translate}}</h3>
+              <div class="row mb-4">
+                <div class="col-md-4">{{'admin.store.settings.loyalty.amountSpent'|translate}}</div>
+                <div class="col-md-8">
+                  <app-price-input [priceFormControl]="getControl('LOYALTY_AMOUNT_SPENT')"></app-price-input>
+                  <div class="invalid-feedback"
+                  *ngIf="getControl('LOYALTY_AMOUNT_SPENT').errors?.required && getControl('LOYALTY_AMOUNT_SPENT').touched">
+                  <span>
+                    {{'admin.global.field.required'|translate}}</span>
+                </div>
+                </div>
+              </div>
+              <div class="row mb-4">
+                <div class="col-md-4">{{'admin.store.settings.loyalty.amountReward'|translate}}</div>
+                <div class="col-md-8">
+                  <app-price-input [priceFormControl]="getControl('LOYALTY_AMOUNT_REWARD')"></app-price-input>
+                  <div class="invalid-feedback"
+                  *ngIf="getControl('LOYALTY_AMOUNT_REWARD').errors?.required && getControl('LOYALTY_AMOUNT_REWARD').touched">
+                  <span>
+                    {{'admin.global.field.required'|translate}}</span>
+                </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-5">
+                  <button class="btn btn-primary" (click)="save()" [disabled]="getControl('LOYALTY_AMOUNT_REWARD').value < 0 || getControl('LOYALTY_AMOUNT_SPENT').value < 0">
+                    <i class="fa fa-link mr-2 link" title="link"></i>{{'admin.global.save'|translate}}
+                  </button>
+                </div>
+              </div>
+            </div>
+          </form>
+          <div *ngIf="loyaltyEnabled">
+            <h3 class="text-blue font-size-popup-title mb-2">{{'admin.store.settings.loyalty.loyaltyScheme'|translate}}</h3>
+            <div class="row mb-4">
+              <div class="col-md-4">{{'admin.store.settings.loyalty.amountSpent'|translate}}​</div>
+              <div class="col-md-8">{{this.loyaltyAmountSpent | currency: currency.symbol}}</div>
+            </div>
+            <div class="row mb-4">
+              <div class="col-md-4">{{'admin.store.settings.loyalty.amountReward'|translate}}​</div>
+              <div class="col-md-8">{{this.loyaltyAmountReward | currency: currency.symbol}}</div>
+            </div>
+            <div class="row">
+              <div class="col-md-4">
+                <button class="btn btn-danger d-flex" (click)="delete()">
+                  <img src="assets/img/link-slash-solid.svg" class="mr-2 slashIcon" alt="">{{'admin.global.delete'|translate}}
+                </button>
+               </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

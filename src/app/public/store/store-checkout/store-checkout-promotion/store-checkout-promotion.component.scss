@@ -1,0 +1,13 @@
+@import "bootstrap/scss/functions";
+@import "bootstrap/scss/variables";
+@import "bootstrap/scss/mixins";
+@import "src/scss/globals";
+.option-wrapper .invalid-feedback {
+  display: block !important;
+  padding: 0 39px;
+}
+@include media-breakpoint-down(lg) {
+  .container{
+    max-width: 100%!important;
+  }
+}

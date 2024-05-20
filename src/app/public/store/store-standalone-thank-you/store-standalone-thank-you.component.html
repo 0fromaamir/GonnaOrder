@@ -1,0 +1,97 @@
+<div class="content theme-interface" [style.height]="isPos ? innerHeight + 'px' : '100%'">
+  <div class="mx-auto position-relative" [style.height]="isPos ? innerHeight + 'px' : '100%'">
+    <div class="overflow-auto" [style.height]="isPos ? innerHeight + 'px' : '100%'">
+      <div class="content-wrapper mx-auto">
+        <div class="store-info position-relative mx-auto pl-3 pt-2 theme-light">
+          <a href="#" class="position-absolute ml-2 arrow-icon header-background round-background container-theme-light-icons"
+            (click)="onGoToDashboard($event)">
+            <i class="fa fa-arrow-left m-auto"></i>
+          </a>
+          <h1 class="text-center font-size-header theme-light-header">{{'public.global.thankYou' | translate}}</h1>
+          <div class="store-title d-block m-1 mt-3 text-center pb-2 font-size-primary theme-light-subtitle">
+            {{(selectedStore)?.name}} <span *ngIf="(selectedStore)?.description">|</span>
+            {{(selectedStore)?.description}}
+          </div>
+        </div>
+        <div class="container m-auto  px-0" style="width: fit-content; margin-top: 50px;">
+          <div class="content mx-auto">
+            <span class="mx-auto"><i class="fas fa-check-circle m-auto d-table"
+                style="color: #098b00; font-size: 60px;"></i></span>
+            <div class="pt-3 px-3 description text-center font-size-header text-unselectable theme-color-text">
+              {{ 'public.standalonepayment.paymentSucces.paymentSuccessful' | translate }}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="remaining-balance row content-wrapper mx-auto pb-2"
+        [ngClass]="isAmountRemaining ? 'd-flex' : 'd-none'">
+        <div class="mt-3 d-flex justify-content-between mr-2 ml-2 pb-2 w-100" *ngIf="isAmountRemaining">
+          <span>{{'public.standalonepayment.paymentpage.remaining_balance' | translate}}</span>
+          <span>{{remainingBalance}}</span>
+        </div>
+        <div class="font-size-primary text-unselectable col-md-3 mx-auto content-wrapper pl-2 pr-2 pb-2"
+          *ngIf="isAmountRemaining">
+          <a href="#" class="button dark d-block text-center py-2 w-100 mt-3 mt-md-0" (throttledClick)="payMore()"
+            appPreventDoubleClick [throttleTime]="3000">
+            {{'public.standalonepayment.paymentpage.payMore' | translate}}
+          </a>
+        </div>
+      </div>
+      <div class="d-flex row content-wrapper mx-auto option-wrapper pt-4 email-confirmation-wrapper flex-column">
+        <div class="variant-wrapper mx-auto no-border">
+          <div class="p-3 mt-3 mb-0 font-size-primary font-weight-bold text-unselectable theme-color-text">
+            {{'public.standalonepayment.thankyou.emailText' | translate}}</div>
+          <form class="mx-3 email-confirmation-form mx-auto" [formGroup]="emailConfirmationFG"
+            (ngSubmit)="onSubmitOrderOnEmail()">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <div class="input-group mb-4"
+                    [class.is-invalid]="getControl('email').invalid && (getControl('email').dirty)">
+                    <input type="text" class="form-control"
+                      [ngClass]="{'is-invalid': (getControl('email').invalid && (getControl('email').dirty)), 'populated': getControl('email').value.length > 0}"
+                      autocomplete="email" formControlName="email" maxlength="200" id="email" />
+                    <label for="#email" class="no-cursor placeholder font-size-primary">{{'public.checkout.email' |
+                      translate}}</label>
+                    <span class="btn btn-submit">
+                      <i class="fa fa-paper-plane theme-color-header"></i> <input type="submit" class="px-0 py-3" />
+                    </span>
+                    <div class="invalid-feedback font-size-secondary" *ngIf="getControl('email').errors">
+                      <span *ngIf="getControl('email').errors.required">{{'public.thankyou.errors.emailProperFormat' |
+                        translate}}.</span>
+                      <span
+                        *ngIf="getControl('email').errors.email || getControl('email').errors.maxlength">{{'public.thankyou.errors.emailProperFormat'
+                        | translate}}.</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="d-flex option-wrapper" *ngIf="emailStatus === 0">
+          <div class="variant-wrapper w-100 border-bottom-0">
+            <h3 class="px-3 mt-2 mb-0 text-center font-size-heading text-unselectable"><img
+                src="/assets/img/remove_circle_outline-24px.svg" />{{'public.thankyou.failedEmail' | translate}}</h3>
+          </div>
+        </div>
+        <div class="d-flex option-wrapper" *ngIf="emailStatus === 1">
+          <div class="variant-wrapper w-100 border-bottom-0">
+            <h3 class="px-3 mt-2 mb-0 text-center font-size-heading text-unselectable"><img
+                src="/assets/img/done-24px.svg" />{{'public.thankyou.emailSent' | translate}}</h3>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- NEW ORDER BUTTON -->
+    <div class="bottom-wrapper d-flex w-100 position-absolute bg-transparent" style="padding-right: 6px;">
+      <div class="button-wrapper w-100 p-1 mx-auto">
+        <a href="#" (click)="onGoToDashboard($event)"
+          class="button dark d-block text-center py-3 mx-2 mt-2 font-size-primary text-unselectable">
+          {{'public.standalonepayment.paymentSucces.backToMenu' | translate}}
+        </a>
+      </div>
+    </div>
+    <!-- NEW ORDER BUTTON END -->
+  </div>
+</div>

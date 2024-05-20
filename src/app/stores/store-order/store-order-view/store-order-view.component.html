@@ -1,0 +1,2 @@
+
+<app-store-order-details [order]="order$ | async" *ngIf="order$ | async" [isViewScreen]="isViewScreen" (collapseOrderFunc)="collapseOrderFunc()" [stationId]="stationId"></app-store-order-details>

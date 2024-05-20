@@ -1,0 +1,183 @@
+<form [formGroup]="reservationsForm" class="mt-3">
+    <div class="form-group row">
+        <label for="reservations" class="col-xl-4 col-lg-4 col-md-4 form-header">Default number of people</label>
+        <div class="d-flex flex-md-row flex-sm-column flex-column col-xl-4 col-lg-4 col-md-4 col-sm-6 col-6">
+            <input type="number" class="form-control" oninput="validity.valid||(value='');" (focusout)="toggleSetting()"
+                min="1" max="20" formControlName="RESERVATION_DEFAULT_NUMBER_OF_PEOPLE"
+                id="RESERVATION_DEFAULT_NUMBER_OF_PEOPLE" />
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="openTap" Class="col-xl-4 col-lg-4 col-md-4 form-header">Allow customer reservations​</label>
+        <div class="col-xl-5 col-lg-4 col-md-4 col-sm-6 col-6">
+            <div class="form-group mb-0">
+                <label>{{'admin.global.no'|translate}}</label>&nbsp;
+                <label class="switch pt-1 mb-0">
+                    <input type="checkbox" (change)="onCheckboxChange($event)" id="RESERVATION_ALLOW_CUSTOMER"
+                        [checked]="resrvationAllowEnabled" />
+
+                    &nbsp;<span class="slider round"></span>
+                </label>&nbsp;
+                <label>{{'admin.global.yes'|translate}}</label>&nbsp;
+            </div>
+            <label class="lbl-Location w-100"><i class="far fa-copy copyUrlIcon mr-1" title="Copy"
+                    (click)="copyStoreURL()"></i> {{storeUrl}} <a href="{{ storeUrl }}" target="_blank"><i
+                        class="fa fa-external-link-alt ml-1 link" aria-hidden="true" title="go-to-link"></i></a>
+            </label>
+        </div>
+
+    </div>
+    <div class="form-group row">
+        <label for="reservations" class="col-xl-4 col-lg-4 col-md-4 form-header">Default reservation duration in
+            minutes​</label>
+        <div class="d-flex flex-md-row flex-sm-column flex-column col-xl-4 col-lg-4 col-md-4 col-sm-6 col-6">
+            <input type="number" class="form-control" oninput="validity.valid||(value='');" (focusout)="toggleSetting()"
+                min="0" max="1440" formControlName="RESERVATION_DEFAULT_SLOT_DURATION"
+                id="RESERVATION_DEFAULT_SLOT_DURATION" />
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="reservationSchedule" class="col-xl-4 col-lg-4 col-md-4 form-header hideInSmallScreen">Reservation
+            Schedule</label>
+        <div class="input-group col-xl-4 col-lg-6 col-md-12 col-sm-12">
+            <select class="form-control" (change)="selectAvailabilityHandler($event, 'reservation')"
+                formControlName="RESERVATION_SCHEDULE" id="RESERVATION_SCHEDULE"
+                [ngClass]="{'default-option' : reservationsForm.value.RESERVATION_SCHEDULE == 0}">
+                <option value="0">{{ 'admin.store.catalog.availability.allTimeAvailability' | translate }}</option>
+                <option *ngFor="let item of scheduleList" [value]="item.id">{{ item.name }}</option>
+            </select>
+        </div>
+        <button type="button" class="btn btn-primary btn-class ml-md-3 mt-3 mt-md-0"
+            (click)="gotoAddSchedule('reservation')">{{ 'admin.store.addNewSchedule' | translate }}</button>
+    </div>
+    <div class="form-group row">
+        <label for="customerReservationSchedule"
+            class="col-xl-4 col-lg-4 col-md-4 form-header hideInSmallScreen">Customer Reservation Schedule</label>
+        <div class="input-group col-xl-4 col-lg-6 col-md-12 col-sm-12">
+            <select class="form-control" (change)="selectAvailabilityHandler($event, 'customer')"
+                formControlName="RESERVATION_SCHEDULE_CUSTOMER" id="RESERVATION_SCHEDULE_CUSTOMER"
+                [attr.placeholder]="'admin.store.catalog.availability.allTimeAvailability'|translate"
+                [ngClass]="{'default-option' : reservationsForm.value.RESERVATION_SCHEDULE_CUSTOMER == 0}">
+                <option value="0">{{ 'admin.store.catalog.availability.allTimeAvailability' | translate }}</option>
+                <option *ngFor="let item of scheduleList" [value]="item.id">{{ item.name }}</option>
+            </select>
+        </div>
+        <button type="button" class="btn btn-primary btn-class ml-md-3 mt-3 mt-md-0"
+            (click)="gotoAddSchedule('customer')">{{ 'admin.store.addNewSchedule' | translate }}</button>
+    </div>
+
+    <div class="form-group row">
+        <label for="reservations" class="col-xl-4 col-lg-4 col-md-4 form-header">Desired time intervals in minutes
+            ​​</label>
+        <div class="d-flex flex-md-row flex-sm-column flex-column col-xl-4 col-lg-4 col-md-4 col-sm-6 col-6">
+            <input type="number" class="form-control" oninput="validity.valid||(value='');" (focusout)="toggleSetting()"
+                min="0" max="1440" formControlName="RESERVATION_TIME_INTERVAL" id="RESERVATION_TIME_INTERVAL" />
+        </div>
+    </div>
+    <!-- Name -->
+    <div class="form-group row mb-4">
+        <label class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-4 form-header">{{'admin.global.name'|translate}}</label>
+        <div class="d-flex flex-md-row flex-sm-column flex-column col-xl-4 col-lg-4 col-md-4 col-sm-6 col-6">
+            <div class="form-group mx-2 my-0">
+                <label class="radio-container" for="RESERVATION_SELECTION_NAME_HIDDEN">
+                    {{'admin.store.settingsHidden'|translate}}
+                    <input type="radio" value="HIDDEN" formControlName="RESERVATION_NAME_SELECTION"
+                        id="RESERVATION_SELECTION_NAME_HIDDEN" (change)="onSubmit()" />
+                    <span class="checkmark"></span>
+                </label>
+            </div>
+            <div class="form-group mx-2 my-0">
+                <label class="radio-container" for="RESERVATION_SELECTION_NAME_OPTIONAL">
+                    {{'admin.store.settingsOptional'|translate}}
+                    <input type="radio" value="OPTIONAL" formControlName="RESERVATION_NAME_SELECTION"
+                        id="RESERVATION_SELECTION_NAME_OPTIONAL" (change)="onSubmit()" />
+                    <span class="checkmark"></span>
+                </label>
+            </div>
+            <div class="form-group mx-2 my-0">
+                <label class="radio-container" for="RESERVATION_SELECTION_NAME_MANDATORY">
+                    {{'admin.store.settingsMandatory'|translate}}
+                    <input type="radio" value="MANDATORY" formControlName="RESERVATION_NAME_SELECTION"
+                        id="RESERVATION_SELECTION_NAME_MANDATORY" (change)="onSubmit()" />
+                    <span class="checkmark"></span>
+                </label>
+            </div>
+        </div>
+    </div>
+
+    <!-- Email -->
+    <div class="form-group row mb-4">
+        <label class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-4 form-header">{{'admin.global.email'|translate}}</label>
+        <div class="d-flex flex-md-row flex-sm-column flex-column col-xl-4 col-lg-4 col-md-4 col-sm-6 col-6">
+            <div class="form-group mx-2 my-0">
+                <label class="radio-container" for="RESERVATION_EMAIL_OPTIONAL_HIDDEN">
+                    {{'admin.store.settingsHidden'|translate}}
+                    <input type="radio" value="HIDDEN" formControlName="RESERVATION_EMAIL_SELECTION"
+                        id="RESERVATION_EMAIL_OPTIONAL_HIDDEN" (change)="onSubmit()" />
+                    <span class="checkmark"></span>
+                </label>
+            </div>
+            <div class="form-group mx-2 my-0">
+                <label class="radio-container" for="RESERVATION_EMAIL_OPTIONAL_OPTIONAL">
+                    {{'admin.store.settingsOptional'|translate}}
+                    <input type="radio" value="OPTIONAL" formControlName="RESERVATION_EMAIL_SELECTION"
+                        id="RESERVATION_EMAIL_OPTIONAL_OPTIONAL" (change)="onSubmit()" />
+                    <span class="checkmark"></span>
+                </label>
+            </div>
+            <div class="form-group mx-2 my-0">
+                <label class="radio-container" for="RESERVATION_EMAIL_OPTIONAL_MANDATORY">
+                    {{'admin.store.settingsMandatory'|translate}}
+                    <input type="radio" value="MANDATORY" formControlName="RESERVATION_EMAIL_SELECTION"
+                        id="RESERVATION_EMAIL_OPTIONAL_MANDATORY" (change)="onSubmit()" />
+                    <span class="checkmark"></span>
+                </label>
+            </div>
+        </div>
+    </div>
+
+    <!-- Phone -->
+    <div class="form-group row mb-4">
+        <label class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-4 form-header">{{'admin.global.phone'|translate}}</label>
+        <div class="d-flex flex-md-row flex-sm-column flex-column col-xl-4 col-lg-4 col-md-4 col-sm-6 col-6">
+            <div class="form-group mx-2 my-0">
+                <label class="radio-container" for="RESERVATION_TEL_OPTIONAL_HIDDEN">
+                    {{'admin.store.settingsHidden'|translate}}
+                    <input type="radio" value="HIDDEN" formControlName="RESERVATION_TEL_SELECTION"
+                        id="RESERVATION_TEL_OPTIONAL_HIDDEN" (change)="onSubmit()" />
+                    <span class="checkmark"></span>
+                </label>
+            </div>
+            <div class="form-group mx-2 my-0">
+                <label class="radio-container" for="RESERVATION_TEL_OPTIONAL_OPTIONAL">
+                    {{'admin.store.settingsOptional'|translate}}
+                    <input type="radio" value="OPTIONAL" formControlName="RESERVATION_TEL_SELECTION"
+                        id="RESERVATION_TEL_OPTIONAL_OPTIONAL" (change)="onSubmit()" />
+                    <span class="checkmark"></span>
+                </label>
+            </div>
+            <div class="form-group mx-2 my-0">
+                <label class="radio-container" for="RESERVATION_TEL_OPTIONAL_MANDATORY">
+                    {{'admin.store.settingsMandatory'|translate}}
+                    <input type="radio" value="MANDATORY" formControlName="RESERVATION_TEL_SELECTION"
+                        id="RESERVATION_TEL_OPTIONAL_MANDATORY" (change)="onSubmit()" />
+                    <span class="checkmark"></span>
+                </label>
+            </div>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="openTap" Class="col-xl-4 col-lg-4 col-md-4 form-header">Email customer on reservation status
+            change​​</label>
+        <div class="d-flex flex-md-row flex-sm-column flex-column col-xl-4 col-lg-4 col-md-4 col-sm-6 col-6">
+            <div class="form-group mb-0">
+                <label>{{'admin.global.no'|translate}}</label>&nbsp;
+                <label class="switch pt-1 mb-0">
+                    <input type="checkbox" (change)="onCheckEmailReservation($event)" [checked]="notifyCustomerReservation" id="RESERVATION_AUTO_CONFIRM" />
+                    &nbsp;<span class="slider round"></span>
+                </label>&nbsp;
+                <label>{{'admin.global.yes'|translate}}</label>&nbsp;
+            </div>
+        </div>
+    </div>
+</form>

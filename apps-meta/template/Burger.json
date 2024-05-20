@@ -1,0 +1,17 @@
+{
+  "appName": "BUR-GER",
+  "appDescription": "Order your favourite BUR-GER online",
+  "type": "TEMPLATE",
+  "tag": "PROD",
+  "bundleId": "com.bur_ger.app",
+  "appleId": "1598132647",
+  "storeAlias": "burger",
+  "iconUrl": "resources/assets/mobile-apps/template/Burger/icon.png",
+  "iconBackgroundUrl": "resources/assets/mobile-apps/template/Burger/icon-background.png",
+  "iconForegroundUrl": "resources/assets/mobile-apps/template/Burger/icon-foreground.png",
+  "splashUrl": "resources/assets/mobile-apps/template/Burger/splash.png",
+  "splashBackgroundColor": "#FFFFFF",
+  "googleServiceInfoUrl": "resources/assets/mobile-apps/template/Burger/GoogleService-Info.plist",
+  "defaultDeeplinkAppAndroidUrl": "https://play.google.com/store/apps/details?id=com.bur_ger.app",
+  "defaultDeeplinkAppIOSUrl": "https://apps.apple.com/nl/app/gonnaorder/id1598132647?l=en"
+}

@@ -1,0 +1,77 @@
+@import "variables";
+
+.btn-primary, .btn-primary:hover, .btn-primary:disabled {
+  background-color: $primary-brand-colour;
+  border-color: $primary-brand-colour;
+}
+
+.btn-outline-primary {
+  color: $primary-brand-colour;
+  border-color: $primary-brand-colour;
+}
+
+a, a:hover {
+  color: $primary-brand-colour;
+}
+
+.btn-outline-primary:not(:disabled):not(.disabled):active, .btn-outline-primary:not(:disabled):not(.disabled).active, .show > .btn-outline-primary.dropdown-toggle {
+  background-color: $primary-brand-colour;
+  border-color: $primary-brand-colour;
+}
+.text-primary {
+  color: $primary-brand-colour !important;
+}
+
+.btn-outline-primary:hover {
+  color: white !important;
+  background-color: $primary-brand-colour;
+  border-color: $primary-brand-colour;
+}
+
+.sidebar .nav-link:hover {
+  background: $primary-brand-colour;
+}
+
+.page-item.active .page-link {
+  background-color: $primary-brand-colour;
+  border-color: $primary-brand-colour;
+}
+
+.page-link {
+  color: $primary-brand-colour;
+}
+
+.page-link:hover {
+  color: $primary-brand-colour;
+}
+
+.border-primary {
+  border-color: $primary-brand-colour !important;
+}
+
+.border-secondary {
+  border-color: $secondary-brand-colour !important;
+}
+
+.custom-control-input:checked ~ .custom-control-label:before, .custom-control-input:not(:disabled):active ~ .custom-control-label::before {
+  color: #fff;
+  border-color: $primary-brand-colour;
+  background-color: $primary-brand-colour;
+}
+
+.custom-control-input:focus ~ .custom-control-label::before {
+  box-shadow: 0 0 0 0.2rem rgba($primary-brand-colour, 0.25);
+}
+
+.btn-primary:not(:disabled):not(.disabled):active, .btn-primary:not(:disabled):not(.disabled).active, .show>.btn-primary.dropdown-toggle {
+  background-color: $primary-brand-colour;
+  border-color: $primary-brand-colour;
+}
+
+.btn-primary:not(:disabled):not(.disabled):active:focus, .btn-primary:not(:disabled):not(.disabled).active:focus, .show > .btn-primary.dropdown-toggle:focus {
+  box-shadow: 0 0 0 0.2rem rgba($primary-brand-colour, 0.5);
+}
+
+.btn-outline-primary:not(:disabled):not(.disabled):active:focus, .btn-outline-primary:not(:disabled):not(.disabled).active:focus, .show > .btn-outline-primary.dropdown-toggle:focus {
+  box-shadow: 0 0 0 0.2rem rgba($primary-brand-colour, 0.5);
+}

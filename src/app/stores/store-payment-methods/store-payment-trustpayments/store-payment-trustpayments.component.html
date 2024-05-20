@@ -1,0 +1,114 @@
+<div class="card list mb-0">
+  <div class="card-body py-0">
+    <div class="row">
+      <div class="col-xl-3 marginlogo col-lg-5">
+        <a href="https://www.trustpayments.com/">
+          <img src="assets/trustpayments_logo.png" class="pr-2" width="100%" style="max-width: 110px">
+          <app-help-icon [helpPageName]="helpUrl"></app-help-icon>
+        </a>
+      </div>
+      <div class="col-xl-9 col-lg-7">
+        <button *ngIf="!showFields && !trustpaymentsConnected" class="btn btn-primary"
+          (click)="onTrustpaymentsClicked()"><i class="fa fa-link mr-2 link" title="link"></i>{{'admin.store.setting.connect'|translate}}</button>
+        <form class="form-group" [formGroup]="trustpaymentsForm" *ngIf="showFields && !trustpaymentsConnected">
+          <div class="row">
+            <div class="col-md-2">
+              {{'admin.store.payment.siteReference' | translate}}
+            </div>
+            <div class="col-md-5">
+              <input type="text" formControlName="TRUSTPAYMENTS_SITE_REFERENCE" class="form-control" maxlength="100">
+              <div class="invalid-feedback"
+                *ngIf="getControl('TRUSTPAYMENTS_SITE_REFERENCE').errors?.required && getControl('TRUSTPAYMENTS_SITE_REFERENCE').touched">
+                <span>
+                  {{'admin.global.field.required'|translate}}</span>
+              </div>
+            </div>
+          </div>
+          <div class="row mt-3">
+            <div class="col-md-2">
+              {{'admin.store.payment.webserviceUser' | translate}}
+            </div>
+            <div class="col-md-5">
+              <input type="text" class="form-control" formControlName="TRUSTPAYMENTS_WEBSERVICE_USER" maxlength="100">
+              <div class="invalid-feedback"
+                *ngIf="getControl('TRUSTPAYMENTS_WEBSERVICE_USER').errors?.required && getControl('TRUSTPAYMENTS_WEBSERVICE_USER').touched">
+                <span>
+                  {{'admin.global.field.required'|translate}}</span>
+              </div>
+            </div>
+          </div>
+          <div class="row mt-3">
+            <div class="col-md-2">
+              {{'admin.store.payment.webservicePassword' | translate}}
+            </div>
+            <div class="col-md-5">
+              <input type="password" class="form-control" formControlName="TRUSTPAYMENTS_WEBSERVICE_PASSWORD"
+                maxlength="100">
+              <div class="invalid-feedback"
+                *ngIf="getControl('TRUSTPAYMENTS_WEBSERVICE_PASSWORD').errors?.required && getControl('TRUSTPAYMENTS_WEBSERVICE_PASSWORD').touched">
+                <span>
+                  {{'admin.global.field.required'|translate}}</span>
+              </div>
+            </div>
+          </div>
+          <div class="row mt-3">
+            <div class="col-md-2">
+              {{'admin.store.payment.siteSecurityPassword' | translate}}
+            </div>
+            <div class="col-md-5">
+              <input type="password" class="form-control" formControlName="TRUSTPAYMENTS_SITE_SECURITY_PASSWORD"
+                     maxlength="100">
+              <div class="invalid-feedback"
+                   *ngIf="getControl('TRUSTPAYMENTS_SITE_SECURITY_PASSWORD').errors?.required && getControl('TRUSTPAYMENTS_SITE_SECURITY_PASSWORD').touched">
+                <span>
+                  {{'admin.global.field.required'|translate}}</span>
+              </div>
+            </div>
+          </div>
+          <div class="row mt-3">
+            <div class="col-md-2">
+            </div>
+            <div class="col-md-5 d-flex flex-row-reverse">
+              <button class="btn btn-primary" (click)="connect()">
+                <i class="fa fa-link mr-2 link" title="link"></i>{{'admin.store.setting.connect'|translate}}
+              </button>
+            </div>
+          </div>
+        </form>
+        <div *ngIf="trustpaymentsConnected">
+          <div class="row">
+            <div class="col-md-2">{{'admin.store.payment.siteReference'|translate}}</div>
+            <div class="col-md-4">{{this.siteReference}}</div>
+          </div>
+          <div class="row mt-3">
+            <div class="col-md-2">{{'admin.store.payment.siteSecurityPassword'|translate}}</div>
+            <div class="col-md-4">{{this.siteSecurityPassword}}</div>
+            <div class="col-md-2">
+              <button class="btn btn-danger d-flex" (click)="disconnect()">
+                <img src="assets/img/link-slash-solid.svg" class="mr-2 slashIcon" alt="">{{'admin.store.disconnect'|translate}}
+              </button>
+            </div>
+          </div>
+          <div class="row mt-3">
+            <div class="col-md-2">
+              <div class="form-group">
+                <label class="form-check-label">{{'admin.store.enabled'|translate}}</label>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label>{{'admin.global.no'|translate}}</label>&nbsp;
+                <label class="switch pt-1 mb-0">
+                  <input type="checkbox" id="enableTrustpaymentsPaymentcreditCard" [(ngModel)]="trustpaymentsEnabled"
+                    (ngModelChange)="toggleTrustpaymentsPayments($event)" [disabled]="!siteReference" />
+                  &nbsp;<span class="slider round"></span>
+                </label>&nbsp;
+                <label>{{'admin.global.yes'|translate}}</label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

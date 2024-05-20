@@ -1,0 +1,108 @@
+<div class="col-lg-12 px-0">
+  <div *ngIf="isMediumScreen$ | async" id="mobileView" class="mt-2">
+    <div class="card" id="cardView" *ngFor="let reservation of reservations; let i = index">
+      <div id="containerView" (click)="navigateToDetails(reservation)">
+        <div class="row mb-3 pl-3">
+          <span><span class=" d-none d-sm-inline-block d-lg-inline-block d-xl-inline-block ml-1">
+              {{'admin.store.id'|translate}}:</span> {{ reservation.id ?? ''}}</span>
+          <span class="ml-4 pl-3" style="width: fit-content;" [ngClass]="{'d-none': !(reservation.location!=null &&
+          reservation.location.label !=null ? reservation.location.label : '')}"><i class="fa fa-chair"></i>
+            {{reservation.location!=null &&
+            reservation.location.label !=null ? reservation.location.label : ''}}</span>
+          <span class="ml-4 pl-3"><i class="fa fa-user"></i> {{reservation.numberOfPeople ?? ''}}</span>
+        </div>
+
+        <div class="row mb-3">
+          <div class="col-md-12">
+
+            <div class="icon"><i class='far fa-clock'></i></div><span class="pr-4">{{'admin.store.schedule.startTime'|
+              translate}}</span><span>{{getTimeFormat(reservation.arrivalTime)}}</span>
+
+          </div>
+        </div>
+        <div class="row mb-3">
+          <div class="col-md-12">
+            <div class="icon"><i class="fa fa-calendar"></i></div>{{getDateFormat(reservation.createdAt)}}
+          </div>
+        </div>
+        <div class="row mb-3">
+          <div class="col-md-12">
+            <div class="icon"><i class='far fa-clock'></i></div><span class="pr-4">{{'admin.store.schedule.endTime'|
+              translate}}</span><span>{{getTimeFormat(reservation.departureTime)}}</span>
+          </div>
+        </div>
+        <div class="row mb-3">
+          <div class="col-md-12">
+            <div class="icon"><i class="fa fa-paper-plane"></i></div>
+            {{'admin.store.requested'| translate}} {{getRequestFormat(reservation.createdAt)}}
+          </div>
+        </div>
+        <div class="row mb-3" *ngIf="reservation.name!=null && reservation.name!=''">
+          <div class="col-md-12">
+            <div class="icon"><i class="fa fa-user"></i></div>
+            {{reservation.name ?? ''}}
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <div class="card list">
+    <div class="card-body">
+      <div class="form-group mb-3">
+        <div>
+          <table id="order-table" class="table table-responsive-sm">
+            <thead>
+              <tr *ngIf="reservations.length">
+                <th>{{ 'admin.store.id'|translate }}</th>
+                <th class="minWidth150">{{ 'admin.store.nameField'|translate }}</th>
+                <th class="minWidth150">{{ 'admin.store.people'|translate }}</th>
+                <th>{{ 'admin.store.table'|translate }}</th>
+                <th class="orderSent">{{ 'admin.store.requested'|translate }}</th>
+                <th>{{ 'admin.store.schedule.startTime'|translate }}</th>
+                <th>{{ 'admin.store.schedule.endTime'|translate }}</th>
+              </tr>
+            </thead>
+            <tbody *ngIf="(storeLocaleTimeZone$ | async) as storeLocaleTimeZone" id="tableBodyData">
+              <ng-container *ngFor="let reservation of reservations; let i = index">
+                <tr class="pointerCursur" (click)="onSelectReservation(reservation.id)"
+                  [ngClass]="{'activeBgColor': selectedReservation == reservation.id}">
+                  <td id="tdDesign">{{ reservation.id ?? ''}}</td>
+                  <td class="smallClass">
+                    {{ reservation.name ?? '' }}
+                  </td>
+                  <td>
+                    {{ reservation.numberOfPeople ?? '' }}
+                  </td>
+                  <td>
+                    {{ reservation.location!=null && reservation.location.label !=null ? reservation.location.label : ''
+                    }}
+                  </td>
+                  <td>
+                    {{ getRequestFormat(reservation.createdAt) }}
+                  </td>
+                  <td>
+                    {{ getTimeFormat(reservation.arrivalTime)}}
+                  </td>
+                  <td>
+                    {{ getTimeFormat(reservation.departureTime)}}
+                  </td>
+
+                </tr>
+                <tr *ngIf="selectedReservation == reservation.id ">
+                  <td colspan="9" class="p-0">
+                    <app-reservation-details [backNavigation]="statusTab" [storeId]="storeId"
+                      [reservation]="reservation" [embedDetails]="false" [selectedStore]="selectedStore"
+                      (changesOccured)="onChangesOccured($event,reservation)"></app-reservation-details>
+                  </td>
+                </tr>
+              </ng-container>
+            </tbody>
+
+          </table>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

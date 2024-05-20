@@ -1,0 +1,32 @@
+<div class="offers-dialog d-flex flex-wrap justify-content-center align-items-center hide" #offersDialog>
+    <div class="selection-container p-4 position-absolute">
+        <div class="header-container d-flex flex-wrap">
+            <div class="w-100">
+                <div class="font-size-header pb-4 font-weight-bold">
+                    {{'public.checkout.errors.orderSubmissionFailed' | translate}}
+                    <span class="float-right position-absolute closebutton text-decoration-underline"
+                        (click)="dismissOffersDialog()">Close<i class="fas fa-times pl-2"></i></span>
+                </div>
+                <div class="font-size-primary">
+                    {{'public.checkout.errors.offersUnavailableExplanation' | translate}}
+                </div>
+            </div>
+        </div>
+        <div class="offers-container py-2">
+            <div class="item-list">
+                <div class="item-wrapper text-select-none d-flex flex-column"
+                    *ngFor="let offer of unavailableOffers.offerNames">
+                    <div class="item flex-fill mb-3 text-unselectable">
+                        <div class="p-0 mb-0 font-size-primary font-weight-bold">{{offer}}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="font-size-primary text-center text-unselectable">
+                <a href="#" class="btn btn-dark px-5 py-1" (throttledClick)="updateOrder($event)" appPreventDoubleClick
+                    [throttleTime]="5000">
+                    {{'public.checkout.updateOrder' | translate}}
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

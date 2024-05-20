@@ -1,0 +1,23 @@
+// Variable overrides
+//----- COLORS -----
+
+$pure-black: #000;
+$primary-brand-colour: var(--primary-brand-color);
+$secondary-brand-colour: var(--secondary-brand-color);
+$dark-blue: #222831;
+$link-blue: #263575;
+$admin-gray: #f8f8f8;
+$admin-menu-text: #919191;
+$admin-menu-text: #000000;
+
+
+//----- ADMIN VARS -----
+$admin-header-lg-height: 56px;
+$admin-header-height: 50px;
+$admin-menu-width: 250px;
+
+$input-font-size: 16px;
+$header3-font-size: 18px;
+
+$breakpoint-mobile-down: sm !important;
+$breakpoint-mobile-up: sm !important;

@@ -1,0 +1,19 @@
+.paid-amount-sec {
+    max-width: 992px;
+    .amount-info{
+        display: flex;
+        flex-direction: column;
+        .amount-item{
+            display: flex;
+            justify-content: space-between;
+            .greenText{
+                color: #098b00;
+            }
+        }
+        .borderBottom {
+            margin-top: 10px 0;
+            padding-top: 10px;
+            border-top: 1px solid #c8ced3;
+        }
+    }
+}

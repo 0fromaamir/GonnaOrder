@@ -1,0 +1,191 @@
+<div class="card list mb-0">
+  <div class="card-body py-0">
+    <div class="row">
+      <div class="col-xl-4 col-lg-4">
+        <img class="powersoft" src="/assets/img/powersoft.png">
+        <app-help-icon [helpPageName]="helpUrl"></app-help-icon>
+      </div>
+      <div class="col-xl-8 col-lg-8 hr-margin">
+        <label
+          class="col-form-label d-block mb-0 pt-0">{{'admin.store.setting.integrations.powersoft.connectWithPowersoft'|translate}}</label>
+        <button *ngIf="!showFields && !powersoftConnected" (click)="onPowersoftClicked()" class="btn btn-primary"><i
+            class="fa fa-link mr-2 link" title="link"></i>{{'admin.store.setting.connect' | translate}} </button>
+        <form autocomplete="off" class="form-group" [formGroup]="powersoftForm"
+          *ngIf="showFields && !powersoftConnected">
+          <div class="row mb-4">
+            <div class="col-md-3">
+              {{'admin.store.accessToken'|translate}}
+            </div>
+            <div class="col-md-9">
+              <input type="text" formControlName="POWERSOFT_ACCESS_TOKEN" class="form-control" maxlength="64">
+              <div class="invalid-feedback"
+                *ngIf="getControl('POWERSOFT_ACCESS_TOKEN').errors?.required && getControl('POWERSOFT_ACCESS_TOKEN').touched">
+                <span>
+                  {{'admin.global.field.required'|translate}}</span>
+              </div>
+              <div class="not-subscribed-text">{{'admin.store.setting.integrations.powersoft.accessTokenmsg'|translate}}
+              </div>
+            </div>
+          </div>
+          <div class="row mb-4">
+            <div class="col-md-3">
+              {{'admin.store.setting.integrations.powersoft.agentCode'|translate}}
+            </div>
+            <div class="col-md-9">
+              <input type="text" class="form-control" formControlName="POWERSOFT_AGENT_CODE" maxlength="64">
+              <div class="invalid-feedback"
+                *ngIf="getControl('POWERSOFT_AGENT_CODE').errors?.required && getControl('POWERSOFT_AGENT_CODE').touched">
+                <span>
+                  {{'admin.global.field.required'|translate}}</span>
+              </div>
+              <div class="not-subscribed-text">{{'admin.store.setting.integrations.powersoft.agentCodemsg'|translate}}
+              </div>
+            </div>
+          </div>
+          <div class="row mb-4">
+            <div class="col-md-3">
+              {{'admin.store.setting.integrations.powersoft.customerCode'|translate}}
+            </div>
+            <div class="col-md-9">
+              <input type="text" class="form-control" formControlName="POWERSOFT_GENERIC_CUSTOMER_CODE" maxlength="64">
+              <div class="invalid-feedback"
+                *ngIf="getControl('POWERSOFT_GENERIC_CUSTOMER_CODE').errors?.required && getControl('POWERSOFT_GENERIC_CUSTOMER_CODE').touched">
+                <span>
+                  {{'admin.global.field.required'|translate}}</span>
+              </div>
+              <div class="not-subscribed-text">
+                {{'admin.store.setting.integrations.powersoft.customerCodemsg'|translate}}
+              </div>
+            </div>
+          </div>
+          <div class="row mb-4">
+            <div class="col-md-3">
+              {{'admin.global.email'|translate}}
+            </div>
+            <div class="col-md-9">
+              <input type="text" class="form-control" formControlName="POWERSOFT_GENERIC_CUSTOMER_EMAIL"
+                maxlength="100">
+              <div class="invalid-feedback"
+                *ngIf="getControl('POWERSOFT_GENERIC_CUSTOMER_EMAIL').errors?.required && getControl('POWERSOFT_GENERIC_CUSTOMER_EMAIL').touched">
+                <span>
+                  {{'admin.global.field.required'|translate}}</span>
+              </div>
+              <div class="not-subscribed-text">{{'admin.store.setting.integrations.powersoft.emailmsg'|translate}}</div>
+            </div>
+          </div>
+          <div class="row mb-4">
+            <div class="col-md-3">
+              {{'admin.store.setting.integrations.powersoft.storeCode'|translate}}
+            </div>
+            <div class="col-md-9">
+              <input type="text" class="form-control" formControlName="POWERSOFT_STORE_CODE" maxlength="64">
+              <div class="not-subscribed-text">{{'admin.store.setting.integrations.powersoft.storeCodemsg'|translate}}
+              </div>
+            </div>
+          </div>
+          <div class="row mb-4">
+            <div class="col-md-3">
+              {{'admin.store.setting.integrations.powersoft.stationCode'|translate}}
+            </div>
+            <div class="col-md-9">
+              <input type="text" class="form-control" formControlName="POWERSOFT_STATION_CODE" maxlength="64">
+              <div class="not-subscribed-text">{{'admin.store.setting.integrations.powersoft.stationCodemsg'|translate}}
+              </div>
+            </div>
+          </div>
+          <div class="row mb-4">
+            <div class="col-md-3">
+              {{'admin.store.setting.integrations.powersoft.priceReference'|translate}}
+            </div>
+            <div class="col-md-9">
+              <select class="form-control" formControlName="POWERSOFT_PRICE_REFERENCE">
+                <option *ngFor="let p of prices" value="{{ p }}">{{ p }}</option>
+              </select>
+            </div>
+          </div>
+          <div class="row mb-4">
+            <div class="col-md-3">
+              {{'admin.store.setting.integrations.powersoft.hospitalityMode'|translate}}
+            </div>
+            <div class="col-md-9">
+              <label>{{'admin.store.disabled'|translate}}</label>&nbsp;
+              <label class="switch pt-1 mb-0" for="POWERSOFT_HOSPITALITY_MODE">
+                <input type="checkbox" formControlName="POWERSOFT_HOSPITALITY_MODE" id="POWERSOFT_HOSPITALITY_MODE" />
+                &nbsp;<span class="slider round"></span>
+              </label>&nbsp;
+              <label>{{'admin.store.enabled'|translate}}</label>
+              <div class="not-subscribed-text">
+                {{'admin.store.setting.integrations.powersoft.hospitalityModemsg'|translate}}
+              </div>
+            </div>
+          </div>
+          <div class="row mb-4">
+            <div class="col-md-3">
+            </div>
+            <div class="col-md-9 d-flex flex-row-reverse">
+              <button class="btn btn-primary" (click)="connect()">
+                <i class="fa fa-link mr-2 link" title="link"></i>{{'admin.store.setting.connect' | translate}}
+              </button>
+            </div>
+          </div>
+        </form>
+        <div *ngIf="powersoftConnected">
+          <div class="row mb-4">
+            <div class="col-md-3">{{'admin.store.accessToken'|translate}}</div>
+            <div class="col-md-9">{{this.powersoftAccessTokenID}}</div>
+           
+          </div>
+          <div class="row mb-4">
+            <div class="col-md-3">{{'admin.store.setting.integrations.powersoft.agentCode'|translate}}</div>
+            <div class="col-md-9">{{this.powersoftAgentCodeID}}</div>
+            
+          </div>
+          <div class="row mb-4">
+            <div class="col-md-3">{{'admin.store.setting.integrations.powersoft.customerCode'|translate}}</div>
+            <div class="col-md-9">{{this.powersoftGenercCustomerCodeID}}</div>
+            
+          </div>
+          <div class="row mb-4">
+            <div class="col-md-3">{{'admin.global.email'|translate}}</div>
+            <div class="col-md-9">{{this.powersoftGenercCustomerEmailID}}</div>
+            
+          </div>
+          <div class="row mb-4">
+            <div class="col-md-3">{{'admin.store.setting.integrations.powersoft.storeCode'|translate}}</div>
+            <div class="col-md-9">{{this.powersoftStoreCodeID}}</div>
+            
+          </div>
+          <div class="row mb-4">
+            <div class="col-md-3">{{'admin.store.setting.integrations.powersoft.stationCode'|translate}}</div>
+            <div class="col-md-9">{{this.powersoftStationCodeID}}</div>
+            
+          </div>
+          <div class="row mb-4">
+            <div class="col-md-3">{{'admin.store.setting.integrations.powersoft.priceReference'|translate}}</div>
+            <div class="col-md-9">{{this.powesoftPriceReferenceID}}</div>
+            
+          </div>
+          <div class="row mb-4">
+            <div class="col-md-3">{{'admin.store.setting.integrations.powersoft.hospitalityMode'|translate}}</div>
+            <div class="col-md-9">{{this.powersoftHospitalityModeID}}</div>
+           
+          </div>
+          <div class="row mb-4">
+            <div class="col-md-6">
+              <button class="btn btn-primary px-2 mb-2 pos-integration-btn"
+                (click)="synchronizeCatalog()">{{'admin.store.setting.integrations.powersoft.synchronizeCatalog'|translate}}</button>
+            </div>
+           
+          </div>
+          <div class="col-lg-12">
+            <div class="float-right">
+              <button type="button" class="btn btn-danger mt-3" (click)="disconnect()">
+                <img src="assets/img/link-slash-solid.svg" class="mr-2 slashIcon" alt="">{{'admin.store.disconnect' | translate}}
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

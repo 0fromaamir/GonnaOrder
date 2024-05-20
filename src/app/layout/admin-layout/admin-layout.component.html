@@ -1,0 +1,78 @@
+<div class="admin app">
+  <div class="flex-grow-1">
+    <app-header id="app-header-admin" [navbarBrandRouterLink]="whitelabelCommericalUrl"
+      [navbarBrandFull]="{src: whiteLabelLogo, style: 'height: 35px'}" [fixed]="true"
+      [navbarBrandText]="{ icon: '🅲', text: whiteLabelName }" [sidebarToggler]="" [asideMenuToggler]="false"
+      [mobileAsideMenuToggler]="false" style="justify-content: left !important;">
+      <div class="current-store d-flex pl-lg-1 ml-lg-4">
+        <div class="d-flex text-blue">
+          <a *ngIf="(changeBtnVisible$ | async)" class="ml-0 my-auto" [routerLink]="['/manager/stores/list']">
+            {{ (store$ | async)?.name }}
+            <i class="nav-icon fas fa-random" aria-hidden="true" title="{{ 'admin.global.change' | translate }}"></i>
+          </a>
+          <span *ngIf="!(changeBtnVisible$ | async)" class="ml-2 my-auto">
+            {{ (store$ | async)?.name }}
+          </span>
+        </div>
+      </div>
+
+      <ul class="nav navbar-nav position-absolute">
+        <li class="nav-item px-3">
+          <a [routerLink]="['/manager/profile/contactus']" class="text-info cursor-pointer"
+            title="{{ 'admin.global.contactus.support' | translate }}"> <i class="fa fa-comment-alt mr-1 text-info"></i>
+            <span
+              class="d-none text-primary d-xl-inline-block ml-1">{{'admin.global.contactus.support'|translate}}</span>
+          </a>
+        </li>
+        <li class="nav-item dropdown" dropdown placement="right" style="padding-right: 1em;">
+          <a class="nav-link text-blue" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
+            aria-expanded="false" dropdownToggle (click)="closeMobileMenu($event)">
+            <i class="fas fa-user mt-1 mr-2"></i> <span class="d-none d-xl-inline-block mr-1">{{ username$ | async
+              }}</span> <i class="fas fa-angle-down"></i>
+          </a>
+          <div class="dropdown-menu dropdown-menu-right" *dropdownMenu aria-labelledby="simple-dropdown">
+            <div class="dropdown-header text-center">
+              <strong>Account</strong>
+            </div>
+            <a class="dropdown-item dropdown-links" [routerLink]="['/manager/profile']"><i
+                class="fas fa-user adminIcons"></i>{{'admin.account.profile' | translate}}</a>
+            <a class="dropdown-item dropdown-links" [routerLink]="['/manager/profile/social-accounts/update']"><i
+                class="fas fa-user-friends adminIcons"></i>{{'admin.account.social.nav' | translate}}</a>
+            <a *ngIf="(hasPassword$ | async)" class="dropdown-item dropdown-links"
+              [routerLink]="['/manager/profile/password/update']"><i class="fas fa-lock adminIcons"></i>
+              {{'admin.account.changePassword' | translate}}</a>
+            <a *ngIf="!(hasPassword$ | async)" class="dropdown-item dropdown-links"
+              [routerLink]="['/manager/profile/password/create']"><i
+                class="fas fa-lock adminIcons"></i>{{'admin.account.createPassword' | translate}}</a>
+            <div class="divider"></div>
+            <a class="dropdown-item dropdown-links" style="vertical-align: middle;display: inline-flex;"
+              (click)="logout()"><i class="adminIcons material-icons">
+                exit_to_app
+              </i>{{'admin.account.logout' | translate}} </a>
+          </div>
+        </li>
+      </ul>
+    </app-header>
+    <div class="app-body admin" style="overflow-x: unset;">
+      <app-menu></app-menu>
+      <main class="main">
+        <ol class="breadcrumb mb-0 pb-0">
+          <!-- Breadcrumb Menu-->
+          <li class="breadcrumb-menu d-md-down-none">
+          </li>
+        </ol>
+        <div class="container-fluid">
+          <div class="animated fadeIn">
+            <router-outlet></router-outlet>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+  <app-footer *ngIf="!isPos && (isNewVersionAvailable$ | async)">
+    <div class="d-flex flex-row-reverse col-12" *ngIf="isNewVersionAvailable$ | async">
+      <app-state-reloader [buttonText]="'admin.global.reloadApplication' | translate"
+        [isAdmin]="true"></app-state-reloader>
+    </div>
+  </app-footer>
+</div>

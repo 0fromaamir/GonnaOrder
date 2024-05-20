@@ -1,0 +1,14 @@
+@import "bootstrap/scss/functions";
+@import "bootstrap/scss/variables";
+@import "bootstrap/scss/mixins";
+
+.btn-save {
+  background-color: green !important;
+  border-color: green !important;
+}
+.emailwidth{
+  width: 50%;
+  @include media-breakpoint-down(sm){
+    width: 100%;
+  }
+}

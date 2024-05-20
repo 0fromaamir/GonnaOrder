@@ -1,0 +1,154 @@
+<div class="col-lg-12 right-col">
+  <div class="card list">
+    <div class="col-lg-12 mb-4 d-flex align-items-center justify-content-between p-0">
+      <a title="{{'admin.store.catalog.backToCatalog'|translate}}" class="btn back-button btn-primary"
+        [routerLink]="['/manager/platform/tenants']">
+        <i class="fas fa-arrow-left mr-2"></i> <span
+          class="d-none d-md-inline-block d-lg-inline-block d-xl-inline-block ml-1">Back To Tenants</span>
+      </a>
+    </div>
+    <div class="card-header">Platform</div>
+    <div class="card-body">
+      <div class="row pt-2 pl-3 mb-3">
+        <button type="button" class="rounded-0 btn btn-outline-primary mr-0"
+          [routerLink]="['/manager/platform/tenants']"
+          [class.btnChange]="true">Tenants</button>
+      </div>
+      <div class="row pl-3 mb-3">
+        <h3 *ngIf="isCreateTenant" class="text-blue font-size-popup-title my-2">Create Tenant</h3>
+        <h3 *ngIf="!isCreateTenant" class="text-blue font-size-popup-title my-2">Edit Tenant : {{ tenantCode }}</h3>
+      </div>
+      <form [formGroup]="tenantForm">
+        <div class="row">
+          <div class="col-lg-12 col-md-12 col-sm-12">
+            <div class="form-group d-flex align-items-center w-100">
+              <label for="tenantCode"
+                class="col-xl-2 col-lg-3 col-md-12 col-sm-12 required">Code</label>
+              <div class="input-group col-xl-10 col-lg-9 col-md-12 col-sm-12" *ngIf="isCreateTenant">
+                <input type="text" class="form-control"
+                  [class.is-invalid]="getControl('code')?.invalid && (getControl('code')?.dirty || getControl('code')?.touched)"
+                  placeholder="Code" autocomplete="off" formControlName="code"
+                  id="tenantCode" />
+                <div class="invalid-feedback" *ngIf="getControl('code')?.errors">
+                  <span
+                    *ngIf="getControl('code')?.errors.required || getControl('code')?.errors.whitespace">{{'admin.global.field.required'|translate}}</span>
+                  <span *ngIf="getControl('code')?.errors.minlength">{{'admin.global.field.minLength'|translate:
+                    {minLength: "2"} }}</span>
+                  <span *ngIf="getControl('code')?.errors.maxlength">{{'admin.global.field.maxLength'|translate:
+                    {maxLength: "128"} }}</span>
+                </div>
+              </div>
+              <div *ngIf="!isCreateTenant" class="input-group col-xl-10 col-lg-9 col-md-12 col-sm-12">
+                {{tenantForm.getRawValue()?.code}}</div>
+            </div>
+            <div class="form-group d-flex align-items-center w-100">
+              <label for="offerName"
+                class="col-xl-2 col-lg-3 col-md-12 col-sm-12 required">{{'admin.global.name'|translate}}</label>
+              <div class="input-group col-xl-10 col-lg-9 col-md-12 col-sm-12">
+                <input type="text" class="form-control"
+                  [class.is-invalid]="getControl('name')?.invalid && (getControl('name')?.dirty || getControl('name')?.touched)"
+                  placeholder="{{'admin.global.name'|translate}}" autocomplete="off" formControlName="name"
+                  id="offerName" />
+                <div class="invalid-feedback" *ngIf="getControl('name')?.errors">
+                  <span
+                    *ngIf="getControl('name')?.errors.required || getControl('name')?.errors.whitespace">{{'admin.global.field.required'|translate}}</span>
+                  <span *ngIf="getControl('name')?.errors.minlength">{{'admin.global.field.minLength'|translate:
+                    {minLength: "2"} }}</span>
+                  <span *ngIf="getControl('name')?.errors.maxlength">{{'admin.global.field.maxLength'|translate:
+                    {maxLength: "128"} }}</span>
+                </div>
+              </div>
+            </div>
+            <div class="form-group d-flex align-items-center w-100">
+              <label for="adminSubdomain"
+                class="col-xl-2 col-lg-3 col-md-12 col-sm-12 required">Admin Subdomain</label>
+              <div class="input-group col-xl-10 col-lg-9 col-md-12 col-sm-12">
+                <input type="text" class="form-control"
+                  [class.is-invalid]="getControl('adminSubdomain')?.invalid && (getControl('adminSubdomain')?.dirty || getControl('adminSubdomain')?.touched)"
+                  placeholder="Admin Subdomain" autocomplete="off"
+                  formControlName="adminSubdomain" id="adminSubdomain" />
+                <div class="invalid-feedback" *ngIf="getControl('adminSubdomain')?.errors">
+                  <span
+                    *ngIf="getControl('adminSubdomain')?.errors.required || getControl('adminSubdomain')?.errors.whitespace">{{'admin.global.field.required'|translate}}</span>
+                  <span
+                    *ngIf="getControl('adminSubdomain')?.errors.minlength">{{'admin.global.field.minLength'|translate:
+                    {minLength: "2"} }}</span>
+                  <span
+                    *ngIf="getControl('adminSubdomain')?.errors.maxlength">{{'admin.global.field.maxLength'|translate:
+                    {maxLength: "128"} }}</span>
+                </div>
+              </div>
+            </div>
+            <div *ngIf="!isCreateTenant">
+              <div class="form-group d-flex align-items-center w-100">
+                <label class="col-xl-2 col-lg-3 col-md-12 col-sm-12 required">Logo</label>
+                <div class="align-middle input-group col-xl-10 col-lg-9 col-md-12 col-sm-12">
+                  <div class="tenant-images-container d-flex row">
+                    <div class="background-image col  pr-0">
+                      <app-image-upload [image]="tenantLogo" (upload)="onTenantLogoUpload($event)"
+                        (uploadType)="onTenantRemoveLogoImage($event)" [type]="'background'" title="Upload Image">
+                      </app-image-upload>
+                    </div>
+                    <span class="download-image col pl-2 mb-3" *ngIf="(tenantLogo)">
+                      <i class="fas fa-cloud-download-alt font-xl" (click)="downloadImage()"></i>
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group d-flex align-items-center mb-0 mt-3">
+                <label class="col-xl-2 col-lg-3 col-md-12 col-sm-12 brand-heading">Primary Color</label>
+                <div class="input-group ml-3">
+                  <input [style.background]="colors.primaryColor" [(colorPicker)]="colors.primaryColor"
+                    [readonly]="true" class="branding-input" (colorPickerClose)="hasAnyPropertyChanged = true" />
+                  <div class="col-xl-3 col-lg-3 col-md-3 font-weight-bold" [style.color]="colors.primaryColor">
+                    {{ 'admin.store.settings.branding.text.sampleText' | translate }}
+                  </div>
+                </div>
+              </div>
+              <div class="form-group d-flex align-items-center mb-0 mt-3">
+                <label class="col-xl-2 col-lg-3 col-md-12 col-sm-12 brand-heading">Secondary Color</label>
+                <div class="input-group ml-3">
+                  <input [style.background]="colors.secondaryColor" [(colorPicker)]="colors.secondaryColor"
+                    [readonly]="true" class="branding-input" (colorPickerClose)="hasAnyPropertyChanged = true" />
+                  <div class="col-xl-3 col-lg-3 col-md-3 font-weight-bold" [style.color]="colors.secondaryColor">
+                    {{ 'admin.store.settings.branding.text.sampleText' | translate }}
+                  </div>
+                </div>
+              </div>
+              <div class="form-group d-flex align-items-center w-100 mt-3">
+                <label for="commercialUrl" class="col-xl-2 col-lg-3 col-md-12 col-sm-12 required">Commercial URL</label>
+                <div class="input-group col-xl-10 col-lg-9 col-md-12 col-sm-12">
+                  <input type="text" class="form-control"
+                    [class.is-invalid]="getControl('commercialUrl')?.invalid && (getControl('commercialUrl')?.dirty || getControl('commercialUrl')?.touched)"
+                    placeholder="Commercial Url" autocomplete="off" formControlName="commercialUrl"
+                    id="commercialUrl" />
+                  <div class="invalid-feedback" *ngIf="getControl('commercialUrl')?.errors">
+                    <span
+                      *ngIf="getControl('commercialUrl')?.errors.required || getControl('commercialUrl')?.errors.whitespace">{{'admin.global.field.required'|translate}}</span>
+                    <span
+                      *ngIf="getControl('commercialUrl')?.errors.minlength">{{'admin.global.field.minLength'|translate:
+                      {minLength: "2"} }}</span>
+                    <span
+                      *ngIf="getControl('commercialUrl')?.errors.maxlength">{{'admin.global.field.maxLength'|translate:
+                      {maxLength: "128"} }}</span>
+                    <span *ngIf="getControl('commercialUrl')?.errors.pattern">Invalid URL</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="buttonGroup w-100">
+            <div class="col-12 floatLeft">
+              <button type="button" class="btn btn-primary mr-0 btn-class mb-1" (click)="onTenantSave()"
+                [disabled]="disableForm"><i class="fas fa-save mr-2 pr-1"></i>{{'admin.global.save'|translate}}</button>
+                <a class="actionLink btn-lr btn-l action-btn ml-2" title="cancel"
+                [routerLink]="['/manager/platform/tenants']">{{'admin.global.cancel'|translate}}</a>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

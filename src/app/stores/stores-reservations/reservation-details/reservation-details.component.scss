@@ -1,0 +1,159 @@
+@import "bootstrap/scss/functions";
+@import "bootstrap/scss/variables";
+@import "bootstrap/scss/mixins";
+
+.card-header {
+  display: flex;
+}
+
+#bodyDetails{
+  padding: 1%;
+  background-color: #F8F8F8;
+  border: 1px solid #dcdcdc;
+  width: 99%;
+
+}
+#firstRowLeft
+{
+  margin-top: 0.5em;
+}
+#requestedTime
+{
+  margin-right: 0.5em;
+}
+.rowLeft{
+  margin-left: 1em;
+}
+.firstRowDiv{
+  margin-right: 8ex;
+}
+#firstRowRightDown{
+  margin-right: 1em;
+}
+#firstRowRight{
+  margin-right: 1em;
+}
+#firstRowRightUp{
+  margin-right: 1em;
+  display: none !important;
+}
+#hrLine{
+  display: none !important;
+}
+.resevationData
+{
+  margin-left: 0.6em;
+}
+.spaceBetweenBtns
+{
+  margin-right: 2em;
+}
+.row {
+  margin-bottom: 0.3em;
+}
+#reserveEndTime
+{
+  margin-left: 0.9em;
+}
+.rightButtons
+{
+  margin-right: 0.5em;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+.Deletebtn{
+  background-color: #f86c6b !important;
+  border-color: #f86c6b !important;
+  color: white;
+}
+#lastRow{
+  display: flex;
+  justify-content: right;
+}
+
+.greenbtn
+{
+  background-color: #008000 ;
+  color: white;
+  display: flex;
+}
+.icon
+{
+  color: white;
+  margin-right: 8px;
+}
+
+.removebtn{
+  background-color: #f86c6b !important;
+  border-color: #f86c6b !important;
+  color: white;
+  display: flex;
+}
+@include media-breakpoint-down(md)
+{
+  #bodyDetails{
+    background-color: white;
+    border: 0px solid white;
+  }
+  .calenderView
+  {
+    display: inline-grid;
+    justify-content: flex-start;
+    align-content: center;
+  }
+  #firstRowRightUp{
+    display: flex !important;
+  }
+  #firstRowRightDown{
+    display: none !important;
+  }
+  #hrLine{
+    display: block !important;
+  }
+}
+@include media-breakpoint-between(sm,md)
+{
+  .reserveDateTime{
+    display: flex;
+    justify-content: space-around;
+    flex-direction: row;
+  }
+  .rightButtons, .mdView{
+    align-items: center;
+    flex-wrap: nowrap;
+    align-content: center;
+    justify-items: stretch;
+    font-size: 12px;
+  }
+
+  .rightButtons.spaceBetweenBtns{
+    margin-right: 1em;
+  }
+}
+#buttonView{
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+.containerbtns{
+  display: flex;
+  justify-content: space-between;
+}
+
+.rgtbtns{
+  display: flex;
+  justify-content: end;
+  @include media-breakpoint-down(sm){
+    display: none;
+  }
+}
+
+.colwidth{
+  @include media-breakpoint-up(md){
+    width: 400px;
+    float: right;
+    text-align: end;
+  }
+}

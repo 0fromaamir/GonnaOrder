@@ -1,0 +1,17 @@
+{
+  "appName": "Avli",
+  "appDescription": "Customer ordering app for AVli",
+  "type": "TEMPLATE",
+  "tag": "PROD",
+  "bundleId": "com.gonnaorder.avlidelivery",
+  "appleId": "1658246271",
+  "storeAlias": "avlidelivery",
+  "iconUrl": "resources/assets/mobile-apps/template/Avli/icon.png",
+  "iconBackgroundUrl": "resources/assets/mobile-apps/template/Avli/icon-background.png",
+  "iconForegroundUrl": "resources/assets/mobile-apps/template/Avli/icon-foreground.png",
+  "splashUrl": "resources/assets/mobile-apps/template/Avli/splash.png",
+  "splashBackgroundColor": "#EC3B32",
+  "googleServiceInfoUrl": "resources/assets/mobile-apps/template/Avli/GoogleService-Info.plist",
+  "defaultDeeplinkAppAndroidUrl": "https://play.google.com/store/apps/details?id=com.gonnaorder.avlidelivery",
+  "defaultDeeplinkAppIOSUrl": "https://apps.apple.com/nl/app/gonnaorder/id1658246271?l=en"
+}

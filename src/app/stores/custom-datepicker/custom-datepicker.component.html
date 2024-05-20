@@ -1,0 +1,25 @@
+<div class="d-flex align-items-center flex-wrap marginLeftDateAndTime">
+  <div class="d-flex flex-wrap align-items-center my-n3">
+    <mat-form-field style="width: 20px;" class="hide-element">
+      <input class="hide-element" hidden matInput [matDatepicker]="picker" (dateChange)="onDateChange($event)">
+      <mat-datepicker #picker [startAt]="displayedDate"></mat-datepicker>
+    </mat-form-field>
+    <mat-datepicker-toggle matSuffix [for]="picker" class="theme-color-date-icon"></mat-datepicker-toggle>
+  </div>
+  <div class="d-flex align-items-center">
+    <div class="d-flex dateSelector">
+      <div class="d-flex px-2 px-sm-1 arrow down m-auto" (click)="decrementDate()">
+        <i class="fas fa-chevron-left"></i>
+      </div>
+      <div style="width: 95px;">
+        <div class="d-flex py-2 justify-content-center px-0 space-nowrap theme-color-date-text">
+          {{ date | date:'EEE dd MMM' }}
+        </div>
+
+      </div>
+      <div class="d-flex px-2 px-sm-1 arrow up m-auto" (click)="incrementDate()"><i class="fas fa-chevron-right"></i>
+      </div>
+    </div>
+
+  </div>
+</div>

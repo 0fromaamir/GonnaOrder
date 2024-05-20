@@ -1,0 +1,17 @@
+{
+  "appName": "Branco",
+  "appDescription": "Customer ordering app for Branco",
+  "type": "TEMPLATE",
+  "tag": "PROD",
+  "bundleId": "com.gonnaorder.branco",
+  "appleId": "1549645888",
+  "storeAlias": "branco",
+  "iconUrl": "resources/assets/mobile-apps/template/Branco/icon.png",
+  "iconBackgroundUrl": "resources/assets/mobile-apps/template/Branco/icon-background.png",
+  "iconForegroundUrl": "resources/assets/mobile-apps/template/Branco/icon-foreground.png",
+  "splashUrl": "resources/assets/mobile-apps/template/Branco/splash.png",
+  "splashBackgroundColor": "#1D454C",
+  "googleServiceInfoUrl": "resources/assets/mobile-apps/template/Branco/GoogleService-Info.plist",
+  "defaultDeeplinkAppAndroidUrl": "https://play.google.com/store/apps/details?id=com.gonnaorder.branco",
+  "defaultDeeplinkAppIOSUrl": "https://apps.apple.com/nl/app/gonnaorder/id1549645888?l=en"
+}

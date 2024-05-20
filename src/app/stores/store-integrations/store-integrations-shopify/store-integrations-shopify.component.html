@@ -1,0 +1,140 @@
+<div class="card list mb-0">
+    <div class="card-body py-0">
+        <div class="row">
+            <div class="col-xl-4 col-lg-4">
+                <img class="shopifyimg pr-2 mt-2" src="/assets/img/shopify.png" width="100%" style="max-width: 180px;">
+                <app-help-icon [helpPageName]="helpUrlShopify"></app-help-icon>
+            </div>
+            <div class="col-xl-8 col-lg-8">
+
+                <ng-container class="row"
+                    *ngIf="shopifySection === 'shopify-dashboard' then shopifyDashboard else shopifyLogin">
+                </ng-container>
+            </div>
+        </div>
+    </div>
+</div>
+<ng-template #shopifyDashboard>
+    <div class="row">
+        <div class="col-lg-12 mb-3">
+            {{ 'admin.store.setting.integrations.connectWithYourPOS' | translate }}
+        </div>
+        <div class="col-lg-12">
+            <div class="d-flex align-items-center justify-content-between p-0">
+                <button type="button" class="btn btn-primary mt-2" (click)="shopifySection = 'shopify-login';">
+                    <i class="fa fa-link mr-2 link" title="link"></i>{{'admin.store.setting.connect' | translate}}
+                </button>
+            </div>
+        </div>
+    </div>
+</ng-template>
+<ng-template #shopifyLogin>
+    <ng-container class="row" *ngIf="shopifySection === 'shopify-login'; else shopifyConnected">
+        <div class="row">
+            <div class="col-xl-12 col-lg-12 mt-2 mt-lg-0">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <form [formGroup]="shopifyCredentialsForm">
+                            <div class="row mb-4">
+                                <label class="col-xl-3 col-lg-3 col-md-12 col-sm-12 required" for="secretUrl">
+                                    {{ 'admin.store.setting.integrations.shopify.shopifyUrl' | translate }}
+                                </label>
+                                <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12">
+                                    <input type="text" autocomplete="off" class="form-control"
+                                        formControlName="SHOPIFY_URL" id="secretUrl" maxlength="100" />
+                                </div>
+                            </div>
+                            <div class="row mb-4">
+                                <label class="col-xl-3 col-lg-3 col-md-12 col-sm-12 required" for="secretId​">
+                                    {{ 'admin.store.setting.integrations.shopify.secretAccessToken' | translate }}
+                                </label>
+                                <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12">
+                                    <input type="text" autocomplete="off" class="form-control"
+                                        formControlName="SHOPIFY_SECRET" id="secretId​" maxlength="100" />
+                                </div>
+                            </div>
+                            <div class="row mb-4">
+                                <label class="col-xl-3 col-lg-3 col-md-12 col-sm-12 required" for="locationCode​">
+                                    {{ 'admin.store.setting.integrations.shopify.locationCode​' | translate }}
+                                </label>
+                                <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12">
+                                    <input type="text" autocomplete="off" class="form-control"
+                                        formControlName="SHOPIFY_LOCATION_ID" id="locationCode​" maxlength="100" />
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12"></div>
+                                <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12">
+                                    <div class="float-right">
+                                        <button type="button" class="btn btn-primary"
+                                            [disabled]="shopifyCredentialsForm.invalid" (click)="onSubmit()">
+                                            <i class="fa fa-link mr-2" title="link"></i> {{'admin.store.setting.connect'
+                                            | translate}}
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ng-container>
+</ng-template>
+<ng-template #shopifyConnected>
+    <div class=" col-lg-12">
+        <form>
+            <div class="row d-flex align-items-center">
+                <div class="col-xl-12 col-lg-9 col-md-12 col-sm-12">
+                    <span class="mr-4">
+                        {{ 'admin.store.setting.integrations.shopify.shopifyUrl' | translate }}:
+                    </span>
+                    <span>
+                        {{ shopifyData.SHOPIFY_URL }}
+                    </span>
+                </div>
+                <br /><br />
+                <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12">
+                    <span class="mr-4">
+                        {{ 'admin.store.setting.integrations.shopify.secretAccessToken' | translate }}:
+                    </span>
+                    <span>
+                        {{ shopifyData.SHOPIFY_SECRET }}
+                    </span>
+                </div> <br /><br />
+
+                <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12">
+                    <span class="mr-4">
+                        {{ 'admin.store.setting.integrations.shopify.locationCode​' | translate }}:
+                    </span>
+                    <span>
+                        {{ shopifyData.SHOPIFY_LOCATION_ID }}
+                    </span>
+                </div> <br /><br />
+
+                
+            </div>
+            <div class="row mt-4 d-flex align-items-center">
+                <div class="col-lg-4">
+                    <div class="d-flex align-items-center">
+                        <label>{{ 'admin.global.no' | translate }}</label>&nbsp;&nbsp;&nbsp;
+                        <label class="switch">
+                            <input type="checkbox" [checked]="shopifyData.SHOPIFY_INTEGRATION_ENABLED"
+                                id="SHOPIFY_INTEGRATION_ENABLED​ " (change)="updateEnabled($event)" />
+                            &nbsp;<span class="slider round"></span>
+                        </label>&nbsp;&nbsp;&nbsp;
+                        <label>{{ 'admin.global.yes' | translate }}</label>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="col-lg-12">
+        <div class="float-right">
+            <button type="button" class="btn btn-danger" (click)="disconnectShopify()">
+                <img src="assets/img/link-slash-solid.svg" class="mr-2 slashIcon" alt="">{{'admin.store.disconnect' | translate}}
+            </button>
+        </div>
+    </div>
+</ng-template>

@@ -1,0 +1,70 @@
+<div class="content">
+    <div class="divide-amount-component mx-auto option-wrapper">
+        <div class="section-title p-3 mb-0 pl-4 font-size-primary font-weight-bold theme-light">
+            {{'public.standalonepayment.paymentpage.splitBill' | translate}}</div>
+        <div>
+            <form [formGroup]="divideAmountForm">
+                <div class="variant-wrapper radio d-flex justify-content-between align-items-center mx-3 my-2">
+                    <label for="var-full-amount" class="d-flex w-100 container pl-0 font-size-primary"
+                        (click)="handleOptionClick($event,'0')">
+                        <input type="radio" name="divideAmountType" value="0" formControlName="divideAmountType"
+                            id="var-full-amount" />
+                        <span class="checkmark" style="right: unset"></span>
+                        <span class="pr-5 option-text" *ngIf="paymentTransactionCount === 0">
+                            {{'public.standalonepayment.paymentpage.payFull' | translate}}
+                        </span>
+                        <span class="pr-5 option-text" *ngIf="paymentTransactionCount > 0">
+                            {{'public.standalonepayment.paymentpage.payRemainingAmount' | translate}}
+                        </span>
+                    </label>
+                </div>
+                <div class="variant-wrapper mx-3 my-2 my-md-0">
+                </div>
+                <div class="variant-wrapper radio d-flex justify-content-between align-items-center mx-3 my-2">
+                    <label for="var-divide-bill" class="d-flex w-100 container pl-0 font-size-primary"
+                        (click)="handleOptionClick($event,'1')">
+                        <input type="radio" name="divideAmountType" value="1" formControlName="divideAmountType"
+                            id="var-divide-bill" />
+                        <span class="checkmark" style="right: unset"></span>
+                        <span class="pr-5 option-text split-radio-option">
+                            <div>{{'public.standalonepayment.paymentpage.splitBetweenPeople' | translate}}</div>
+                            <div *ngIf="(paymentData?.divideBillBy !== 0 && paymentData?.divideBillBy)">
+                                {{'public.standalonepayment.paymentpage.amount' | translate}}: {{paymentData?.amountSelected | formatPrice:
+                                    paymentData.locale:paymentData.currencyIsoCode:paymentData.currencySymbol}}
+                            </div>
+                        </span>
+                        <div class="mr-md-3 mr-2 mt-n-1 item-wrapper mt-n-1">
+                            <div class="qty d-flex font-size-primary font-weight-bold text-unselectable">
+                                <div class="decrement d-flex container-theme-light-icons" (click)="onDecreaseItemQty($event, divideBillBy)">
+                                    <i class="fa fa-minus m-auto"></i>
+                                </div>
+                                <div class="value mx-md-3 mx-2 font-size-primary theme-color-text">{{divideBillBy}}</div>
+                                <div class="increment d-flex container-theme-light-icons" (click)="onIncreaseItemQty($event, divideBillBy)">
+                                    <i class="fa fa-plus m-auto"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </label>
+                </div>
+                <div class="variant-wrapper mx-3 my-2 my-md-0">
+                </div>
+                <div class="variant-wrapper radio d-flex justify-content-between align-items-center mx-3 my-2">
+                    <label for="var-specific-amount" class="d-flex w-100 container pl-0 font-size-primary">
+                        <input type="radio" name="divideAmountType" value="2" formControlName="divideAmountType"
+                            id="var-specific-amount" />
+                        <span class="checkmark" style="right: unset"></span>
+                        <span class="pr-5 option-text">
+                            {{'public.standalonepayment.paymentpage.specificAmount' | translate}}
+                        </span>
+                        <div class="price-input item-wrapper">
+                            <span>{{currencySymbol}}</span>
+                            <input type="text" name="specificAmount" formControlName="specificAmount"
+                                class="form-control" id="var-specific-amount"
+                                (keyup)='handleOptionClick($event, "2")' [textMask]="{mask: amountMask}" (focus)='focusInput()'/>
+                        </div>
+                    </label>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

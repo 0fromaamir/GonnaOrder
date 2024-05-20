@@ -1,0 +1,164 @@
+<form [formGroup]="form">
+  <div class="form-group row pt-4">
+    <label class="col-xl-1 col-lg-2 col-md-2 form-header">{{ 'admin.store.settings.branding.text.theme' | translate }}</label>
+    <div class="col-md-5">
+      <div class="form-group" *ngFor="let type of themeTypes">
+        <label class="radio-container" for="{{ type.key }}">
+          {{ type.text | translate }}
+          <input type="radio" formControlName="theme" id="{{ type.key }}" value="{{ type.key }}"
+            (change)="onThemeChange(type.key)" />
+          <span class="checkmark"></span>
+        </label>
+      </div>
+    </div>
+  </div>
+  <div class="form-group row mb-0 customized-branding" *ngIf="themeSelected() === 'customized'">
+    <div class="col-md-10 col-xl-11 col-lg-10 offset-xl-1 offset-lg-2 offset-md-2">
+      <div class="form-group mb-0">
+        <div class="row">
+          <div class="col-xl-9 col-lg-9 col-md-9">
+            <div class="row">
+              <label class="col-xl-5 col-lg-5 col-md-5 form-header brand-heading mb-0">{{
+                'admin.store.settings.branding.text.primaryFont' | translate }}</label>
+              <div class="form-group col-xl-4 col-lg-4 col-md-4 mb-2">
+                <select class="form-control" formControlName="primaryFont" (change)="hasAnyPropertyChanged = true">
+                  <option *ngFor="let font of fonts" value="{{ font }}">{{ font }}</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-3 col-lg-3 col-md-3" [style.font-family]="getValue('primaryFont')">{{
+            'admin.store.settings.branding.text.sampleText' | translate }}</div>
+        </div>
+      </div>
+      <div class="form-group mb-0">
+        <div class="row">
+          <div class="col-xl-9 col-lg-9 col-md-9">
+            <div class="row">
+              <label class="col-xl-5 col-lg-5 col-md-5 form-header brand-heading mb-0">{{
+                'admin.store.settings.branding.text.secondaryFont' | translate }}</label>
+              <div class="form-group col-xl-4 col-lg-4 col-md-4 mb-2">
+                <select class="form-control" formControlName="secondaryFont" (change)="hasAnyPropertyChanged = true">
+                  <option *ngFor="let font of fonts" value="{{ font }}">{{ font }}</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-3 col-lg-3 col-md-3" [style.font-family]="getValue('secondaryFont')">{{
+            'admin.store.settings.branding.text.sampleText' | translate }}</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="row">
+          <label class="col-xl-3 col-lg-3 col-md-3 form-header brand-heading font-weight-bold">
+            {{ 'admin.store.settings.branding.text.noBackgroundStyle' | translate }}
+          </label>
+        </div>
+      </div>
+      <div class="form-group mb-0">
+        <div class="row">
+          <div class="col-xl-9 col-lg-9 col-md-9">
+            <div class="row">
+              <label class="col-xl-5 col-lg-5 col-md-5 form-header brand-heading">{{
+                'admin.store.settings.branding.text.highlightColour' | translate }}</label>
+              <div class="form-group col-xl-4 col-lg-4 col-md-4">
+                <input [style.background]="colors.noBackgroundText" [(colorPicker)]="colors.noBackgroundText"
+                  [readonly]="true" class="branding-input" (colorPickerClose)="hasAnyPropertyChanged = true" />
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-3 col-lg-3 col-md-3 font-weight-bold" [style.color]="colors.noBackgroundText"
+            [style.font-family]="getFont()">
+            {{ 'admin.store.settings.branding.text.sampleText' | translate }}
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="row">
+          <label class="col-xl-5 col-lg-5 col-md-5 form-header brand-heading font-weight-bold">
+            {{ 'admin.store.settings.branding.text.lightBackgroundStyle' | translate }}
+          </label>
+        </div>
+      </div>
+      <div class="form-group mb-0">
+        <div class="row">
+          <div class="col-xl-9 col-lg-9 col-md-9">
+            <div class="row">
+              <label class="col-xl-5 col-lg-5 col-md-5 form-header brand-heading">{{
+                'admin.store.settings.branding.text.backgroundColor' | translate }}</label>
+              <div class="form-group col-xl-4 col-lg-4 col-md-4">
+                <input [style.background]="colors.lightBackground" [(colorPicker)]="colors.lightBackground"
+                  [readonly]="true" class="branding-input" (colorPickerClose)="hasAnyPropertyChanged = true" />
+              </div>
+            </div>
+            <div class="row">
+              <label class="col-xl-5 col-lg-5 col-md-5 form-header brand-heading">{{
+                'admin.store.settings.branding.text.foregroundColor' | translate }}</label>
+              <div class="form-group col-xl-4 col-lg-4 col-md-4">
+                <input [style.background]="colors.lightText" [(colorPicker)]="colors.lightText" [readonly]="true"
+                  class="branding-input" (colorPickerClose)="hasAnyPropertyChanged = true" />
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-3 col-lg-3 col-md-3">
+            <button type="button" [style.background]="colors.lightBackground" [style.font-family]="getFont()"
+              [style.color]="colors.lightText" class="btn-branding">
+              {{ 'admin.store.settings.branding.text.sampleText' | translate }}
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="row">
+          <label class="col-xl-5 col-lg-5 col-md-5 form-header brand-heading font-weight-bold">
+            {{ 'admin.store.settings.branding.text.darkBackgroundStyle' | translate }}
+          </label>
+        </div>
+      </div>
+      <div class="form-group mb-0">
+        <div class="row">
+          <div class="col-xl-9 col-lg-9 col-md-9">
+            <div class="row">
+              <label class="col-xl-5 col-lg-5 col-md-5 form-header brand-heading">{{
+                'admin.store.settings.branding.text.backgroundColor' | translate }}</label>
+              <div class="form-group col-xl-4 col-lg-4 col-md-4">
+                <input [style.background]="colors.darkBackground" [(colorPicker)]="colors.darkBackground"
+                  [readonly]="true" class="branding-input" (colorPickerClose)="hasAnyPropertyChanged = true" />
+              </div>
+            </div>
+            <div class="row">
+              <label class="col-xl-5 col-lg-5 col-md-5 form-header brand-heading">{{
+                'admin.store.settings.branding.text.foregroundColor' | translate }}</label>
+              <div class="form-group col-xl-4 col-lg-4 col-md-4">
+                <input [style.background]="colors.darkText" [(colorPicker)]="colors.darkText" [readonly]="true"
+                  class="branding-input" (colorPickerClose)="hasAnyPropertyChanged = true" />
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-3 col-lg-3 col-md-3">
+            <button type="button" [style.background]="colors.darkBackground" [style.font-family]="getFont()"
+              [style.color]="colors.darkText" class="btn-branding">
+              {{ 'admin.store.settings.branding.text.sampleText' | translate }}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="form-group row mb-0 mt-3">
+    <div class="col-md-10 col-xl-11 col-lg-10 offset-xl-1 offset-lg-2 offset-md-2">
+      <div class="form-group mb-0">
+        <div class="row mt-0" *ngIf="buttonEnabled()">
+          <div class="col-lg-12 mx-md-0">
+            <button type="button" class="btn btn-primary btn-class mb-1" appPreventDoubleClick [throttleTime]="5000"
+              (click)="onBrandingSave()">
+              <i class="fas fa-save mr-2 pr-1"></i>{{'admin.global.save'|translate}}
+            </button>
+            <a *ngIf="themeSelected() === 'customized'" class="actionLink btn-lr btn-l action-btn ml-md-2"
+              title="{{'admin.global.cancel'|translate}}" (click)="reset()">{{'admin.global.cancel'|translate}}</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

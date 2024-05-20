@@ -1,0 +1,70 @@
+@import "bootstrap/scss/functions";
+@import "bootstrap/scss/variables";
+@import "bootstrap/scss/mixins";
+
+form div.form-group {
+  display: flex;
+  @include media-breakpoint-down(md) {
+    display: block;
+  }
+}
+
+input:disabled {
+  background: none;
+  border: none;
+  padding: 0;
+}
+
+.form-check {
+  margin-bottom: 10px;
+
+  img {
+    height: 1.5em;
+    margin-left: 10px;
+  }
+}
+
+.ml-14 {
+  margin-left: 14px;
+}
+.text-black{
+  color: black !important;
+}
+
+label.radio-container img {
+  display: inline-block;
+  max-width: 150px;
+  max-height: 25px;
+  width: auto;
+  height: auto;
+}
+
+#sodexo_logo {
+  display: block;
+  max-width: 150px;
+  max-height: 50px;
+  width: auto;
+  height: auto;
+}
+
+form label.required:after {
+  color: red;
+  content: " *";
+}
+
+.sharePaymentLink {
+  background-color: #24AFB2;
+  border-color: #24AFB2;
+}
+
+.copyIcon{
+  font-size: 20px;
+  margin-left: 4px;
+  cursor: pointer;
+}
+
+.actionLink {
+  display: block !important;
+  white-space: normal !important;
+  color: #23282c
+}

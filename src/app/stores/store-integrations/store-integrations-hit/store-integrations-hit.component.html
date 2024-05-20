@@ -1,0 +1,216 @@
+<div class="card list mb-0">
+    <div class="card-body py-0">
+        <div class="row">
+            <div class="col-xl-4 col-lg-4">
+                <img class="hitimg" src="/assets/img/Hit.png">
+                <app-help-icon [helpPageName]="helpUrl"></app-help-icon>
+            </div>
+            <div class="col-xl-8 col-lg-8">
+                <ng-container class="row" *ngIf="hitSection === 'hit-dashboard' then hitDashboard else hitLogin">
+                </ng-container>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-template #hitDashboard>
+    <div class="row">
+        <div class="italic col-lg-12 mb-3">
+            {{ 'admin.store.setting.integrations.connectWithYourPOS' | translate }}
+        </div>
+        <div class="col-lg-12">
+            <div class="d-flex align-items-center justify-content-between p-0">
+                <button type="button" class="btn btn-primary mt-2" (click)="hitSection = 'hit-login';">
+                    <i class="fa fa-link mr-2 link" title="link"></i>{{'admin.store.setting.connect' | translate}}
+                </button>
+            </div>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #hitLogin>
+    <ng-container class="row" *ngIf="hitSection === 'hit-login'; else hitConnected">
+        <div class="row">
+            <div class="col-xl-12 col-lg-12 mt-2 mt-lg-0">
+                <div class="row mt-4">
+                    <div class="col-lg-12">
+                        <form [formGroup]="hitForm">
+                            <div class="row mb-4">
+                                <label class="col-xl-3 col-lg-3 col-md-12 col-sm-12 required" for="url">
+                                    {{ 'admin.store.setting.integrations.URL' | translate }}
+                                </label>
+                                <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12">
+                                    <input type="text" class="form-control" formControlName="HIT_URL" id="url"
+                                        maxlength="255" />
+                                </div>
+                            </div>
+                            <div class="row mb-4">
+                                <label class="col-xl-3 col-lg-3 col-md-12 col-sm-12 required" for="username">
+                                    {{ 'admin.store.setting.integrations.username' | translate }}
+                                </label>
+                                <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12">
+                                    <input type="text" class="form-control" formControlName="HIT_USERNAME" id="username"
+                                        maxlength="100" />
+                                </div>
+                            </div>
+                            <div class="row mb-4">
+                                <label class="col-xl-3 col-lg-3 col-md-12 col-sm-12 required" for="password">
+                                    {{ 'admin.store.setting.integrations.password' | translate }}
+                                </label>
+                                <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12">
+                                    <input type="password" class="form-control" formControlName="HIT_PASSWORD"
+                                        id="password" maxlength="100" />
+                                </div>
+                            </div>
+                            <div class="row mb-4">
+                                <label class="col-xl-3 col-lg-3 col-md-12 col-sm-12 required" for="name">
+                                    {{'admin.store.setting.integrations.storeId' | translate}}
+                                </label>
+                                <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12">
+                                    <input type="text" class="form-control" formControlName="HIT_STORE_ID" id="name"
+                                        maxlength="255" />
+                                </div>
+                            </div>
+                            <div class="row mb-4">
+                                <label class="col-xl-3 col-lg-3 col-md-12 col-sm-12 required" for="name">
+                                    {{'admin.store.setting.integrations.defaultCustomerId' | translate}}
+                                </label>
+                                <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12">
+                                    <input type="text" class="form-control" formControlName="HIT_DEFAULTCUSTOMER_ID"
+                                        id="name" maxlength="255" />
+                                </div>
+                            </div>
+                            <div class="row mb-4">
+                                <label class="col-xl-3 col-lg-3 col-md-12 col-sm-12 required" for="name">
+                                    {{'admin.store.setting.integrations.defaultShippingAddressId' | translate}}
+                                </label>
+                                <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12">
+                                    <input type="text" class="form-control" formControlName="HIT_SHIPPINGADDRESS_ID"
+                                        id="name" maxlength="255" />
+                                </div>
+                            </div>
+                            <div class="row mb-4">
+                                <label class="col-xl-2 col-lg-3 col-md-12 col-sm-12 required" for="name">
+                                    {{'admin.store.setting.integrations.defaultPriceListId' | translate}}
+                                </label>
+                                <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12">
+                                    <input type="text" class="form-control" formControlName="HIT_PRICELIST_ID" id="name"
+                                        maxlength="255" />
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12"></div>
+            <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12">
+                <div class="float-right">
+                    <button type="button" class="btn btn-primary" (click)="connectToHit()"
+                        [disabled]="this.hitForm.invalid">
+                        <i class="fa fa-link mr-2 link" title="link"></i>{{'admin.store.setting.connect' | translate}}
+                    </button>
+                </div>
+            </div>
+        </div>
+
+    </ng-container>
+
+</ng-template>
+
+<ng-template #hitConnected>
+    <div class="row">
+        <div class="col-xl-12 col-lg-12 mt-2 mt-lg-0">
+            <div class="row">
+                <div class="col-lg-12">
+                    <form [formGroup]="hitForm">
+                        <div class="row mb-4">
+                            <label class="col-xl-3 col-lg-3 col-md-12 col-sm-12 required">
+                                {{ 'admin.store.setting.integrations.URL' | translate }}
+                            </label>
+                            <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12">
+                                <p>{{this.hitForm.controls.HIT_URL.value}}</p>
+                            </div>
+                        </div>
+                        <div class="row mb-4">
+                            <label class="col-xl-3 col-lg-3 col-md-12 col-sm-12 required" for="secretUrl">
+                                {{ 'admin.store.setting.integrations.username' | translate }}
+                            </label>
+                            <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12">
+                                <p>{{this.hitForm.controls.HIT_USERNAME.value}}</p>
+                            </div>
+                        </div>
+                        <div class="row mb-4">
+                            <label class="col-xl-3 col-lg-3 col-md-12 col-sm-12 required" for="secretUrl">
+                                {{ 'admin.store.setting.integrations.password' | translate }}
+                            </label>
+                            <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12">
+                                <p>{{maskedPassword}}</p>
+                            </div>
+                        </div>
+                        <div class="row mb-4">
+                            <label class="col-xl-3 col-lg-3 col-md-12 col-sm-12 required" for="secretUrl">
+                                {{'admin.store.setting.integrations.storeId' | translate}}
+                            </label>
+                            <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12">
+                                <p>{{this.hitForm.controls.HIT_STORE_ID.value}}</p>
+                            </div>
+                        </div>
+                        <div class="row mb-4">
+                            <label class="col-xl-3 col-lg-3 col-md-12 col-sm-12 required" for="secretUrl">
+                                {{'admin.store.setting.integrations.defaultCustomerId' | translate}}
+                            </label>
+                            <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12">
+                                <p>{{this.hitForm.controls.HIT_DEFAULTCUSTOMER_ID.value}}</p>
+                            </div>
+                        </div>
+                        <div class="row mb-4">
+                            <label class="col-xl-3 col-lg-3 col-md-12 col-sm-12 required" for="secretUrl">
+                                {{'admin.store.setting.integrations.defaultShippingAddressId' | translate}}
+                            </label>
+                            <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12">
+                                <p>{{this.hitForm.controls.HIT_SHIPPINGADDRESS_ID.value}}</p>
+                            </div>
+                        </div>
+                        <div class="row mb-4">
+                            <label class="col-xl-3 col-lg-3 col-md-12 col-sm-12 required" for="secretUrl">
+                                {{'admin.store.setting.integrations.defaultPriceListId' | translate}}
+                            </label>
+                            <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12">
+                                <p>{{this.hitForm.controls.HIT_PRICELIST_ID.value}}</p>
+                            </div>
+                        </div>
+                        <div class="row mb-4">
+                            <label class="col-xl-3 col-lg-3 col-md-12 col-sm-12 required" for="secretUrl">
+                                {{ 'admin.store.enabled' | translate }}
+                            </label>
+                            <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12">
+                                <label>{{'admin.global.no'|translate}}</label> &nbsp;
+                                <label class="switch pt-1 mb-0">
+                                    <input type="checkbox" formControlName="HIT_ENABLED" id="HIT_ENABLED"
+                                        (change)="toggleHit()" />
+                                    &nbsp;<span class="slider round"></span>
+                                </label>&nbsp;
+                                <label>{{'admin.global.yes'|translate}}</label> &nbsp;
+                            </div>
+                        </div>
+                    </form>
+
+                    <div class="col-lg-12">
+                        <div class="float-right">
+                            <button type="button" class="btn btn-danger mt-3" (click)="disconnectToHit()">
+                                <img src="assets/img/link-slash-solid.svg" class="mr-2 slashIcon"
+                                    alt="">{{'admin.store.disconnect' | translate}}
+                            </button>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</ng-template>

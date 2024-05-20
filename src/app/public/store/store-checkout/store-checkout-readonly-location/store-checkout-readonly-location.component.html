@@ -1,0 +1,105 @@
+<div #yourInfoWrapper>
+  <div class="option-wrapper">
+    <div class="variant-wrapper my-2 my-md-0">
+      <!-- FORM -->
+      <div
+        class="expandable-content-wrapper">
+        <form class="mx-3" [formGroup]="personalInfoForm">
+          <div class="row" *ngIf="!nameFieldHidden()">
+            <div class="col-md-12">
+              <div class="form-group mx-2">
+                <div class="input-group mb-4">
+                  <input
+                    type="text"
+                    class="form-control"
+                    [ngClass]="{'is-invalid': checkoutService.isInvalid(getControl('name')), 'populated': !!getControl('name').value}"
+                    autocomplete="name"
+                    [formControl]="getControl('name')"
+                    maxlength="200"
+                    id="name"
+                    (keyup)="checkFormValidity()"
+                    (change)="addOrderMeta('customerName', 'name', 'personalInfoForm')"
+                    trim="blur"
+                    appPreventEnter
+                  />
+                  <label
+                    *ngIf="!nameFieldOptional()"
+                    for="#name"
+                    class="placeholder font-size-primary"
+                    (click)="checkoutService.focusField($event)"
+                  >{{'public.checkout.yourName' | translate}} *</label>
+                  <label
+                    *ngIf="nameFieldOptional()"
+                    for="#name"
+                    class="placeholder font-size-primary"
+                    (click)="checkoutService.focusField($event)"
+                  >{{'public.checkout.yourName' | translate}} {{'public.global.optional' | translate}}</label>
+                  <div class="invalid-feedback font-size-secondary" *ngIf="checkoutService.showErrors(getControl('name'))">
+                    <span *ngIf="getControl('name').errors.required">{{'public.checkout.errors.fieldRequired' | translate}}.</span>
+                    <span *ngIf="!getControl('name').errors.required && getControl('name').errors.whitespace">{{'public.payment.errors.valueNotValid' | translate}}.</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Email -->
+          <div class="row" *ngIf="!emailFieldHidden()">
+            <div class="col-md-12">
+              <div class="form-group mx-2">
+                <div class="input-group mb-4">
+                  <input
+                    type="text"
+                    class="form-control"
+                    [ngClass]="{'is-invalid': (checkoutService.isInvalid(getControl('email')) || getControl('email').errors?.email), 'populated': !!getControl('email').value}"
+                    autocomplete="email"
+                    [formControl]="getControl('email')"
+                    maxlength="200"
+                    id="email"
+                    (keyup)="checkFormValidity()"
+                    (change)="addOrderMeta('customerEmail', 'email', 'personalInfoForm')"
+                    trim="blur"
+                    appPreventEnter
+                  />
+                  <label
+                    *ngIf="!emailFieldOptional()"
+                    for="#email"
+                    class="placeholder font-size-primary"
+                    (click)="checkoutService.focusField($event)"
+                  >{{'public.checkout.email' | translate}} *</label>
+                  <label
+                    *ngIf="emailFieldOptional()"
+                    for="#email"
+                    class="placeholder font-size-primary"
+                    (click)="checkoutService.focusField($event)"
+                  >{{'public.checkout.email' | translate}} {{'public.global.optional' | translate}}</label>
+                  <div class="invalid-feedback font-size-secondary" *ngIf="checkoutService.showErrors(getControl('email')) || getControl('email').errors?.email">
+                    <span *ngIf="getControl('email').errors.required">{{'public.checkout.errors.fieldRequired' | translate}}.</span>
+                    <span *ngIf="!getControl('email').errors.required && (getControl('email').errors.email || getControl('email').errors.whitespace || getControl('email').errors.minLength || getControl('email').errors.maxlength)">{{'public.payment.errors.valueNotValid' | translate}}.</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Phone Number -->
+          <div class="row" *ngIf="!phoneFieldHidden()">
+            <div class="col-md-12">
+              <div class="form-group mx-2">
+                <app-phone-input
+                  [id]="'phone'"
+                  [countryCode]="countryCode()"
+                  [formControl]="getControl('phone')"
+                  [invalidSubmit]="checkoutService.invalidSubmit()"
+                  [required]="!phoneFieldOptional()"
+                  (inputChange)="checkFormValidity(); addOrderMeta('customerPhoneNumber', 'phone', 'personalInfoForm');"
+                  (change)="checkFormValidity(); addOrderMeta('customerPhoneNumber', 'phone', 'personalInfoForm');"
+                  >
+                </app-phone-input>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <!-- FORM END -->
+    </div>
+  </div>
+</div>

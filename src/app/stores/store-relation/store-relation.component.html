@@ -1,0 +1,95 @@
+<div class="col-lg-12 py-2 px-0">
+  <div class="card list">
+    <div class="b-header card-header-background-none font-weight-regular" *ngIf="!multistoreStoreFlag">
+      {{'admin.store.setting.multiStore.titleNoSetupRelation'|translate}}
+    </div>
+    <div class="card-header card-header-background-none font-weight-regular" *ngIf="multistoreStoreFlag">
+      {{'admin.store.setting.multiStore.titleHasRelation'|translate}}
+    </div>
+    <div class="card-body mt-1 pt-2">
+      <router-outlet>
+      </router-outlet>
+      <div class=" mt-3">
+        <div class="form-group row" *ngIf="currentRoute && !hasChildStores">
+          <label
+            class="col-xl-4 col-lg-4 col-md-4 form-header">{{'admin.store.setting.multiStore.independent'|translate}}</label>
+          <div class="col-md-8">
+            <div class="form-group mb-4">
+              <label>{{'admin.global.no'|translate}}</label>&nbsp;
+              <label class="switch pt-1 mb-0">
+                <input type="checkbox" id="indpendent_flag" [checked]="selectedStore?.isIndependent"
+                  (change)="toggleIndependent('indpendent_flag')" />
+                &nbsp;<span class="slider round"></span>
+              </label>&nbsp;
+              <label>{{'admin.global.yes'|translate}}</label>
+            </div>
+          </div>
+        </div>
+        <form [formGroup]="settingsForm">
+          <div class="form-group row" *ngIf="currentRoute && hasValidParent">
+            <label class="col-xl-4 col-lg-4 col-md-4 form-header">{{'admin.store.setting.inheritCatalogParentStore'
+              |translate}}
+              <app-help-icon [helpPageName]="helpUrlInheritCatalog" class="pl-2"></app-help-icon>
+            </label>
+            <div class="col-md-8">
+              <div class="form-group mb-4">
+                <label>{{'admin.global.no'|translate}}</label>&nbsp;
+                <label class="switch pt-1 mb-0">
+                  <input type="checkbox" id="INHERIT_CATALOG_PARENT_STORE"
+                    formControlName="INHERIT_CATALOG_PARENT_STORE" (change)="onSubmit()" />
+                  &nbsp;<span class="slider round"></span>
+                </label>&nbsp;
+                <label>{{'admin.global.yes'|translate}}</label>
+              </div>
+            </div>
+          </div>
+          <div class="form-group row" *ngIf="currentRoute && hasValidParent">
+            <label class="col-xl-4 col-lg-4 col-md-4 form-header">{{'admin.store.setting.inheritSchedulesParentStore'
+              |translate}}
+              <app-help-icon [helpPageName]="helpUrlInheritSchedules" class="pl-1"></app-help-icon>
+            </label>
+            <div class="col-md-8">
+              <div class="form-group mb-4">
+                <label>{{'admin.global.no'|translate}}</label>&nbsp;
+                <label class="switch pt-1 mb-0">
+                  <input type="checkbox" id="INHERIT_SCHEDULE_PARENT_STORE"
+                    formControlName="INHERIT_SCHEDULE_PARENT_STORE" (change)="onSubmit()" />
+                  &nbsp;<span class="slider round"></span>
+                </label>&nbsp;
+                <label>{{'admin.global.yes'|translate}}</label>
+              </div>
+            </div>
+          </div>
+          <div class="form-group row" *ngIf="currentRoute && hasValidParent">
+            <label class="col-xl-4 col-lg-4 col-md-4 form-header">{{'admin.store.setting.inheritLoyaltyParentStore' | translate}}
+              <app-help-icon [helpPageName]="helpUrlInheritSchedules" class="pl-1"></app-help-icon>
+            </label>
+            <div class="col-md-8">
+              <div class="form-group mb-4">
+                <label>{{'admin.global.no'|translate}}</label>&nbsp;
+                <label class="switch pt-1 mb-0">
+                  <input type="checkbox" id="INHERIT_LOYALTY_PARENT_STORE"
+                    formControlName="INHERIT_LOYALTY_PARENT_STORE" (change)="onSubmit()" />
+                  &nbsp;<span class="slider round"></span>
+                </label>&nbsp;
+                <label>{{'admin.global.yes'|translate}}</label>
+              </div>
+            </div>
+          </div>
+        </form>
+        <div class="form-group row">
+          <div class="" role="group">
+            <button type="button" *ngIf="currentRoute && hasValidParent" class="btn btn-primary px-4 mr-2"
+              value="MultiSore" routerLink="parentStorelist" routerLinkActive="btnChangeHide">
+              {{'admin.store.setting.multiStore.changeParentButton'|translate}}
+            </button>
+            <button type="button" *ngIf="currentRoute && hasValidParent" class="btn btn-primary px-4 mr-2"
+              value="MultiSore" (click)="removeParent()">
+              {{'admin.store.setting.multiStore.removeParent'|translate}}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

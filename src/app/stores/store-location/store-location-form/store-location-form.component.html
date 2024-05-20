@@ -1,0 +1,349 @@
+<div class="card-header mb-3">
+  {{'admin.store.location.text'|translate}} {{location.label}}<app-help-icon
+    [helpPageName]="qrCodesLocationHelpPage"></app-help-icon>
+</div>
+<form [formGroup]="locationForm">
+  <div class="form-group row" *ngIf="mode === 'UPDATE' && (location?.openTap || storeOpenTap)">
+    <label Class="col-xl-2 col-lg-3 col-md-12 col-form-label">{{'admin.store.location.tableStatus'|translate}}</label>
+    <div class="col-xl-10 col-lg-9 col-md-8">
+      <div class="form-group mb-0">
+        <label>{{'admin.store.location.openTap.closed'|translate}}</label>&nbsp;
+        <label class="switch pt-1 mb-0">
+          <input type="checkbox" disabled formControlName="status" id="status" />
+          &nbsp;<span class="slider round disabledSlider"></span>
+        </label>&nbsp;
+        <label>{{'admin.store.location.openTap.open'|translate}}</label>&nbsp;
+        <label *ngIf="location.status == 'OPEN'" class="px-4">{{getOpenTime(location?.openedAt)}}</label>
+        <label *ngIf="location.status == 'OPEN'" class="px-4"><i class="fa fa-unlock-alt mr-1" title="Pin"> </i>PIN
+          {{location?.customerPinCode}} </label>
+        <button type="button" *ngIf="location.status == 'OPEN'" class="btn btn-primary"
+          title="{{'admin.global.print'|translate}}" style="margin-left: 12px;" (click)="onOrderPrint()">
+          <i class="fa fa-print"></i>
+          <span
+            class="d-none d-md-inline-block d-lg-inline-block d-xl-inline-block ml-1">{{'admin.global.print'|translate}}</span>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="form-group row" *ngIf="!isStoreOperator">
+    <label for="label"
+      Class="col-xl-2 col-lg-3 col-md-12 col-form-label required">{{'admin.store.location.label'|translate}}</label>
+    <div class="col-xl-10 col-lg-9 col-md-8">
+      <div class="input-group cstm-lbl">
+        <input type="text" class="form-control label"
+          [class.is-invalid]="getControl('label').invalid && getControl('label').touched"
+          placeholder="{{'admin.store.location.label'|translate}}" autocomplete="label" formControlName="label"
+          id="label" maxlength="10"
+          (keyup)="locationForm.patchValue({label: $event.target.value.toUpperCase()});setLocationURL($event.target.value)"
+          pattern="^(?=.*[A-Z0-9])[A-Z0-9-_ ]+$" />
+        <div class="col-xl-10 col-lg-9 col-md-12" *ngIf="isStoreOperator">
+          {{location.label}}
+        </div>
+        <div class="invalid-feedback label-error" *ngIf="getControl('label').errors && getControl('label').touched">
+          <span *ngIf="getControl('label').errors.required">{{'admin.global.field.required'|translate}}</span>
+          <span *ngIf="getControl('label').errors.maxlength">{{'admin.global.field.maxLength'|translate: {maxLength:
+            "10"} }}</span>
+          <span *ngIf="getControl('label').errors.minlength">{{'admin.global.field.minLength'|translate: {minLength:
+            "1"} }}</span>
+          <span *ngIf="getControl('label').errors.pattern">{{'admin.store.location.error.pattern'|translate}} </span>
+        </div>
+        <div class="input-group pt-2" *ngIf="mode === 'UPDATE'">
+          <div class="input-group mt-1 mr-3 ml-0-responsive location-url">
+            <label class="lbl-Location w-100"><i class="far fa-copy copyUrlIcon mr-1" title="Copy"
+                (click)="copyLocationURL()"></i> {{locationUrl}} </label>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+  <div class="form-group row" *ngIf="isStoreOperator">
+    <label for="label" Class="col-xl-2 col-lg-3 col-md-12 ">{{'admin.store.location.label'|translate}}</label>
+    <div class="col-xl-10 col-lg-9 col-md-8">
+      <div class="input-group row">
+        <div class="col-xl-10 col-lg-9 col-md-12">
+          {{location.label}}
+        </div>
+
+        <div class="col-xl-10 col-lg-9 col-md-12">
+          <div class="input-group mt-1 mr-3 ml-0-responsive location-url">
+            <label class="lbl-Location w-100"><i class="far fa-copy copyUrlIcon mr-1" title="Copy"
+                (click)="copyLocationURL()"></i> {{locationUrl}} </label>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="description" class="col-xl-2 col-lg-3 col-md-12 ">{{'admin.global.description'|translate}}</label>
+    <div class="col-xl-10 col-lg-9 col-md-8" *ngIf="!isStoreOperator">
+      <div class="input-group cstm-lbl">
+        <textarea class="form-control textareaheight" rows="2" [class.is-invalid]="getControl('description').invalid"
+          placeholder="{{'admin.global.description'|translate}}" autocomplete="description"
+          formControlName="description" id="description" maxlength="1000"
+          (keyup)="locationForm.patchValue({description: $event.target.value})" [readonly]="isStoreOperator"></textarea>
+        <div class="invalid-feedback" *ngIf="getControl('description').errors">
+          <span *ngIf="getControl('description').errors.maxlength">{{'admin.global.field.maxLength'|translate:
+            {maxLength: "1000"} }}</span>
+        </div>
+      </div>
+    </div>
+    <div class="col-xl-10 col-lg-9 col-md-8" *ngIf="isStoreOperator">
+      {{location.description}}
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="comment" class="col-xl-2 col-lg-3 col-md-12 ">{{'admin.global.comment'|translate}}</label>
+    <div class="col-xl-10 col-lg-9 col-md-8" *ngIf="!isStoreOperator">
+      <div class="input-group cstm-lbl">
+        <textarea class="form-control textareaheight" rows="2" [class.is-invalid]="getControl('comment').invalid"
+          placeholder="{{'admin.global.comment'|translate}}" autocomplete="comment" formControlName="comment"
+          id="comment" maxlength="1000" (keyup)="locationForm.patchValue({comment: $event.target.value})"
+          [readonly]="isStoreOperator"></textarea>
+        <div class="invalid-feedback" *ngIf="getControl('comment').errors">
+          <span *ngIf="getControl('comment').errors.maxlength">{{'admin.global.field.maxLength'|translate: {maxLength:
+            "1000"} }}</span>
+        </div>
+      </div>
+    </div>
+    <div class="col-xl-10 col-lg-9 col-md-8" *ngIf="isStoreOperator">
+      {{location.comment}}
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="locationType"
+      class="col-xl-2 col-lg-3 col-md-12  ">{{'admin.store.location.locationType'|translate}}</label>
+    <div class="col-xl-10 col-lg-9 col-md-8" *ngIf="!isStoreOperator">
+      <div class="input-group cstm-lbl">
+        <select class="form-control" formControlName="locationType" id="locationType"
+          (change)="onLocationTypeChanged($event)">
+          <option value="TABLE">{{'admin.store.location.table' | translate}}</option>
+          <option value="LOCATION">{{'admin.store.location.location' | translate}}</option>
+          <option value="ROOM">{{'admin.store.location.room' | translate}}</option>
+        </select>
+      </div>
+    </div>
+    <div class="col-xl-10 col-lg-9 col-md-8" *ngIf="isStoreOperator">
+      {{location.locationType}}
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="reservations" class="col-xl-2 col-lg-3 col-md-12">Reservation maximum capacity​</label>
+    <div class="col-xl-10 col-lg-9 col-md-8">
+      <input type="number" formControlName="maxCapacity" id="maxCapacity" class="form-control" min="1" max="20"
+        (keyup)="locationForm.patchValue({maxCapacity: $event.target.value});" oninput="validity.valid||(value='');" />
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="reservations" class="col-xl-2 col-lg-3 col-md-12">Reservation minimum capacity​​​</label>
+    <div class="col-xl-10 col-lg-9 col-md-8">
+      <input type="number" formControlName="minCapacity" id="minCapacity" class="form-control" min="1" max="20"
+        (keyup)="locationForm.patchValue({minCapacity: $event.target.value});" oninput="validity.valid||(value='');" />
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="reservations" class="col-xl-2 col-lg-3 col-md-12">Reservation priority​​</label>
+    <div class="col-xl-10 col-lg-9 col-md-8">
+      <input type="number" class="form-control" formControlName="reservationPriority" id="RESERVATION_PRIORITY" min="1"
+        max="20" (keyup)="locationForm.patchValue({reservationPriority: $event.target.value});"
+        oninput="validity.valid||(value='');" />
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label for="openTap" Class="col-xl-2 col-lg-3 col-md-12 col-form-label">Allow customer reservations​</label>
+    <div class="col-xl-10 col-lg-9 col-md-8">
+      <div class="form-group mb-0">
+        <label>{{'admin.global.no'|translate}}</label>&nbsp;
+        <label class="switch pt-1 mb-0">
+          <input type="checkbox" formControlName="allowCustomerReservation" id="RESERVATION_ALLOW_CUSTOMER"
+            [(ngModel)]="customerResrvationEnabled" />
+          &nbsp;<span class="slider round"></span>
+        </label>&nbsp;
+        <label>{{'admin.global.yes'|translate}}</label>&nbsp;
+      </div>
+
+    </div>
+  </div>
+  <div class="form-group row" *ngIf="mode === 'UPDATE'">
+    <label for="openTap"
+      Class="col-xl-2 col-lg-3 col-md-12 col-form-label">{{'admin.store.setting.opentabordering'|translate}}</label>
+    <div class="col-xl-10 col-lg-9 col-md-8">
+      <div class="form-group mb-0">
+        <label>{{'admin.store.disabled'|translate}}</label>&nbsp;
+        <label class="switch pt-1 mb-0">
+          <input type="checkbox" formControlName="openTap" id="openTap" />
+          &nbsp;<span class="slider round" [ngClass]="{'disabledSlider':isStoreOperator}"></span>
+        </label>&nbsp;
+        <label>{{'admin.store.enabled'|translate}}</label>&nbsp;
+      </div>
+
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="externalId" class="col-xl-2 col-lg-3 col-md-12 ">{{'admin.store.location.externalId'|translate}}</label>
+    <div class="col-xl-10 col-lg-9 col-md-8">
+      <div class="input-group cstm-lbl">
+        <textarea class="form-control externalId" rows="1" [class.is-invalid]="getControl('externalId').invalid"
+          placeholder="{{'admin.store.externalId'|translate}}" autocomplete="externalId" formControlName="externalId"
+          id="externalId" maxlength="100" (keyup)="locationForm.patchValue({externalId: $event.target.value})"
+          [readonly]="isStoreOperator"></textarea>
+        <div class="invalid-feedback" *ngIf="getControl('externalId').errors">
+          <span *ngIf="getControl('externalId').errors.maxlength">{{'admin.global.field.maxLength'|translate:
+            {maxLength: "100"} }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="form-group row" *ngIf="mode === 'UPDATE'">
+    <label for="qrCodes"
+      Class="col-xl-2 col-lg-3 col-md-12 col-form-label">{{'admin.store.location.print.qrCodes'|translate}}</label>
+    <div class="col-xl-10 col-lg-9 col-md-8">
+      <div class="form-group mb-0">
+        <app-qr-codes-location [clientStoreId]="storeId" [location]="locationId" [locationLabel]="locationLabel">
+        </app-qr-codes-location>
+      </div>
+    </div>
+  </div>
+  <div [style.display]="showAdditionalPart?'block':'none'">
+    <div class="form-group row">
+      <div class="col-xl-2 col-lg-3 col-md-12 col-sm-12">{{'admin.global.address'|translate}}</div>
+      <div class="col-xl-10 col-lg-9 col-md-12 col-sm-12">
+        <div class="form-group row">
+          <label class="col-xl-2 col-md-12 col-sm-12 "
+            for="addressLine1">{{'admin.global.addressLine1'|translate}}</label>
+          <div class="col-xl-10 col-md-12 col-sm-12">
+            <input type="text" id="addressLine1" #addresstext class="form-control"
+              (keyup)="getPlaceAutocomplete($event)" [attr.placeholder]="'admin.global.addressLine1' | translate"
+              [attr.autocomplete]="getControl('addressLine1').value ? 'none' : 'address-line1'"
+              [class.is-invalid]="getControl('addressLine1').invalid && (getControl('addressLine1').dirty || getControl('addressLine1').touched)"
+              formControlName="addressLine1" maxlength="128" />
+            <div class="invalid-feedback" *ngIf="getControl('addressLine1').errors">
+              <span *ngIf="getControl('addressLine1').errors.minlength">{{'admin.global.field.minLength'|translate:
+                {minLength: getControl('addressLine1').errors.minlength.requiredLength} }}</span>
+              <span *ngIf="getControl('addressLine1').errors.maxlength">{{'admin.global.field.maxLength'|translate:
+                {maxLength: getControl('addressLine1').errors.maxlength.requiredLength} }}</span>
+            </div>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-xl-2 col-md-12 col-sm-12"
+            for="addressLine2">{{'admin.global.addressLine2'|translate}}</label>
+          <div class="col-xl-10 col-md-12 col-sm-12">
+            <input type="text" class="form-control" [attr.placeholder]="'admin.global.addressLine2' | translate"
+              autocomplete="address-line2" formControlName="addressLine2" id="addressLine2"
+              [class.is-invalid]="getControl('addressLine2').invalid && (getControl('addressLine2').dirty || getControl('addressLine2').touched)"
+              maxlength="128" />
+            <div class="invalid-feedback" *ngIf="getControl('addressLine2').errors">
+              <span *ngIf="getControl('addressLine2').errors.minlength">{{'admin.global.field.minLength'|translate:
+                {minLength: getControl('addressLine2').errors.minlength.requiredLength} }}</span>
+              <span *ngIf="getControl('addressLine2').errors.maxlength">{{'admin.global.field.maxLength'|translate:
+                {maxLength: getControl('addressLine2').errors.maxlength.requiredLength} }}</span>
+            </div>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="postCode" class="col-xl-2 col-lg-12">{{'admin.global.postCode'|translate}}</label>
+          <div class="input-group col-xl-2 col-lg-12 mb-2">
+            <input type="text" class="form-control"
+              [class.is-invalid]="getControl('postCode').invalid && (getControl('postCode').dirty || getControl('postCode').touched)"
+              [attr.placeholder]="'admin.global.postCode' | translate" autocomplete="postal-code"
+              formControlName="postCode" id="postCode" maxlength="16" />
+            <div class="invalid-feedback" *ngIf="getControl('postCode').errors">
+              <span *ngIf="getControl('postCode').errors.pattern">{{'admin.global.postCodePattern'|translate}} </span>
+              <span *ngIf="getControl('postCode').errors.minlength">{{'admin.global.field.minLength'|translate:
+                {minLength: getControl('postCode').errors.minlength.requiredLength} }}</span>
+              <span *ngIf="getControl('postCode').errors.maxlength">{{'admin.global.field.maxLength'|translate:
+                {maxLength: getControl('postCode').errors.maxlength.requiredLength} }}</span>
+            </div>
+          </div>
+          <label for="region" class="col-xl-2 col-lg-12 text-xl-right">{{'admin.store.region.label'|translate}}</label>
+          <div class="input-group col-xl-2 col-lg-12 mb-2">
+            <input type="text" class="form-control"
+              [class.is-invalid]="getControl('region').invalid && (getControl('region').dirty || getControl('region').touched)"
+              [attr.placeholder]="'admin.store.region.label' | translate" autocomplete="address-level1"
+              formControlName="region" id="region" maxlength="64" />
+            <div class="invalid-feedback" *ngIf="getControl('region').errors">
+              <span *ngIf="getControl('region').errors.minlength">{{'admin.global.field.minLength'|translate:
+                {minLength: getControl('region').errors.minlength.requiredLength} }}</span>
+              <span *ngIf="getControl('region').errors.maxlength">{{'admin.global.field.maxLength'|translate:
+                {maxLength: getControl('region').errors.maxlength.requiredLength} }}</span>
+            </div>
+          </div>
+          <label for="city" class="col-xl-2 col-lg-12 text-xl-right">{{'admin.store.city.label'|translate}}</label>
+          <div class="input-group col-xl-2 col-lg-12">
+            <input type="text" class="form-control"
+              [class.is-invalid]="getControl('city').invalid && (getControl('city').dirty || getControl('city').touched)"
+              [attr.placeholder]="'admin.store.city.label' | translate" autocomplete="address-level2"
+              formControlName="city" id="city" maxlength="64" />
+            <div class="invalid-feedback" *ngIf="getControl('city').errors">
+              <span *ngIf="getControl('city').errors.minlength">{{'admin.global.field.minLength'|translate: {minLength:
+                getControl('city').errors.minlength.requiredLength} }}</span>
+              <span *ngIf="getControl('city').errors.maxlength">{{'admin.global.field.maxLength'|translate: {maxLength:
+                getControl('city').errors.maxlength.requiredLength} }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div [ngClass]="{'d-none': !mapReturnResult}" class="form-group row">
+      <label class="col-xl-2 col-lg-3 col-md-12 col-sm-12"></label>
+      <div class="col-offset-2 col-xl-10 col-lg-9 col-md-12 col-sm-12">
+        <div #mapWrapper id="map"></div>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-xl-2 col-md-12 col-sm-12" for="email">{{'admin.account.provideEmailMsg'|translate}}</label>
+      <div class="col-xl-10 col-md-12 col-sm-12">
+        <input type="email" class="form-control" [attr.placeholder]="'admin.account.provideEmailMsg' | translate"
+          autocomplete="email" formControlName="email" id="email"
+          [class.is-invalid]="getControl('email').invalid && (getControl('email').dirty || getControl('email').touched)" />
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="phoneNumber"
+        class="col-xl-2 col-lg-3 col-md-12 col-sm-12">{{'admin.global.phoneNumber'|translate}}</label>
+      <div class="input-group col-xl-10 col-lg-9 col-md-12 col-sm-12 row">
+        <div class="col-md-2 col-sm-3">
+          <input type="text" class="form-control" [class.is-invalid]="getControl('phoneCountryCode').invalid"
+            autocomplete="phoneCountryCode" formControlName="phoneCountryCode" id="phoneCountryCode" disabled />
+        </div>
+        <div class="col-md-10 col-sm-9">
+          <input type="text" class="form-control"
+            [class.is-invalid]="getControl('phoneNumber').invalid && (getControl('phoneNumber').dirty || getControl('phoneNumber').touched)"
+            [attr.placeholder]="'admin.global.phoneNumber' | translate" autocomplete="phoneNumber"
+            formControlName="phoneNumber" id="phoneNumber" (change)="onPhoneNumberChange($event)" pattern="^[0-9]+$"
+            maxlength="16" />
+        </div>
+        <div id="phoneNumberError" class="error-feedback ml-3"
+          *ngIf="(getControl('phoneCountryCode').errors && (getControl('phoneCountryCode').errors.maxlength || getControl('phoneCountryCode').errors.required)) || (getControl('phoneNumber').errors && (getControl('phoneNumber').errors.maxlength || getControl('phoneNumber').errors.pattern))">
+          <span *ngIf="getControl('phoneCountryCode').errors?.required">{{'admin.global.field.required' |
+            translate}}.</span>
+          <span *ngIf="getControl('phoneCountryCode').errors?.maxlength">{{'admin.global.field.maxLength'|translate:
+            {maxLength: "6"} }}</span>
+          <span *ngIf="getControl('phoneNumber').errors?.maxlength">{{'admin.global.field.maxLength'|translate:
+            {maxLength: "16"} }}</span>
+          <span *ngIf="getControl('phoneNumber').errors?.pattern">{{'admin.store.phoneNumber.pattern'|translate}}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="form-group row mt-3 mb-0" *ngIf="!isStoreOperator">
+    <div class="col-md-12">
+      <div *ngIf="mode === 'UPDATE'">
+        <button class="btn btn-primary btn-class mb-1" type="button" (click)="onSubmit()"><i
+            class="fas fa-save mr-2 pr-1"></i>{{'admin.global.save'|translate}}</button>
+        <a class="actionLink btn-lr btn-l action-btn" (click)="onCancel()">{{'admin.global.cancel'|translate}}</a>
+        <button type="button" class="btn btn-danger float-right btn-lr" (click)="onDelete()"><i
+            class="fas fa-trash mr-2 pr-1 text-white"></i>{{'admin.global.delete'|translate}}</button>
+      </div>
+      <div *ngIf="mode !== 'UPDATE'">
+        <button type="button" class="btn btn-primary btn-class mb-1" (click)="onSubmit()"><i
+            class="fas fa-save mr-2 pr-1"></i>{{'admin.global.save'|translate}}</button>
+        <a class="actionLink btn-lr btn-l action-btn" (click)="onCancel()">{{'admin.global.cancel'|translate}}</a>
+      </div>
+    </div>
+  </div>
+</form>

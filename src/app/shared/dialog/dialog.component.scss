@@ -1,0 +1,15 @@
+.dialog-wrapper {
+  overflow: hidden;
+  .float-right {
+    float: right;
+
+    button {
+      margin-left: 15px;
+    }
+  }
+
+  .cursorPointer {
+    cursor: pointer;
+    text-decoration: underline !important;
+  }
+}

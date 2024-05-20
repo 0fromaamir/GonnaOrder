@@ -1,0 +1,13 @@
+@import "src/scss/variables";
+.helpIcon{
+    font-weight: bolder;
+    color: $secondary-brand-colour;
+}
+
+.helpFont{
+    font-size: $input-font-size;
+    color: black;
+}
+.text-decoration-undeline{
+    text-decoration: underline;
+}

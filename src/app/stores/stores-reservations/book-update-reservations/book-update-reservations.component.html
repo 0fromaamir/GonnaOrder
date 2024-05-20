@@ -1,0 +1,164 @@
+<div id="bodyModal" class="mb-md-3 px-md-5 px-3">
+  <div (click)="close()" class="headerReservation pt-4 pb-3">
+    <div class="float-right position-relative closebuttonReservation text-decoration-underline">{{ "admin.store.close"|
+      translate }}<i class="fas fa-times pl-2"></i></div>
+    <div id="headerTitle" class="font-size-header mt-md-0 mt-3">{{ "admin.store.makeReservation"|translate }}</div>
+  </div>
+  <div id="customerDetailsArea">
+    <form [formGroup]="form" fxLayout="column" fxLayoutGap="10px">
+      <div class="form-group mb-0">
+
+        <div class="dateformGroup pl-md-3 row pt-4" id="dateformGroup" *ngIf="action=='UPDATE'">
+          <label class="col-4 px-0">{{"admin.store.reservationID" | translate}}</label>
+          <div class="col-8">
+            <div class="reserveID pl-3">{{reservation.id}}</div>
+          </div>
+        </div>
+
+        <div id="dateArea" class="row pt-4">
+          <label class="col-4 col-form-label required" *ngIf="action=='UPDATE'">{{'admin.store.date' |
+            translate}}</label>
+          <label class="col-4 col-form-label required" *ngIf="action!='UPDATE'">{{'admin.store.date' |
+            translate}}</label>
+          <div class="col-8 mt-n1 px-0 pl-md-3" *ngIf="action!='UPDATE'">
+            <app-custom-datepicker [startDate]="date" [deleteMarginTop]="false" [vAlignment]="'datepickArea'"
+              (dateChange)="onDateChange($event)"></app-custom-datepicker>
+          </div>
+          <div class="col-8 pt-2 pl-md-3" *ngIf="action=='UPDATE'">
+            <div>{{date?.split('T')[0]}}</div>
+          </div>
+        </div>
+        <div class="row pt-4">
+          <label class="col-4 col-form-label required">{{'admin.store.people'|translate}}
+          </label>
+          <div id="peopleDropDown" class="col-8">
+            <mat-select class="form-control" (selectionChange)="onChange($event)" [(value)]="peopleNumberSelected">
+
+              <mat-option value="{{ people }}" *ngFor="let people of peopleList" [value]="people">{{ people }} {{
+                'admin.store.people' |
+                translate }}
+              </mat-option>
+            </mat-select>
+          </div>
+        </div>
+        <div class="row pt-4">
+          <label class="col-sm-4 col-form-label required my-auto">{{'admin.store.time'|translate}}</label>
+          <div class="col-sm-8">
+            <div class="row">
+              <div class="col-6 pl-md-0 pl-3">
+                <div class=" row align-items-center m-0 align-items-center">
+                  <div class=" px-3">
+                    <label for="startTime">{{'admin.store.catalog.availability.startTime'|translate}}</label>
+                  </div>
+                  <div class="">
+                    <timepicker [minuteStep]="defaultTimeInterval" formControlName="startTime" [showMeridian]="false">
+                    </timepicker>
+                  </div>
+                </div>
+              </div>
+              <div class="col-6 pl-md-0 pl-3">
+                <div class=" row align-items-center m-0 align-items-center">
+                  <div class=" px-3">
+                    <label for="endTime">{{'admin.store.catalog.availability.endTime'|translate}}</label>
+                  </div>
+                  <div class="">
+                    <timepicker [minuteStep]="defaultTimeInterval" formControlName="endTime" [showMeridian]="false">
+                    </timepicker>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <div class="row pt-4">
+          <label class="col-4 col-form-label">{{'admin.store.tableNumber'|
+            translate }}</label>
+          <div class="col-8">
+            <mat-select class="form-control" (selectionChange)="onTableChange($event)" [(value)]="tableId">
+
+              <mat-option *ngFor="let location of locations" [value]="location.id">{{
+                location.label ?? ''}}
+              </mat-option>
+            </mat-select>
+          </div>
+        </div>
+
+        <div class="row pt-4">
+          <div class="name-form mx-3">
+            <mat-form-field class="name-full-width">
+              <mat-label>{{'admin.store.nameField'|translate}}</mat-label>
+              <input matInput formControlName="name" autocomplete="off">
+              <mat-error *ngIf="form.controls.name.hasError('required')">
+                {{'admin.global.field.required' | translate}}
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+        </div>
+        <div class="row pt-1">
+          <div id="inputPhone" class="col-12 phoneNumberHeight">
+            <app-phone-input [id]="'phone'" [countryCode]="getCountryCode()" [matForm]="true" formControlName="phone"
+              (phoneInputChange)="onPhoneChange($event)" [placeholder]="false" [minHeight]="'38'">
+            </app-phone-input>
+            <div *ngIf="form.get('phone').invalid && form.get('phone').touched" class="mb-3 pb-3">
+              <mat-error class="mt-n5 ml-5 pl-2" style="font-size: 12px;">
+                <span>{{
+                  "public.payment.errors.valueNotValid" | translate
+                  }}</span>
+              </mat-error>
+            </div>
+          </div>
+        </div>
+
+        <div class="row pt-4 mt-4 mt-sm-0">
+
+          <div class="email-form mx-3">
+            <mat-form-field class="email-form-full-width">
+              <mat-label>{{'admin.global.email'|translate}}</mat-label>
+              <input type="email" matInput formControlName="email" [errorStateMatcher]="matcher">
+              <mat-error class="mb-3 position-relative" style="margin-bottom: 20px;"
+                *ngIf="form.controls.email.hasError('email') && !form.controls.email.hasError('required')">
+                Please enter a valid email address
+              </mat-error>
+              <mat-error class="mb-3 position-relative" *ngIf="form.controls.email.hasError('required')">
+                {{'admin.global.field.required' | translate}}
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row pt-1">
+          <div class="notes-form mx-3">
+            <mat-form-field class="notes-full-width">
+              <mat-label>{{'admin.store.notes'| translate}} (Optional)</mat-label>
+              <textarea matInput formControlName="notes"></textarea>
+            </mat-form-field>
+          </div>
+
+        </div>
+
+        <div class="row">
+          <label class="col-4 col-form-label">
+            {{'admin.store.status'| translate }}
+          </label>
+          <div class="col-8">
+
+            <mat-select class="form-control" (selectionChange)="onStatusChange($event)" [(value)]="selectedStatus">
+
+              <mat-option *ngFor="let status of statusList" [value]="status">{{ status }}
+              </mat-option>
+            </mat-select>
+
+          </div>
+        </div>
+        <hr>
+        <div fxLayout="row" fxLayoutAlign="end" id="detailsEnd" class="pt-3 pb-2">
+          <div id="closeBtn" class="mr-3" (click)="close()">{{'admin.store.close'|translate}}</div>
+          <button color="primary" class="btn btn-primary px-5" type="submit"
+            (click)="addReservation()">{{'admin.forgot.submit'|translate}}</button>
+        </div>
+      </div>
+    </form>
+
+  </div>
+</div>

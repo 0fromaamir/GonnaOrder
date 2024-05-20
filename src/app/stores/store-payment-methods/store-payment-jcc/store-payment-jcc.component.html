@@ -1,0 +1,102 @@
+<div class="card list mb-0">
+  <div class="card-body py-0">
+    <div class="row">
+      <div class="col-xl-4 marginlogo col-lg-5">
+        <a href="https://www.jcc.com.cy/">
+          <img src="assets/img/payment_logos/jcc.png" class="pr-2" width="100%" style="max-width: 100px">
+          <app-help-icon [helpPageName]="helpUrl"></app-help-icon>
+        </a>
+      </div>
+      <div class="col-xl-8 col-lg-7">
+        <!-- <label class="col-form-label d-block mb-0">{{'admin.store.payment.jccUserMsg' | translate}}</label> -->
+        <button *ngIf="!showFields && !jccConnected" class="btn btn-primary" (click)="onJCCClicked()"><i
+            class="fa fa-link mr-2 link" title="link"></i>{{'admin.store.setting.connect' | translate}}</button>
+        <form class="formgroup" [formGroup]="jccForm" *ngIf="showFields && !jccConnected">
+          <div class="row">
+            <div class="col-md-2">
+              {{'admin.store.payment.merchantId' | translate}}
+            </div>
+            <div class="col-md-5">
+              <input type="text" class="form-control" maxlength="100" formControlName="JCC_MERCHANT_ID">
+              <div class="invalid-feedback" *ngIf="getControl('JCC_MERCHANT_ID').errors">
+                <span
+                  *ngIf="getControl('JCC_MERCHANT_ID').errors.required && getControl('JCC_MERCHANT_ID').touched">{{'admin.global.field.required'|translate}}.</span>
+                <span
+                  *ngIf="getControl('JCC_MERCHANT_ID').errors.whitespace || getControl('JCC_MERCHANT_ID').errors.maxlength || getControl('JCC_MERCHANT_ID').errors.pattern">{{'admin.store.payment.valueNotValid'
+                  | translate}}</span>
+              </div>
+            </div>
+          </div>
+          <div class="row mt-3">
+            <div class="col-md-2">
+              {{'admin.store.payment.acquirerId' | translate}}
+            </div>
+            <div class="col-md-5">
+              <input type="text" class="form-control" formControlName="JCC_ACQUIRER_ID" maxlength="100">
+              <div class="invalid-feedback" *ngIf="getControl('JCC_ACQUIRER_ID').errors">
+                <span
+                  *ngIf="getControl('JCC_ACQUIRER_ID').errors.required && getControl('JCC_ACQUIRER_ID').touched">{{'admin.global.field.required'|translate}}.</span>
+                <span
+                  *ngIf="getControl('JCC_ACQUIRER_ID').errors.whitespace || getControl('JCC_ACQUIRER_ID').errors.maxlength || getControl('JCC_ACQUIRER_ID').errors.pattern">{{'admin.store.payment.valueNotValid'
+                  | translate}}</span>
+              </div>
+            </div>
+          </div>
+          <div class="row mt-3">
+            <div class="col-md-2">
+              {{'admin.store.payment.apiSignaturePassword' | translate}}
+            </div>
+            <div class="col-md-5">
+              <input type="password" class="form-control" formControlName="JCC_API_SIGNATURE_PASSWORD" maxlength="100">
+              <div class="invalid-feedback"
+                *ngIf="getControl('JCC_API_SIGNATURE_PASSWORD').errors?.required && getControl('JCC_API_SIGNATURE_PASSWORD').touched">
+                <span>
+                  {{'admin.global.field.required'|translate}}</span>
+              </div>
+            </div>
+          </div>
+          <div class="row mt-3">
+            <div class="col-md-2">
+            </div>
+            <div class="col-md-5 d-flex flex-row-reverse">
+              <button class="btn btn-primary" (click)="connect()">
+                <i class="fa fa-link mr-2 link" title="link"></i>{{'admin.store.setting.connect' | translate}}
+              </button>
+            </div>
+          </div>
+        </form>
+        <div *ngIf="jccConnected">
+          <div class="row">
+            <div class="col-md-2">{{'admin.store.payment.merchantId'|translate}}</div>
+            <div class="col-md-4">{{this.jccMerchantId}}</div>
+            <div class="col-md-2">
+              <button class="btn btn-danger d-flex" (click)="disconnect()">
+                <img src="assets/img/link-slash-solid.svg" class="mr-2 slashIcon" alt="">{{'admin.store.disconnect'|translate}}
+              </button>
+            </div>
+          </div>
+          <div class="form-horizontal mt-3">
+            <div class="row">
+              <div class="col-md-2">
+                <div class="form-group">
+                  <label class="form-check-label">{{'admin.store.enabled'|translate}}</label>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label>{{'admin.global.no'|translate}}</label>&nbsp;
+                  <label class="switch pt-1 mb-0">
+                    <input type="checkbox" id="enableJCCPaymentcreditCard" [(ngModel)]="jccEnabled"
+                      (ngModelChange)="toggleJCCPayments($event)" [disabled]="!jccConnected" />
+                    &nbsp;<span class="slider round"></span>
+                  </label>&nbsp;
+                  <label>{{'admin.global.yes'|translate}}</label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

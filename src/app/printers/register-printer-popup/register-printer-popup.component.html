@@ -1,0 +1,20 @@
+<div #namePrinter>
+  <div mat-dialog-title class="text-blue col-lg-12 mat-dialog-title">{{'admin.printer.registerTitle'|translate}}</div>
+  <div mat-dialog-content class="mb-2 col-lg-12">
+    <form [formGroup]="printerForm">
+      <mat-form-field appearance="standard" class="no-padding-top">
+        <mat-label>{{'admin.printer.printerName'|translate}}</mat-label>
+        <input matInput type="text" formControlName="printerNameInput" #printerName/>
+        <mat-error>{{'admin.printer.notEmpty'|translate}}</mat-error>
+      </mat-form-field>
+    </form>
+  </div>
+  <div mat-dialog-actions class="col-lg-12">
+    <div class="float-right">
+      <button (click)="onCancelClick()" type="button" class="btn btn-cancel mr-3">{{'admin.global.cancel' | translate}}</button>
+      <button class="btn btn-primary submit-btn ml-15" [disabled]="printerNameInput.invalid" (click)="registerToStore(printerName.value)">
+        {{'admin.global.ok' | translate}}
+      </button>
+    </div>
+  </div>
+</div>

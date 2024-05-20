@@ -1,0 +1,176 @@
+<form [formGroup]="settingsForm">
+  <h3 class="text-blue font-size-popup-title my-4">{{'admin.store.setting.paymentSettings'|translate}}</h3>
+  <div class="form-group row mb-4">
+    <label class="col-xl-4 col-lg-5 form-header">{{'admin.store.paymentOptions'|translate}}
+      <app-help-icon [helpPageName]="helpUrl" class="pl-2"></app-help-icon></label>
+    <div class="col-md-5">
+      <div class="form-group explanation" *ngIf="!paymentEnabled">
+        {{'admin.store.paymentOptionsDisabled'|translate}}
+      </div>
+      <div class="form-group mb-4">
+        <label class="radio-container" for="PAYMENT_OPTION_DISABLED">
+          {{'admin.store.paymentDisabled'|translate}}
+          <input [disableControl]="!paymentEnabled || orderingDisabled" type="radio" value="disabled"
+            formControlName="PAYMENT_OPTION" id="PAYMENT_OPTION_DISABLED" (change)="onSubmit()" />
+          <span class="checkmark"></span>
+        </label>
+      </div>
+      <div class="form-group mb-4">
+        <label class="radio-container" for="PAYMENT_OPTION_OPTIONAL">
+          {{'admin.store.paymentOptional'|translate}}
+          <input [disableControl]="!paymentEnabled || orderingDisabled" type="radio" value="optional"
+            formControlName="PAYMENT_OPTION" id="PAYMENT_OPTION_OPTIONAL" (change)="onSubmit()" />
+          <span class="checkmark"></span>
+        </label>
+      </div>
+      <div class="form-group mb-4">
+        <label class="radio-container" for="PAYMENT_OPTION_MANDATORY">
+          {{'admin.store.paymentMandatory'|translate}}
+          <input [disableControl]="!paymentEnabled || orderingDisabled" type="radio" value="mandatory"
+            formControlName="PAYMENT_OPTION" id="PAYMENT_OPTION_MANDATORY" (change)="onSubmit()" />
+          <span class="checkmark"></span>
+        </label>
+      </div>
+    </div>
+  </div>
+  <div class="form-group row mb-4" *ngIf="settings['PAYMENT_OPTION'] === 'optional'">
+    <label for="PAY_LATER_OPTION"
+      class="col-xl-4 col-lg-5 form-header">{{'admin.store.payLaterOption.label'|translate}}</label>
+    <div class="d-flex flex-md-row flex-sm-column flex-column col-xl-4 col-lg-4 col-md-4 col-sm-6 col-6">
+      <div class="input-group cstm-lbl">
+        <select class="form-control" formControlName="PAY_LATER_OPTION" id="PAY_LATER_OPTION" (change)="onSubmit()">
+          <option value="NONE">{{'admin.store.payLaterOption.none' | translate}}</option>
+          <option value="CASH">{{'admin.store.payLaterOption.cash' | translate}}</option>
+          <option value="CARD">{{'admin.store.payLaterOption.card' | translate}}</option>
+          <option value="CASH_CARD">{{'admin.store.payLaterOption.cashOrCard' | translate}}</option>
+        </select>
+      </div>
+    </div>
+  </div>
+  <div class="form-group row mb-4 pt-2" *ngIf="settings['PAYMENT_OPTION'] === 'optional'">
+    <label class="col-xl-4 col-lg-5 form-header">{{'admin.store.defaultPaymentSelection'|translate}}</label>
+    <div class="col-md-5">
+      <div class="form-group">
+        <label>{{'admin.store.notSelected'|translate}}</label>&nbsp;
+        <label class="switch pt-1 mb-0">
+          <input type="checkbox" formControlName="OPTIONAL_PAYMENT_PRESELECTED" id="OPTIONAL_PAYMENT_PRESELECTED"
+            (change)="onSubmit()" />
+          &nbsp;<span class="slider round"></span>
+        </label>&nbsp;
+        <label>{{'admin.store.preselected'|translate}}</label>
+      </div>
+    </div>
+  </div>
+</form>
+<div class="row mb-4">
+  <div class="col-lg-8">
+    <h3 class="text-blue font-size-popup-title">{{'admin.store.paymentMethodDetailsMessage'|translate}}</h3>
+  </div>
+</div>
+<div class="row mb-4">
+  <div class="col-lg-12">
+    <app-store-payment-payabl></app-store-payment-payabl>
+  </div>
+</div>
+<hr>
+<div class="row mb-4">
+  <div class="col-lg-12">
+    <app-store-payment-mollie></app-store-payment-mollie>
+  </div>
+</div>
+<hr>
+<ng-container *ngIf="selectedStore?.address?.country?.code === 'CY'">
+  <div class="row mb-4">
+    <div class="col-lg-12">
+      <app-store-payment-jcc></app-store-payment-jcc>
+    </div>
+  </div>
+  <hr>
+</ng-container>
+<div class="row mb-4">
+  <div class="col-lg-12">
+    <app-store-payment-stripe></app-store-payment-stripe>
+  </div>
+</div>
+<hr>
+<ng-container *ngIf="selectedStore?.address?.country?.code === 'IE' || selectedStore?.address?.country?.code === 'GB'">
+  <div class="row mb-4">
+    <div class="col-lg-12">
+      <app-store-payment-trustpayments></app-store-payment-trustpayments>
+    </div>
+  </div>
+  <hr>
+</ng-container>
+<ng-container *ngIf="selectedStore?.address?.country?.code === 'GB'">
+  <div class="row mb-4">
+    <div class="col-lg-12">
+      <app-store-payment-globalpay></app-store-payment-globalpay>
+    </div>
+  </div>
+  <hr>
+</ng-container>
+<ng-container *ngIf="selectedStore?.address?.country?.code === 'GB'">
+  <div class="row mb-4">
+    <div class="col-lg-12">
+      <app-store-payment-rms></app-store-payment-rms>
+    </div>
+  </div>
+  <hr>
+  <div class="row mb-4">
+    <div class="col-lg-12">
+      <app-store-payment-sense></app-store-payment-sense>
+    </div>
+  </div>
+  <hr>
+</ng-container>
+<div class="row mb-4">
+  <div class="col-lg-12">
+    <app-store-payment-viva></app-store-payment-viva>
+  </div>
+</div>
+<hr>
+<ng-container *ngIf="['GR'].includes(selectedStore?.address?.country?.code)">
+  <div class="row mb-4">
+    <div class="col-lg-12">
+      <app-store-payment-epay></app-store-payment-epay>
+    </div>
+  </div>
+  <hr>
+</ng-container>
+<div class="row mb-4">
+  <div class="col-lg-12">
+    <app-store-payment-square></app-store-payment-square>
+  </div>
+</div>
+<hr>
+<div class="row mb-4">
+  <div class="col-lg-12">
+    <app-store-payment-paypal></app-store-payment-paypal>
+  </div>
+</div>
+<hr>
+<ng-container *ngIf="['AG', 'BS','BB', 'CR','DM','DO','SV','GD','GT','GY','HN','JM','KN','NI','PA','LC','VC','SR','TT','US','GB'].includes(selectedStore?.address?.country?.code)">
+  <div class="row">
+    <div class="col-lg-12">
+      <app-store-payment-fygaro></app-store-payment-fygaro>
+    </div>
+  </div>
+  <hr>
+</ng-container>
+<div class="row mb-4">
+  <div class="col-lg-12">
+    <app-store-payment-apcopay></app-store-payment-apcopay>
+  </div>
+</div>
+<hr>
+<div class="row mb-4">
+  <div class="col-lg-12">
+    <app-store-payment-hobex></app-store-payment-hobex>
+  </div>
+</div>
+<hr>
+<div class="row">
+  <div class="col-lg-12">
+    <app-store-payment-others></app-store-payment-others>
+  </div>
+</div>

@@ -1,0 +1,62 @@
+.phone-container {
+    display: flex;
+  border-radius: 4px;
+}
+
+.country-selector-button {
+    font-size: 0.9rem;
+    min-height: 54px;
+    // border-radius: 0;
+}
+
+.country-selector-container {
+    display: flex;
+}
+
+.country-selector-icon {
+    flex-grow: 1;
+}
+
+.country-selector-dropdown-box {
+    display: flex;
+    align-items: center;
+}
+
+.country-selector-dropdown {
+    font-size: 0.875em !important;
+}
+
+.country-item-selected {
+    background-color: rgb(238,248,254);
+}
+
+.country-item-selected span {
+    font-weight: 500;
+}
+
+.country-flag {
+    margin-right: 10px;
+}
+
+.mat-mdc-menu-item:not(.country-item-selected):focus {
+    background-color: rgba(0,0,0,.04);;
+}
+.phone-customerReserve{
+    width: 100%;
+  }
+  .country-item-selected-reserve{
+    // width:50px;
+  }
+  .country-selector-button{
+    // border: 0.2px solid #e4e7ea;
+    height: 56px;
+  }
+  
+  ::ng-deep .mdc-floating-label--required:not(.mdc-floating-label--hide-required-marker)::after {
+    display: none !important;
+}
+
+input:-webkit-autofill {
+    background-color: #f8f7f5 !important;
+    box-shadow: 0 0 0 50px #f8f7f5 inset !important; 
+  }

@@ -1,0 +1,74 @@
+[
+  {
+    "relation": [
+      "delegate_permission\/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.gonnaorder.trattoriasicily",
+      "sha256_cert_fingerprints": [
+        "37:8C:20:28:E4:38:FC:A8:BF:86:36:9A:AE:23:67:00:B5:D3:C3:C8:03:EA:DA:28:2D:8F:39:7A:52:DB:02:C4"
+      ]
+    }
+  },
+  {
+    "relation": [
+      "delegate_permission\/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.gonnaorder.godev",
+      "sha256_cert_fingerprints": [
+        "37:8C:20:28:E4:38:FC:A8:BF:86:36:9A:AE:23:67:00:B5:D3:C3:C8:03:EA:DA:28:2D:8F:39:7A:52:DB:02:C4"
+      ]
+    }
+  },
+  {
+    "relation": [
+      "delegate_permission\/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.gonnaorder.go",
+      "sha256_cert_fingerprints": [
+        "37:8C:20:28:E4:38:FC:A8:BF:86:36:9A:AE:23:67:00:B5:D3:C3:C8:03:EA:DA:28:2D:8F:39:7A:52:DB:02:C4"
+      ]
+    }
+  },
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.gonnaorder.timsthai",
+      "sha256_cert_fingerprints": [
+        "37:8C:20:28:E4:38:FC:A8:BF:86:36:9A:AE:23:67:00:B5:D3:C3:C8:03:EA:DA:28:2D:8F:39:7A:52:DB:02:C4"
+      ]
+    }
+  },
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.gonnaorder.crepashouse",
+      "sha256_cert_fingerprints": [
+        "37:8C:20:28:E4:38:FC:A8:BF:86:36:9A:AE:23:67:00:B5:D3:C3:C8:03:EA:DA:28:2D:8F:39:7A:52:DB:02:C4"
+      ]
+    }
+  },
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.bur_ger.app",
+      "sha256_cert_fingerprints": [
+        "37:8C:20:28:E4:38:FC:A8:BF:86:36:9A:AE:23:67:00:B5:D3:C3:C8:03:EA:DA:28:2D:8F:39:7A:52:DB:02:C4"
+      ]
+    }
+  }
+]

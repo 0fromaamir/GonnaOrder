@@ -1,0 +1,39 @@
+.customer.app {
+    height: calc(var(--vh, 1vh) * 100);
+    max-width: 992px;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+
+.customer-footer-wrapper {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    z-index: 4;
+    .customer-footer {
+        max-width: 992px;
+        background-color: #fff;
+        box-shadow: 0px -2px 15px 0px #00000012;
+        padding-bottom: env(safe-area-inset-bottom);
+        .fa, .fas, .far {
+            font-size: 24px !important;
+        }
+        .material-icons,
+        .material-icons-outlined{
+            color: #273773;
+            font-size: 30px !important;
+        }
+        p{
+            font-size: 14px;
+            margin: 0px;
+        }
+    }
+
+}
+
+.storeName {
+    max-width: 120px;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    flex-wrap: wrap;
+  }

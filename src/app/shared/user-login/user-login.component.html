@@ -1,0 +1,32 @@
+<div class="social-login-wrapper row no-gutters justify-content-between" [class.stacked-panel]="stacked" [class.inline-panel]="!stacked">
+
+  <!-- Google login button -->
+  <div class="google-btn mt-xl-0" id="google-btn-tab" [class.col-12]="stacked" [class.mb-3]="stacked" [class.col-4]="!stacked">
+    <div class="google-btn-wrapper">
+      <div appCustomGoogle size="large" theme="outline" [text]="googleText()" [class.google-icon]="iconMode" 
+      logo_alignment='center' id="connect-google" [events]="eventsSubject.asObservable()"
+      (afterButtonRender)="markRendered()"></div>
+    </div>
+  </div>
+
+  <!-- Facebook login button -->
+  <div class="facebook-btn mt-xl-0" [class.col-12]="stacked" [class.mb-3]="stacked" [class.col-4]="!stacked">
+    <div class="facebook-btn-wrapper" id="connect-facebook" (click)="facebookLoginAction()"
+      [class.icon-button]="iconMode">
+      <div class="facebook-icon-wrapper">
+        <img class="facebook-icon" src="/assets/img/social/facebook.svg" />
+      </div>
+      <span *ngIf="!iconMode" class="btn-text">{{'admin.login.social.facebook' | translate}}</span>
+    </div>
+  </div>
+
+  <!-- Apple login button -->
+  <div class="apple-btn mt-xl-0" [class.col-12]="stacked" [class.col-4]="!stacked" *ngIf="!isInvitationUser">
+    <div class="apple-btn-wrapper" id="connect-apple" (click)="signInWithApple()" [class.icon-button]="iconMode">
+      <div class="apple-icon-wrapper">
+        <img class="apple-icon" src="/assets/img/social/apple.svg" />
+      </div>
+      <span *ngIf="!iconMode" class="btn-text">{{'admin.login.social.apple' | translate}}</span>
+    </div>
+  </div>
+</div>

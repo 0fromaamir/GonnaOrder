@@ -1,0 +1,54 @@
+@import "src/scss/variables";
+:host {
+  width: 100%;
+}
+
+.copyUrlIcon {
+  cursor: pointer;
+  font-size: 20px;
+  color: $primary-brand-colour;
+}
+
+.disabledSlider {
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.actionLink {
+  cursor: pointer;
+  text-decoration: underline !important;
+  margin-left: 10px;
+}
+
+::ng-deep .sidebar-lg-show {
+  .cdk-overlay-pane {
+    @media (min-width: 320px) and (max-width: 425px) {
+      width: 80% !important;
+      .label{
+        max-width: 230px;
+      }
+      .lbl-Location{
+        word-break: break-all;
+      }
+    }
+  }
+}
+
+.textareaheight{
+  min-height: 40px;
+}
+
+form label.required:after {
+  color: red;
+  content: " *";
+}
+
+.error-feedback {
+  width: 100%;
+  margin-top: 0.25rem;
+  font-size: 80%;
+  color: #f86c6b;
+}
+#map {
+  height: 300px;
+}

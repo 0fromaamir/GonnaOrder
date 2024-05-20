@@ -1,0 +1,38 @@
+<div class="row">
+    <div class="col-lg-12">
+        <form [formGroup]="myNextSettingsForm">
+            <div class="row">
+                <label class="col-xl-2 col-lg-3 col-md-12 col-sm-12" for="secretUrl">
+                    {{ 'admin.store.accountID' | translate }}:
+                </label>
+                <div class="col-xl-4 col-lg-9 col-md-12 col-sm-12">
+                    <p>{{ myNextSettingsForm.get('DELIVERY_PROVIDER_MYNEXT_ACCOUNT_ID').value }}</p>
+                </div>
+            </div>
+            <div class="row">
+                <label class="col-xl-2 col-lg-3 col-md-12 col-sm-12" for="secretUrl">
+                    {{ 'admin.store.enabled' | translate }}
+                </label>
+                <div class="col-xl-4 col-lg-9 col-md-12 col-sm-12">
+                    <div class="d-flex align-items-center">
+                        <label>{{ 'admin.global.no' | translate }}</label>&nbsp;&nbsp;&nbsp;
+                        <label class="switch">
+                            <input type="checkbox" formControlName="DELIVERY_PROVIDER_MYNEXT_ENABLE"
+                                id="ORDER_NOTIFICATION_SOUND" (change)="updateEnabled()" />
+                            &nbsp;<span class="slider round"></span>
+                        </label>&nbsp;&nbsp;&nbsp;
+                        <label>{{ 'admin.global.yes' | translate }}</label>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        <div class="col-lg-12">
+            <div class="float-right">
+                <button type="button" class="btn btn-danger mt-3" (click)="disconnectMynext()">
+                    <img src="assets/img/link-slash-solid.svg" class="mr-2 slashIcon" alt="">{{'admin.store.disconnect' | translate}}
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

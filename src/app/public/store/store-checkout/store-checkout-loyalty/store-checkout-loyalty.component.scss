@@ -1,0 +1,34 @@
+$progress-color: black; /* the progress color */
+$progress-background: lightgrey; /* the background color */
+$progress-width: 225px;
+
+.loyalty-progress[value] {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border: none;
+  width: $progress-width;
+  border-radius: 10em;
+  background: $progress-background;
+}
+
+.loyalty-progress[value]::-webkit-progress-bar {
+  border-radius: 10em;
+  background: $progress-background;
+}
+
+.loyalty-progress[value]::-webkit-progress-value {
+  border-radius: 10em;
+  background: $progress-color;
+}
+
+.loyalty-progress[value]::-moz-progress-bar {
+  border-radius: 10em;
+  background: $progress-color;
+}
+
+.loyalty-box {
+    border: 1px solid #4F4F4F;
+    border-radius: 4px;
+    line-height: 2em;
+}

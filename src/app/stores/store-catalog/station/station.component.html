@@ -1,0 +1,24 @@
+<div class="row">
+  <div class="col-12" *ngIf="!hideButtonForStandardUser">
+    <button type="button" class="btn btn-primary px-4" (click)="addStationHandler()">
+      {{'admin.store.catalog.station.addStation'|translate}}
+    </button>
+  </div>
+  <div class="col-12">
+    <table class="table lg" *ngIf="stations && stations.length">
+      <thead>
+        <tr>
+          <th>{{'admin.global.name'|translate}}</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let station of stations" (click)="onStationClick(station)" style="cursor: pointer;">
+          <td>{{station.name}}</td>
+          <td></td>
+          <td><a><img src="assets/img/icon-forward.svg" /></a></td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+  </div>

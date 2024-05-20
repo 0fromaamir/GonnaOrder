@@ -1,0 +1,309 @@
+<div *ngIf="customerAuthService.enableCustomerAuth() && !helper.isMobileApp()"
+    [class.loyalty-active]="loyaltyEnabled && !customerAuthService.isUserLoggedIn()">
+    <div class="expandable-content-wrapper" *ngIf="customerAuthService.isUserLoggedIn()">
+        <div class="logout row mx-4 mb-3" style="float: right;" (click)="logout()">
+            <i class="fas fa-user adminIcons"></i>
+            &nbsp;
+            <div class="font-medium font-size-heading"> {{'public.checkout.logout' | translate}} </div>
+        </div>
+    </div>
+
+    <div *ngIf="!customerAuthService.isUserLoggedIn()">
+        <label class="d-flex w-100 container font-size-primary m-0 pl-4">
+            {{'public.checkout.prompt.signin' | translate}}
+        </label>
+        <label class="loyality-discount d-flex w-100 container font-size-primary m-0 pl-4 mt-2" *ngIf="selectedStore.firstLoginVoucherAmount">
+            <span class="discount-price">{{selectedStore.firstLoginVoucherAmount | formatPrice: selectedStoreLocale:selectedStoreCurrency:selectedStoreCurrencySymbol}}</span>
+            {{'public.loyalty.firstLoginVoucher' | translate :
+            {
+                discountMinAmount: (selectedStore.firstLogingVoucherMinAmount ? selectedStore.firstLogingVoucherMinAmount : 0)  | formatPrice: selectedStoreLocale:selectedStoreCurrency:selectedStoreCurrencySymbol
+            }
+        }}
+        </label>
+    </div>
+
+    <app-store-checkout-loyalty></app-store-checkout-loyalty>
+
+    <div *ngIf="!customerAuthService.isUserLoggedIn()">
+        <iframe *ngIf="!isMobile()" id="user-login" [src]="userLoginSrc" class="login-iframe" frameBorder="0"
+            scrolling="no"></iframe>
+        <app-user-login *ngIf="isMobile()" class="user-login w-100 pl-4" authType="custLogin"
+            (submitEvent)="customerSocialSignIn($event)"></app-user-login>
+    </div>
+
+    <div class="px-4" *ngIf="!customerAuthService.isUserLoggedIn()">
+        <div class="d-none d-md-block">
+            <div class="or-separator">
+                <span>OR</span>
+            </div>
+        </div>
+
+        <div class="email-button mb-4" (click)="openLoginDialog()">
+            <span class="btn-text theme-interface">
+                Login with Email
+            </span>
+        </div>
+    </div>
+
+    <app-loading-panel [showLoading]="loading" [overlay]="true" [hideText]="true"></app-loading-panel>
+
+    <ng-template #emailLogin class="emailLogin">
+        <div class="email-login-header"></div>
+        <h1 class="font-size-header font-weight-bold" mat-dialog-title>
+            <span *ngIf="emailPhase == 'login'">Login</span>
+            <span *ngIf="emailPhase == 'register'">Register</span>
+            <span *ngIf="emailPhase == 'verify'">We've sent you a verification code</span>
+            <span *ngIf="emailPhase == 'change-password'">Set your password</span>
+            <span *ngIf="emailPhase == 'reset'">Forget Password</span>
+        </h1>
+
+        <div mat-dialog-content class="email-login-content">
+            <div class="header-container d-flex flex-wrap">
+                <div class="w-100">
+                    <div class="font-size-header font-weight-bold">
+                        <span
+                            class="float-right position-absolute closebutton text-decoration-underline font-weight-bold"
+                            (click)="closeDialog()">Close<i class="fas fa-times pl-2"></i></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Login -->
+            <div *ngIf="emailPhase == 'login'">
+                <form [formGroup]="loginForm" (submit)="login()">
+                    <div class="row">
+                        <div class="col-12 mt-2"
+                        [ngClass]="{'mb-2':loginForm.controls.email.touched && loginForm.controls.email.errors?.email || loginForm.controls.email.touched && loginForm.controls.email.errors?.required}">
+                            <mat-form-field appearance="outline" class="w-100">
+                                <mat-label>Email </mat-label>
+                                <input matInput id="login-email-field" formControlName="email">
+                                <mat-error *ngIf="loginForm.controls.email.touched && loginForm.controls.email.errors?.required" class="error-msg">
+                                    This field is required.
+                                </mat-error> 
+                                <mat-error *ngIf="loginForm.controls.email.touched && loginForm.controls.email.errors?.email" class="error-msg">
+                                    Email is invaild.
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-12 mt-2"
+                        [ngClass]="{'mb-2':loginForm.controls.password.touched && loginForm.controls.password.errors?.minlength || loginForm.controls.password.touched && loginForm.controls.password.errors?.required}">
+                            <mat-form-field appearance="outline" class="w-100">
+                                <mat-label>Password </mat-label>
+                                <input matInput [type]="hide ? 'password' : 'text'" id="login-password-field"
+                                    formControlName="password">
+                                <mat-error *ngIf="loginForm.controls.password.errors?.required" class="error-msg">
+                                    This field is required.
+                                </mat-error>
+                                <mat-error *ngIf="loginForm.controls.password.errors?.minlength" class="error-msg">
+                                    This field should be minimum 8 characters or digits.
+                                </mat-error>
+                                <button type="button" mat-icon-button matSuffix (click)="hide = !hide"
+                                    [attr.aria-label]="hide ? 'Show password' : 'Hide password'"
+                                    class="eye-icon pwdicon-top" [attr.aria-pressed]="hide">
+                                    <mat-icon>{{ hide ? 'visibility_off' : 'visibility' }}</mat-icon>
+                                </button>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="row" *ngIf="errorStatus == 'UNAUTHORIZED'">
+                        <div class="col-12 error-message">
+                            Invalid credentials supplied.
+                        </div>
+                    </div>
+                    <div class="d-flex flex-row mb-2 mb-xs-0 justify-content-end">
+                        <button type="button" class="btn button-link px-0 forgetPassword" (click)="goto('reset')">
+                            Forgot Password?
+                        </button>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <button class="btn btn-dark w-100" type="submit">Login</button>
+                        </div>
+                    </div>
+                </form>
+
+                <div class="row mt-1">
+                    <div class="col-12">
+                        Don't have an account? <button class="btn button-link px-0" (click)="goto('register')">Sign
+                            Up</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Register -->
+            <div *ngIf="emailPhase == 'register'">
+                <form [formGroup]="registerResetForm" (submit)="sendRegistrationCode()">
+                    <div class="row">
+                        <div class="col-12 mt-2" 
+                        [ngClass]="{'mb-2':registerResetForm.controls.email.touched && registerResetForm.controls.email.errors?.required || registerResetForm.controls.email.touched && registerResetForm.controls.email.errors?.email}">
+                            <mat-form-field appearance="outline" class="w-100">
+                                <mat-label>Email </mat-label>
+                                <input matInput id="register-email-field" formControlName="email" required>
+                                <mat-error
+                                    *ngIf="registerResetForm.controls.email.touched && registerResetForm.controls.email.errors?.required" class="error-msg">
+                                    This field is required.
+                                </mat-error>
+                                <mat-error
+                                    *ngIf="registerResetForm.controls.email.touched && registerResetForm.controls.email.errors?.email" class="error-msg">
+                                    Email is invaild.
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="row" *ngIf="errorStatus == 'CONFLICT'">
+                        <div class="col-12">
+                            <span class="error-message mr-2">Email already registered.</span>
+                            <button type="button" class="btn button-link px-0" (click)="goto('reset')">
+                                Forgot Password?
+                            </button>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-12">
+                            <button class="btn btn-dark w-100" type="submit">Send code</button>
+                        </div>
+                    </div>
+                </form>
+
+                <div class="row mt-1">
+                    <div class="col-12">
+                        Already have an account? <button class="btn button-link px-0" (click)="goto('login')">
+                            Login
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Verify -->
+            <div *ngIf="emailPhase == 'verify'">
+                <form [formGroup]="verifyForm" (submit)="verifyCode()">
+                    <div class="row">
+                        <div class="col-12 mb-1 mt-2 text-dark">
+                            Please check your email for a six-digit code and enter it below to continue
+                        </div>
+                    </div>
+                        <div class="row mb-2"
+                        [ngClass]="{'mb-3':verifyForm.get('code').invalid && (verifyForm.get('code').dirty || verifyForm.get('code').touched)}">
+                        <div class="col-12 error-message">
+                            <mat-form-field appearance="outline" class="w-100">
+                                <mat-label>Enter code </mat-label>
+                                <input matInput id="verify-code-field" formControlName="code">
+                                <mat-error *ngIf="verifyForm.get('code').invalid && (verifyForm.get('code').dirty || verifyForm.get('code').touched)">
+                                    <span *ngIf="verifyForm.get('code').errors.required"> Invalid code</span>
+                                    <span *ngIf="verifyForm.get('code').errors.minlength">Minimum length is 6 characters.</span>
+                                    <span *ngIf="verifyForm.get('code').errors.maxlength">Maximum length is 6 characters.</span>
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                     </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <button class="btn btn-dark w-100" type="submit">Next</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Change password -->
+            <div *ngIf="emailPhase == 'change-password'">
+                <form [formGroup]="changePasswordForm" (submit)="changePassword()" mat-form>
+                    <div class="row">
+                        <div class="col-12 mt-2" 
+                        [ngClass]="{'mb-2':changePasswordForm.controls.password.touched && changePasswordForm.controls.password.errors?.required || changePasswordForm.controls.password.touched && changePasswordForm.controls.password.errors?.minlength}">
+                            <mat-form-field appearance="outline" class="w-100 mb-2">
+                                <mat-label>Password </mat-label>
+                                <input matInput [type]="hide ? 'password' : 'text'" id="password-field"
+                                    formControlName="password">
+                                <mat-error *ngIf="changePasswordForm.controls.password.touched && changePasswordForm.controls.password.errors?.required" class="error-msg">
+                                    This field is required.
+                                </mat-error>
+                                <mat-error *ngIf="changePasswordForm.controls.password.touched && changePasswordForm.controls.password.errors?.minlength" class="error-msg">
+                                    This field should be minimum 8 characters or digits.
+                                </mat-error>
+                                <button type="button" mat-icon-button matSuffix (click)="hide = !hide"
+                                    [attr.aria-label]="hide ? 'Show password' : 'Hide password'"
+                                    class="eye-icon pwdicon-top" [attr.aria-pressed]="hide">
+                                    <mat-icon>{{ hide ? 'visibility_off' : 'visibility' }}</mat-icon>
+                                </button>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-12" 
+                        [ngClass]="{'mb-2':changePasswordForm.controls.confirmPassword.touched && changePasswordForm.controls.confirmPassword.errors?.required || changePasswordForm.controls.confirmPassword.touched && changePasswordForm.controls.confirmPassword.errors?.minlength || changePasswordForm.controls.confirmPassword.touched &&  changePasswordForm.controls.confirmPassword.errors?.mismatch}">
+                            <mat-form-field appearance="outline" class="w-100">
+                                <mat-label>Confirm Password </mat-label>
+                                <input matInput [type]="hide ? 'password' : 'text'" id="confirm-password-field"
+                                    formControlName="confirmPassword">
+                                <mat-error *ngIf="changePasswordForm.controls.confirmPassword.touched && changePasswordForm.controls.confirmPassword.errors?.required" class="error-msg">
+                                    This field is required.
+                                </mat-error>
+                                <mat-error *ngIf="changePasswordForm.controls.confirmPassword.touched && changePasswordForm.controls.confirmPassword.errors?.minlength" class="error-msg">
+                                    This field should be minimum 8 characters or digits.
+                                </mat-error>
+                                <mat-error *ngIf="changePasswordForm.controls.confirmPassword.touched &&  changePasswordForm.controls.confirmPassword.errors?.mismatch" class="error-msg">
+                                    Passwords do not match
+                                </mat-error>
+                                <button type="button" mat-icon-button matSuffix (click)="hide = !hide"
+                                    [attr.aria-label]="hide ? 'Show password' : 'Hide password'"
+                                    class="eye-icon pwdicon-top" [attr.aria-pressed]="hide">
+                                    <mat-icon>{{ hide ? 'visibility_off' : 'visibility' }}</mat-icon>
+                                </button>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="row mb-2" *ngIf="errorStatus == 'UNAUTHORIZED'">
+                        <div class="col-12 error-message">
+                            Unauthorized request
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-12">
+                            <button class="btn btn-dark w-100" type="submit">Submit</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Reset -->
+            <div *ngIf="emailPhase == 'reset'">
+                <form [formGroup]="registerResetForm" (submit)="resetPassword()">
+                    <div class="row">
+                        <div class="col-12 mt-2" 
+                        [ngClass]="{'mb-2':registerResetForm.controls.email.touched && registerResetForm.controls.email.errors?.required || registerResetForm.controls.email.touched && registerResetForm.controls.email.errors?.email}">
+                            <mat-form-field appearance="outline" class="w-100">
+                                <mat-label>Email </mat-label>
+                                <input matInput id="reset-email-field" formControlName="email">
+                                <mat-error *ngIf="registerResetForm.controls.email.touched && registerResetForm.controls.email.errors?.required" class="error-msg">
+                                    This field is required.
+                                </mat-error>
+                                <mat-error *ngIf="registerResetForm.controls.email.touched && registerResetForm.controls.email.errors?.email" class="error-msg">
+                                    Email is invaild.
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="row" *ngIf="errorStatus == 'NOT_FOUND'">
+                        <div class="col-12">
+                            <span class="error-message mr-2">Email not registered.</span>
+                            <button type="button" class="btn button-link px-0" (click)="goto('register')">
+                                Sign up?
+                            </button>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-12">
+                            <button class="btn btn-dark w-100" type="submit">Send code</button>
+                        </div>
+                    </div>
+                </form>
+                <div class="row">
+                    <div class="col-12">
+                        Or try to <button class="btn button-link px-0" (click)="goto('login')">
+                            Login
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </ng-template>
+</div>

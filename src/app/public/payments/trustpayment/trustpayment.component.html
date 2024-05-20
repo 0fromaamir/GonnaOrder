@@ -1,0 +1,20 @@
+<form method="POST" action="{{requestJSON?.checkoutUrl}}" id="trustpaymentsForm" #trustpaymentsForm class="checkout mx-2" [hidden]="true">
+  <input type="hidden" name="sitereference" value="{{requestJSON?.paymentFormParams?.siteReference}}">
+  <input type="hidden" name="stprofile" value="{{requestJSON?.paymentFormParams?.stProfile}}">
+  <input type="hidden" name="stdefaultprofile" value="{{requestJSON?.paymentFormParams?.stDefaultProfile}}">
+  <input type="hidden" name="currencyiso3a" value="{{requestJSON?.paymentFormParams?.currencyIso3a}}">
+  <input type="hidden" name="mainamount" value="{{requestJSON?.paymentFormParams?.mainAmount}}">
+  <input type="hidden" name="version" value="{{requestJSON?.paymentFormParams?.version}}">
+  <input type="hidden" name="orderreference" value="{{requestJSON?.paymentFormParams?.orderReference}}">
+  <ng-container *ngFor="let ruleIdentifier of requestJSON?.paymentFormParams?.ruleIdentifiers">
+    <input type="hidden" name="ruleidentifier" value="{{ruleIdentifier}}">
+  </ng-container>
+  <ng-container *ngFor="let stextraUrlRedirectField of requestJSON?.paymentFormParams?.stextraUrlRedirectFields">
+    <input type="hidden" name="stextraurlredirectfields" value="{{stextraUrlRedirectField}}">
+  </ng-container>
+  <input type="hidden" name="successfulurlredirect" value="{{requestJSON?.paymentFormParams?.successfulUrlRedirect}}">
+  <input type="hidden" name="declinedurlredirect" value="{{requestJSON?.paymentFormParams?.declinedUrlRedirect}}">
+  <input type="hidden" name="errorurlredirect" value="{{requestJSON?.paymentFormParams?.errorUrlRedirect}}">
+  <input type="hidden" name="sitesecuritytimestamp" value="{{requestJSON?.paymentFormParams?.siteSecurityTimestamp}}">
+  <input type="hidden" name="sitesecurity" value="{{requestJSON?.paymentFormParams?.siteSecurity}}">
+</form>

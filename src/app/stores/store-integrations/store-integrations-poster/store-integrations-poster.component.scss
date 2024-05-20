@@ -1,0 +1,17 @@
+.posterimg {
+    max-height: 30px;
+  }
+  
+  :host {
+    form label.required:after {
+      color: red;
+      content: " *";
+    }
+  }
+  
+  div.is-invalid {
+    .invalid-feedback {
+      display: block !important;
+    }
+  }
+  

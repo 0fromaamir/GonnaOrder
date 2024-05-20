@@ -1,0 +1,60 @@
+<div class="phone-container" [style.gap]="gap + 'px'">
+  <div [ngClass]="{'country-item-selected-reserve': matForm}">
+    <!-- mat-icon-button -->
+    <button class="form-control" [matMenuTriggerFor]="menu" [ngClass]="{'country-selector-button': matForm}"
+      aria-label="Phone country code select" [matMenuTriggerRestoreFocus]="false" [style.min-height]="minHeight+'px'">
+      <span class="country-selector-container">
+        <span *ngIf="selectedCountry" class="country-selector-icon">
+          <span class="fi fi-{{ selectedCountry.isoCode }}"></span>
+        </span>
+        <span *ngIf="!selectedCountry" class="country-selector-icon">-</span>
+        <span class="country-selector-dropdown-box">
+          <i class="fas fa-chevron-down country-selector-dropdown"></i>
+        </span>
+      </span>
+    </button>
+    <mat-menu #menu="matMenu" class="country-menu" (closed)="inputFocus()">
+      <button mat-menu-item (click)="select(selectedCountry)" class="country-item-selected" *ngIf="selectedCountry">
+        <span class="country-flag fi fi-{{ selectedCountry.isoCode }}"> </span>
+        <span>{{ selectedCountry.name }} (+{{ selectedCountry.code }}) </span>
+      </button>
+      <button mat-menu-item (click)="select(initialCountry)"
+        *ngIf="initialCountry?.isoCode && initialCountry.isoCode !== selectedCountry?.isoCode">
+        <span class="country-flag fi fi-{{ initialCountry.isoCode }}"> </span>
+        <span>{{ initialCountry.name }} (+{{ initialCountry.code }}) </span>
+      </button>
+      <button mat-menu-item *ngFor="let o of countryCodes" (click)="select(o)">
+        <span class="country-flag fi fi-{{ o.isoCode }}"> </span>
+        <span>{{ o.name }} (+{{ o.code }}) </span>
+      </button>
+    </mat-menu>
+  </div>
+  <div class="input-group mb-4" *ngIf="!matForm">
+    <input #phoneTextInput type="tel" maxlength="16" [(ngModel)]="phoneNumber" (input)="updatePhoneNumber()" id="{{id}}"
+      (keyup)="inputChange.emit($event)" class="form-control" [ngClass]="{
+        'is-invalid': touched && showErrors(),
+        populated: !!phoneNumber
+      }" [style.min-width]="minHeight + 'px'" />
+    <label for="#phoneTextInput" class="placeholder font-size-primary" (click)="inputFocus()" *ngIf="placeholder">
+      {{ "public.checkout.phoneNumber" | translate }}
+      {{ !required ? ("public.global.optional" | translate) : " *" }}
+    </label>
+    <div class="invalid-feedback font-size-secondary" *ngIf="showErrors()">
+      <span *ngIf="errors.required">{{ "public.checkout.errors.fieldRequired" | translate }}.</span>
+      <span *ngIf="!errors.required && errors.invalidPhone">{{
+        "public.payment.errors.valueNotValid" | translate
+        }}</span>
+    </div>
+  </div>
+  <div class="input-group mb-4 " *ngIf="matForm">
+    <mat-form-field class="phone-customerReserve">
+      <mat-label>Phone</mat-label>
+      <input matInput type="tel" maxlength="16" [(ngModel)]="phoneNumber" (input)="updatePhoneNumber()" id="{{id}}"
+        (keyup)="inputChange.emit($event)" class="form-control" [ngClass]="{
+          'is-invalid': touched && showErrors(),
+          populated: !!phoneNumber
+          }" [style.min-width]="minHeight + 'px'" [formControl]="phoneControl" class="bg-transparent">
+
+    </mat-form-field>
+  </div>
+</div>

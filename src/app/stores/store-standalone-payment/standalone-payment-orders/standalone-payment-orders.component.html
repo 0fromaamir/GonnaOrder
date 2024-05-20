@@ -1,0 +1,182 @@
+<div class="col-lg-12 right-col">
+    <div class="card-header right">
+        {{'admin.store.statistics.standalonePayment'|translate}}
+        <app-help-icon [helpPageName]="helpPage" class="ml-2"></app-help-icon>
+    </div>
+    <div class="d-flex align-items-center mb-4 mt-4 pl-1">
+        <form [formGroup]="form" class="d-flex flex-column col-md-12 mobile-style">
+            <div class="d-flex">
+                <div class="form-group d-md-flex d-sm-block align-items-center w-100 mobile-style">
+                    <div class="d-flex align-items-baseline">
+                        <label for="amount" class="mr-4">{{'admin.store.order.amount'|translate}}:</label>
+                        <div>
+                            <app-price-input [allowNegValue]="false" [priceFormControl]="getControl('amount')">
+                            </app-price-input>
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-primary mb-1 mt-2"
+                        (click)="createPaymentRequest()">{{'admin.store.order.createPaymentRequest'|translate}}</button>
+                    <app-help-icon [helpPageName]="helpUrl" class="ml-2"></app-help-icon>
+                </div>
+            </div>
+            <hr>
+            <div class="d-flex mobile-style">
+                <div class="d-flex pl-0 pr-0 align-items-center mb-1 mt-1 mr-2 col-md-3">
+                    <i class="material-icons">room</i>
+                    <select class="form-control" (change)="onLocationChange($event)" formControlName="location">
+                        <option *ngFor="let location of locations" [ngValue]="location.id" #selectLocations>{{
+                            location.label |
+                            translate }}
+                        </option>
+                    </select>
+                </div>
+
+                <div *ngIf="form.getRawValue().location !== null"
+                    class="d-flex align-items-center mb-1 mt-1 mr-3 checkbox-wrapper">
+                    <div class="d-flex pl-0 align-items-center form-check nopadding">
+                        <label class="chk-container nomargin-bottom space-nowrap" for="openTap">
+                            {{'admin.store.orderDeliveryMethod.openTap' | translate}}
+                            <input type="checkbox" id="openTap" name="openTap" formControlName="openTap"
+                                (change)="onLocationChange($event)" />
+                            <span class="checkmark"></span>
+                        </label>
+                    </div>
+                </div>
+                <div class="d-flex align-items-center pl-0 pr-0 mb-1 mt-1 mr-2 col-md-6 customer-name-wrapper">
+                    <i class="material-icons mr-1">person</i>
+                    <label for="customerName"
+                        class="d-flex align-items-center space-nowrap nomargin-bottom name-input-wrapper">
+                        {{'admin.store.order.customerName'|translate}}
+                        <input type="text" name="customerName" placeholder="" formControlName="customerName"
+                            class="d-flex ml-2 form-control search-field customerNameInput" (keyup)='onNameChange()'>
+                    </label>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="table-responsive">
+        <table id="order-table" class="table table-responsive-sm">
+            <thead>
+                <tr>
+                    <th>{{'admin.store.location.text'|translate}}</th>
+                    <th>{{'admin.store.order.label'|translate}}</th>
+                    <th>{{'admin.store.order.customerName'|translate}}</th>
+                    <th>{{'admin.store.ordered'|translate}}</th>
+                    <th>{{'admin.store.order.selected'|translate}}</th>
+                    <th>{{'admin.store.order.tip'|translate}}</th>
+                    <th>{{'admin.store.payment.paid'|translate}}</th>
+                    <th>{{'admin.store.order.paymentTime'|translate}}</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody *ngIf="(storeLocaleTimeZone$ | async) as storeLocaleTimeZone">
+                <tr *ngIf="standalonePaymentOrders && !standalonePaymentOrders.length">
+                    <td colspan="7">{{'admin.global.noData'|translate}}</td>
+                </tr>
+                <tr *ngFor="let order of standalonePaymentOrders">
+                    <td>{{ order.locationLabel }}</td>
+                    <td>{{ order.orderToken }}</td>
+                    <td>{{ order.customerName }}</td>
+                    <td>{{ order.formattedAmountReference }}</td>
+                    <td>{{ order.formattedAmountSelected }}</td>
+                    <td>{{ order.formattedAmountTip }}</td>
+                    <td>{{ order.formattedAmountTotal }}</td>
+                    <td *ngIf="dayCheck(order.updatedAt) as updatedAtDay">
+                        <span class="space-nowrap" *ngIf="!isJapanese">
+                            {{ order.updatedAt |
+                            localizedDate:'HH:mm':storeLocaleTimeZone.locale:storeLocaleTimeZone.timezone | async }}
+                        </span>
+                        <span *ngIf="updatedAtDay === DayType.YESTERDAY" class="space-nowrap">{{
+                            'admin.store.order.yesterday' | translate }}</span>
+                        <span *ngIf="updatedAtDay === DayType.TODAY" class="space-nowrap">{{ 'admin.store.order.today' |
+                            translate }}</span>
+                        <span *ngIf="updatedAtDay === DayType.TOMORROW" class="space-nowrap">{{
+                            'admin.store.order.tomorrow'
+                            | translate }}</span>
+                        <span *ngIf="updatedAtDay === DayType.DEFAULT" class="space-nowrap">
+                            <span *ngIf="!isJapanese">
+                                {{ order.updatedAt | localizedDate:'ddd DD
+                                MMM':storeLocaleTimeZone.locale:storeLocaleTimeZone.timezone | async }}
+                            </span>
+                            <span *ngIf="isJapanese">
+                                {{ order.updatedAt | localizedDate:'MMM
+                                DD(ddd)':storeLocaleTimeZone.locale:storeLocaleTimeZone.timezone | async }}
+                            </span>
+                        </span>
+                        <span class="space-nowrap" *ngIf="isJapanese">
+                            - {{ order.updatedAt |
+                            localizedDate:'HH:mm':storeLocaleTimeZone.locale:storeLocaleTimeZone.timezone | async }}
+                        </span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div id='order-list' class="mb-2 col-lg-12" *ngIf="(storeLocaleTimeZone$ | async) as storeLocaleTimeZone">
+        <div class="card border-top" *ngIf="standalonePaymentOrders && !standalonePaymentOrders.length">
+            {{'admin.global.noData'|translate}}
+        </div>
+        <div class="d-flex col-sm-12 border-top card pt-4" style="cursor: pointer;"
+            *ngFor="let order of standalonePaymentOrders">
+            <div class="row" *ngIf="order.orderToken">
+                <span class="mr-1 ml-4">{{'admin.store.order.label'|translate}} - {{ order.orderToken }}</span>
+            </div>
+            <div class="row" *ngIf="order.locationLabel">
+                <i class="material-icons deliver-icon">room</i>
+                <span class="mr-1">{{'admin.store.location.text'|translate}} - {{ order.locationLabel }}</span>
+            </div>
+            <div class="row mt-2" *ngIf="order.customerName">
+                <i class="material-icons">person</i>
+                <span class="mr-1">{{'admin.store.order.customerName'|translate}} - {{ order.customerName }}</span>
+            </div>
+            <div class="row mt-2" *ngIf="order.formattedAmountReference">
+                <i class="fas fa-solid fa-money-bill-wave mx-1"></i>
+                <span>{{'admin.store.ordered'|translate}} - {{order.formattedAmountReference}}</span>
+            </div>
+            <div class="row mt-2" *ngIf="order.formattedAmountSelected">
+                <i class="fas fa-solid fa-money-bill-wave mx-1"></i>
+                <span>{{'admin.store.order.selected'|translate}} - {{order.formattedAmountSelected}}</span>
+            </div>
+            <div class="row mt-2" *ngIf="order.formattedAmountTip">
+                <i class="fas fa-solid fa-money-bill-wave mx-1"></i>
+                <span>{{'admin.store.order.tip'|translate}} - {{order.formattedAmountTip}}</span>
+            </div>
+            <div class="row mt-2" *ngIf="order.formattedAmountTotal">
+                <i class="fas fa-solid fa-money-bill-wave mx-1"></i>
+                <span>{{'admin.store.payment.paid'|translate}} - {{order.formattedAmountTotal}}</span>
+            </div>
+            <div class="row mt-2" *ngIf="dayCheck(order.updatedAt) as updatedAtDay">
+                <i class="fas fa-paper-plane"></i>
+                <span class="ml-1">{{'admin.store.order.paymentTime'|translate}} - </span>
+                <span class="space-nowrap" *ngIf="!isJapanese">
+                    {{ order.updatedAt |
+                    localizedDate:'HH:mm':storeLocaleTimeZone.locale:storeLocaleTimeZone.timezone | async }}
+                </span>
+                <span *ngIf="updatedAtDay === DayType.YESTERDAY" class="space-nowrap">{{
+                    'admin.store.order.yesterday' | translate }}</span>
+                <span *ngIf="updatedAtDay === DayType.TODAY" class="space-nowrap">{{ 'admin.store.order.today' |
+                    translate }}</span>
+                <span *ngIf="updatedAtDay === DayType.TOMORROW" class="space-nowrap">{{ 'admin.store.order.tomorrow'
+                    | translate }}</span>
+                <span *ngIf="updatedAtDay === DayType.DEFAULT" class="space-nowrap">
+                    <span *ngIf="!isJapanese">
+                        {{ order.updatedAt | localizedDate:'ddd DD
+                        MMM':storeLocaleTimeZone.locale:storeLocaleTimeZone.timezone | async }}
+                    </span>
+                    <span *ngIf="isJapanese">
+                        {{ order.updatedAt | localizedDate:'MMM
+                        DD(ddd)':storeLocaleTimeZone.locale:storeLocaleTimeZone.timezone | async }}
+                    </span>
+                </span>
+                <span class="space-nowrap" *ngIf="isJapanese">
+                    - {{ order.updatedAt |
+                    localizedDate:'HH:mm':storeLocaleTimeZone.locale:storeLocaleTimeZone.timezone | async }}
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <app-pager [totalPagesCount]="totalPages" [page]="pageNumber" [size]="pageSize" (paginate)="paginate($event)">
+    </app-pager>
+</div>

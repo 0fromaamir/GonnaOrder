@@ -1,0 +1,13 @@
+@import "src/scss/variables";
+hr{
+    height: 0 !important;
+      background: $secondary-brand-colour !important;
+      display: inline-block !important;
+      width: 100%;
+      margin-top: 1rem;
+      margin-bottom: 1rem;
+      border: 0;
+      border-top: 1px solid rgba(0,0,0,0.1);
+      box-sizing: content-box;
+      overflow: visible;
+  }

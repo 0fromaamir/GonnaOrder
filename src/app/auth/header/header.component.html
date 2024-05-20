@@ -1,0 +1,19 @@
+<div class="sticky-wrapper">
+  <header class="site-header">
+    <div class="container-fluid">
+      <div class="row justify-content-between">
+        <div class="col-md-10 col-sm-6 col-6">
+          <a [href]="whitelabelCommericalUrl" class="custom-logo-link" rel="home" aria-current="page"
+            target="_blank"><img [src]="whiteLabelLogo" class="custom-logo" [alt]="whiteLabelName"></a>
+        </div>
+        <div class="header-mobile-menu col-md-2 col-sm-6 col-5" *ngIf="!isSuccessPage">
+          <mat-select [(value)]="languageId" class="mat-select-custom" (selectionChange)="onLanguageChange($event)">
+            <mat-option *ngFor="let language of languagesList" [value]="language.id">
+              {{ language.name }}
+            </mat-option>
+          </mat-select>
+        </div>
+      </div>
+    </div>
+  </header>
+</div>

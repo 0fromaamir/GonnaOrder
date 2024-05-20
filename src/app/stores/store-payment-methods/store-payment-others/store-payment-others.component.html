@@ -1,0 +1,83 @@
+<form [formGroup]="otherspaymentForm">
+  <div class="card-body py-1" id="otherContainer">
+    <div class="row">
+      <div class="col-xl-4 marginlogo col-lg-5" style="display: flex;">
+        <h2 class="form-check-label pr-2 font-weight-light">
+          {{'admin.store.other'|translate}}
+        </h2>
+        <app-help-icon class="pt-2" [helpPageName]="helpUrlOther"></app-help-icon>
+      </div>
+      <div class="col-xl-8 col-lg-7">
+        <button *ngIf="!showFields && !othersConnected" class="btn btn-primary" (click)="onotherClicked()"><i
+            class="fa fa-link mr-2 link" title="link"></i>{{'admin.store.setting.connect' | translate}}</button>
+        <div *ngIf="showFields && !othersConnected">
+          <!-- <div class="row">
+            <div class="col-md-2">
+              {{'admin.store.paymentProvider'|translate}}
+            </div>
+            <div class="col-md-5">
+              <input type="text" autocomplete="off" (focusout)="onFocusOut()"
+                formControlName="POST_ORDER_PAYMENT_LINK_GENERAL_DESCRIPTION"
+                id="POST_ORDER_PAYMENT_LINK_GENERAL_DESCRIPTION" class="form-control" maxlength="100">
+              <div class="invalid-feedback"
+                *ngIf="getControl('POST_ORDER_PAYMENT_LINK_GENERAL_DESCRIPTION').errors?.required">
+                <span>
+                  {{'admin.global.field.required'|translate}}</span>
+              </div>
+            </div>
+          </div> -->
+
+          <div class="row mb-4">
+            <div class="col-md-3">
+              {{'admin.store.paymentLink'|translate}}
+            </div>
+            <div class="col-md-6">
+              <input type="text" autocomplete="off" formControlName="POST_ORDER_PAYMENT_LINK_GENERAL_URL"
+                id="POST_ORDER_PAYMENT_LINK_GENERAL_URL" maxlength="200" value="https://"
+                (keyup)="checkPredefaultPaymentLink($event)" class="form-control url-field">
+            </div>
+          </div>
+          <div class="row mb-4">
+            <div class="col-md-3">
+            </div>
+            <div class="col-md-6 d-flex flex-row-reverse">
+              <button class="btn btn-primary" (click)="connect()">
+                <i class="fa fa-link mr-2 link" title="link"></i>{{'admin.store.setting.connect' | translate}}
+              </button>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="othersConnected">
+          <div class="row mb-4">
+            <div class="col-md-3">{{'admin.store.paymentLink'|translate}}</div>
+            <div class="col-md-6">{{this.paymentLink}}</div>
+            <div class="col-md-2">
+              <button class="btn btn-danger d-flex" (click)="disconnect()">
+                <img src="assets/img/link-slash-solid.svg" class="mr-2 slashIcon" alt="">{{'admin.store.disconnect'|translate}}
+              </button>
+            </div>
+          </div>
+          <div class="row mb-4">
+            <div class="col-md-3">
+              <div class="form-group">
+                <label class="form-check-label">{{'admin.store.enableWithanylink'|translate}}
+                </label>&nbsp;
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>{{'admin.global.no'|translate}}</label>&nbsp;
+                <label class="switch pt-1 mb-0">
+                  <input type="checkbox" id="paymentLinkFlag" formControlName="POST_ORDER_PAYMENT_LINK_GENERAL_ENABLED"
+                    (change)="togglePaymentLinkSwitch($event)" />
+                  &nbsp;<span class="slider round"></span>
+                </label>&nbsp;
+                <label>{{'admin.global.yes'|translate}}</label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

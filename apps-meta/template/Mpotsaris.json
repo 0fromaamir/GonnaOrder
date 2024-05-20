@@ -1,0 +1,17 @@
+{
+  "appName": "Μπότσαρης",
+  "appDescription": "Customer ordering app for Μπότσαρης",
+  "type": "TEMPLATE",
+  "tag": "PROD",
+  "bundleId": "com.gonnaorder.mpotsaris",
+  "appleId": "6496507489",
+  "storeAlias": "kempaptzidikompotsaris",
+  "iconUrl": "resources/assets/mobile-apps/template/Mpotsaris/icon.png",
+  "iconBackgroundUrl": "resources/assets/mobile-apps/template/Mpotsaris/icon-background.png",
+  "iconForegroundUrl": "resources/assets/mobile-apps/template/Mpotsaris/icon-foreground.png",
+  "splashUrl": "resources/assets/mobile-apps/template/Mpotsaris/splash.png",
+  "splashBackgroundColor": "#FDFDFE",
+  "googleServiceInfoUrl": "resources/assets/mobile-apps/template/Mpotsaris/GoogleService-Info.plist",
+  "defaultDeeplinkAppAndroidUrl": "https://play.google.com/store/apps/details?id=com.gonnaorder.mpotsaris",
+  "defaultDeeplinkAppIOSUrl": "https://apps.apple.com/nl/app/gonnaorder/id6496507489?l=en"
+}

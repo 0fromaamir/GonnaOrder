@@ -1,0 +1,24 @@
+<div #printerSelectPopup>
+  <div mat-dialog-title class="text-blue col-lg-12">{{'admin.printer.selectPrinterTitle'|translate}}</div>
+  <div mat-dialog-content class="mb-2 col-lg-12">
+    <form [formGroup]="printerSelectForm">
+      <mat-label *ngIf="(printers$ | async).data.length === 0">{{'admin.printer.noPrinter'|translate}}</mat-label>
+      <mat-form-field *ngIf="(printers$ | async).data.length > 0" appearance="standard">
+        <mat-label>{{'admin.printer.selectPrinter'|translate}}</mat-label>
+        <mat-select formControlName="printerSelect" (selectionChange)="onPrinterChanged($event)">
+          <mat-option [value]="">{{'admin.printer.selectPrinter' | translate}}</mat-option>
+          <mat-option *ngFor="let printer of (printers$ | async).data" [value]="printer.url">{{ printer.name }}</mat-option>
+        </mat-select>
+        <mat-error>{{'admin.printer.notEmpty'|translate}}</mat-error>
+      </mat-form-field>
+    </form>
+  </div>
+  <div mat-dialog-actions class="col-lg-12">
+    <div class="float-right">
+      <button (click)="onCancelClick()" type="button" class="btn btn-cancel mr-3">{{'admin.global.cancel' | translate}}</button>
+      <button class="btn btn-primary submit-btn ml-15" [disabled]="printerSelect.invalid" (click)="printOrder()">
+        {{'admin.global.ok' | translate}}
+      </button>
+    </div>
+  </div>
+</div>

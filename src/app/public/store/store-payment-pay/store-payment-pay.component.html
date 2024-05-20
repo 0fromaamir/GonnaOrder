@@ -1,0 +1,22 @@
+<div class="payment-pay-container">
+  <div class="store-info languages position-relative mx-auto">
+    <div class="theme-light">
+      <a href="#"
+         class="close-details d-flex m-1 arrow-icon position-absolute container-theme-light-icons round-background"
+         (click)="onGoBack($event)">
+        <i class="fa fa-arrow-left m-auto"></i>
+      </a>
+      <div class="text-center font-size-header font-weight-bold">{{ (this.paymentPayDetails?.isStandalonePayment ? 'public.standalonepayment.paymentpage.title' : 'public.checkout.yourOrder') | translate}}</div>
+      <div class="store-title d-block m-1 mt-3 text-center pb-2 font-size-primary theme-light-subtitle">
+        {{this.paymentPayDetails?.selectedStore?.name }} <span *ngIf="this.paymentPayDetails?.selectedStore?.description">|</span>
+        {{this.paymentPayDetails?.selectedStore?.description}}
+      </div>
+    </div>
+    <div class="w-100 mx-auto"> <app-store-catalog-language-selector
+      [haveBackground]="false"></app-store-catalog-language-selector></div>
+  </div>
+  <app-hobex *ngIf = "this.hobexEnabled()" [paymentWidgetScriptUrl]="this.paymentPayDetails?.requestJSON?.checkoutUrl" [returnUrl]="this.paymentPayDetails?.requestJSON?.paymentFormParams?.callbackUrl"></app-hobex>
+</div>
+
+
+

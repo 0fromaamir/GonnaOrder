@@ -1,0 +1,41 @@
+@import "bootstrap/scss/functions";
+@import "bootstrap/scss/variables";
+@import "bootstrap/scss/mixins";
+@import "src/scss/variables";
+
+form div.form-group {
+    display: flex;
+
+    @include media-breakpoint-down(md) {
+        display: block;
+    }
+}
+
+.buttonGroup{
+    .floatLeft{
+        float: left;
+    }
+    .floatRight{
+        float:right;
+        @include media-breakpoint-down(sm) {
+            float: none;
+            margin: 10px 0 0 0;
+            display: flex;
+        }
+    }
+}
+
+.actionLink{
+    cursor: pointer;
+    text-decoration: underline !important;
+    margin-left: 10px;
+}
+
+.buttonGroup a.actionLink {
+    color: $primary-brand-colour;
+}
+
+form label.required:after{
+    color: red;
+    content: " *";
+}

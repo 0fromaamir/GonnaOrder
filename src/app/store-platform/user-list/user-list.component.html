@@ -1,0 +1,51 @@
+<div class="col-lg-12 right-col">
+  <div class="card list">
+    <div class="col-lg-12 mb-4 d-flex align-items-center justify-content-between p-0">
+      <a title="{{'admin.store.catalog.backToCatalog'|translate}}" class="btn back-button btn-primary"
+        [routerLink]="['/manager/platform/tenants']">
+        <i class="fas fa-arrow-left mr-2"></i> <span
+          class="d-none d-md-inline-block d-lg-inline-block d-xl-inline-block ml-1">Back To Tenants</span>
+      </a>
+    </div>
+    <div class="card-header">Platform</div>
+    <div class="card-body">
+      <div class="row pt-2 pl-3 mb-3">
+        <button type="button" class="rounded-0 btn btn-outline-primary mr-0"
+          [routerLink]="['/manager/platform/tenants']"
+          [class.btnChange]="true">Tenants</button>
+      </div>
+      <div class="row mb-3">
+        <h3 class="text-blue font-size-popup-title my-2 pl-3">Manage Users for Tenant : {{ tenantCode }}</h3>
+      </div>
+      <div class="mb-3 col-12 pl-0">
+        <button class="btn btn-primary" (click)="openDialog()"><i class="fas fa-plus mr-3"></i>Add Tenant Admin</button>
+      </div>
+      <table class="table table-responsive-sm">
+        <thead>
+          <tr>
+            <th>{{'admin.global.name'|translate}}</th>
+            <th>{{'admin.global.role'|translate}}</th>
+            <th>{{'admin.global.email'|translate}}</th>
+            <th>{{'admin.global.phoneNumber'|translate}}</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngIf="!(tenantUsers$ | async)?.data?.length && !tenantUsers.length">
+            <td colspan="5">{{'admin.global.noData'|translate}}</td>
+          </tr>
+          <tr *ngFor="let user of tenantUsers">
+            <td>{{ user.firstName + ' ' + user.lastName}}</td>
+            <td>
+              <ng-container *ngIf="user.storeRole === 'TENANT_ADMIN'">Tenant Admin</ng-container>
+            </td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.country?.phoneCode }}<span class="ml-1">{{ user.phoneNumber }}</span></td>
+            <td><i (click)="removeUserStoreAcess(user.id)" title="{{'admin.users.removeAccessMsg'|translate}}"
+                class="fas fa-user-minus text-dark cursor-pointer"></i></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

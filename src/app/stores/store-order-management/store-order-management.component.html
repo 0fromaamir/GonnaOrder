@@ -1,0 +1,209 @@
+<div class="animated fadeIn">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="card list">
+        <form [formGroup]="settingsForm" class="form-horizontal my-3">
+          <div class="card-body py-3">
+            <div class="form-group row mb-3 mb-md-0">
+                <label
+                  class="col-xl-4 col-lg-4 col-md-4 form-header mb-2 mb-md-0">{{'admin.store.orderingEmailcustomer'|translate}}</label>
+                <div class="col-md-5">
+                  <div class="form-group">
+                    <label>{{'admin.global.no'|translate}}</label>&nbsp;
+                    <label class="switch pt-1 mb-0">
+                      <input type="checkbox" formControlName="ORDER_NOTIFICATION_EMAIL_STATUS_CHANGE"
+                        id="ORDER_NOTIFICATION_EMAIL_STATUS_CHANGE" (change)="onSubmit()" />
+                      &nbsp;<span class="slider round"></span>
+                    </label>&nbsp;
+                    <label>{{'admin.global.yes'|translate}}</label>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group row mb-3 mb-md-4">
+                <label class="col-xl-4 col-lg-4 col-md-4 form-header">
+                  {{'admin.store.orderingMinutesorderready'|translate}}</label>
+                <div class="col-md-5">
+                  <div class="form-group explanation">
+                    {{'admin.store.orderingDefaultestimated'|translate}}
+                  </div>
+                  <div class="d-flex w-100">
+                    <span class="m-2">{{'admin.store.orderingMinimum'|translate}}</span>
+                    <input type="number" class="form-control col-lg-3 col-md-3 col-sm-3 default-number" min="0"
+                      formControlName="DEFAULT_MIN_ESTIMATED_DURATION_READY" id="DEFAULT_MIN_ESTIMATED_DURATION_READY"
+                      (input)="onSubmit()"
+                      [class.is-invalid]="defaultMinNumber.invalid && (defaultMinNumber.dirty || defaultMinNumber.touched)" />
+  
+                    <span class="m-2">{{'admin.store.orderingMaximum'|translate}}</span>
+                    <input type="number" class="form-control col-lg-3 col-md-3 col-sm-3 default-number"
+                      formControlName="DEFAULT_MAX_ESTIMATED_DURATION_READY" id="DEFAULT_MAX_ESTIMATED_DURATION_READY"
+                      (input)="onSubmit()"
+                      [class.is-invalid]="defaultMaxNumber.invalid && (defaultMaxNumber.dirty || defaultMaxNumber.touched)" />
+                  </div>
+                  <div class="invalid-feedback d-block" *ngIf="defaultMaxNumber.errors">
+                    <span>{{'admin.global.field.maxNumber'|translate: {maxNumber: defaultMaxNumber.errors.max.max}
+                      }}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group row mb-3 mb-md-4">
+              <label
+                class="col-xl-4 col-lg-4 col-md-4 form-header">{{'admin.store.orderingNotification'|translate}}</label>
+              <div class="col-md-5">
+                <div class="form-group">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <label
+                        class="col-md-12 ml-n3 form-header">{{'admin.store.orderingNotificationmessage'|translate}}</label>
+                      <div class="d-flex w-100">
+                        <input type="text" class="form-control" formControlName="ORDER_NOTIFICATION_EMAIL"
+                          [class.is-invalid]="email.invalid && (email.dirty || email.touched)" placeholder="Email"
+                          autocomplete="email" maxlength="254" />
+                        <button class="btn btn-primary ml-4 d-flex align-self-center" (click)="onSubmit()" [disabled]="settingsForm.get('ORDER_NOTIFICATION_EMAIL').invalid || settingsForm.get('ORDER_NOTIFICATION_EMAIL').errors"><i
+                            class="fas fa-save mr-2 pr-1"></i>{{'admin.global.save'|translate}}</button>
+                      </div>
+                      <div class="invalid-feedback" *ngIf="email.errors && email.errors.required">
+                        {{'admin.global.field.required'|translate}}
+                      </div>
+                      <div class="invalid-feedback" *ngIf="email.errors && email.errors.email">
+                        {{'admin.forgot.emailInvalid'|translate}}
+                      </div>
+                      <div class="invalid-feedback" *ngIf="email.errors && email.errors.maxlength">
+                        {{'admin.global.field.maxLength' | translate:{maxLength: email.errors.maxlength.requiredLength}
+                        }}.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group row mb-3 mb-md-4">
+            <label
+              class="col-xl-4 col-lg-4 col-md-4 form-header">Out of stock notification emails</label>
+            <div class="col-md-5">
+              <div class="form-group">
+                <div class="row">
+                  <div class="col-md-12">
+                    <label>{{'admin.global.no'|translate}}</label>&nbsp;
+                  <label class="switch pt-1 mb-0">
+                    <input type="checkbox" formControlName="STOCK_NOTIFICATION_ENABLED"
+                      id="STOCK_NOTIFICATION_ENABLED" (change)="onSubmit()" />
+                    &nbsp;<span class="slider round"></span>
+                  </label>&nbsp;
+                  <label>{{'admin.global.yes'|translate}}</label>
+                    <div class="d-flex w-100 mt-3">
+                      <input type="text" class="form-control" formControlName="STOCK_NOTIFICATION_EMAIL"
+                        [class.is-invalid]="stockemail.invalid && (stockemail.dirty || stockemail.touched)" placeholder="Email"
+                        autocomplete="stockemail" maxlength="254" />
+                      <button class="btn btn-primary ml-4 d-flex align-self-center" (click)="onSubmit()" [disabled]="settingsForm.get('STOCK_NOTIFICATION_EMAIL').invalid || settingsForm.get('STOCK_NOTIFICATION_EMAIL').errors"><i
+                          class="fas fa-save mr-2 pr-1"></i>{{'admin.global.save'|translate}}</button>
+                    </div>
+                    <div class="invalid-feedback" *ngIf="stockemail.errors && stockemail.errors.required">
+                      {{'admin.global.field.required'|translate}}
+                    </div>
+                    <div class="invalid-feedback" *ngIf="stockemail.errors && stockemail.errors.stockemail">
+                      {{'admin.forgot.emailInvalid'|translate}}
+                    </div>
+                    <div class="invalid-feedback" *ngIf="stockemail.errors && stockemail.errors.maxlength">
+                      {{'admin.global.field.maxLength' | translate:{maxLength: stockemail.errors.maxlength.requiredLength}
+                      }}.
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group row mb-3 mb-md-4">
+            <label
+              class="col-xl-4 col-lg-4 col-md-4 form-header">{{'admin.store.orderNotificationSound'|translate}}</label>
+            <div class="col-md-5">
+              <div class="form-group">
+                <label>{{'admin.store.disabled'|translate}}</label>&nbsp;
+                <label class="switch pt-1 mb-0">
+                  <input type="checkbox" formControlName="ORDER_NOTIFICATION_SOUND" id="ORDER_NOTIFICATION_SOUND"
+                    (change)="onSubmit()" />
+                  &nbsp;<span class="slider round"></span>
+                </label>&nbsp;
+                <label>{{'admin.store.enabled'|translate}}</label>
+              </div>
+            </div>
+          </div>
+          <div class="form-group row mb-3 mb-md-4">
+            <label
+              class="col-xl-4 col-lg-4 col-md-4 form-header">{{'admin.store.setting.allowOrderUpdateByStore'|translate}}</label>
+            <div class="col-md-5">
+              <div class="form-group">
+                <label>{{'admin.store.disabled'|translate}}</label>&nbsp;
+                <label class="switch pt-1 mb-0">
+                  <input type="checkbox" formControlName="ALLOW_ORDER_CHANGE" id="ALLOW_ORDER_CHANGE"
+                    (change)="onSubmit()" />
+                  &nbsp;<span class="slider round"></span>
+                </label>&nbsp;
+                <label>{{'admin.store.enabled'|translate}}</label>
+              </div>
+            </div>
+          </div>
+          <div class="form-group row mb-3 mb-md-4">
+            <label
+              class="col-xl-4 col-lg-4 col-md-4 form-header">{{'admin.store.setting.allowOrderDeletionByStore'|translate}}</label>
+            <div class="col-md-5">
+              <div class="form-group">
+                <label>{{'admin.store.disabled'|translate}}</label>&nbsp;
+                <label class="switch pt-1 mb-0">
+                  <input type="checkbox" formControlName="ALLOW_ORDER_DELETE" id="ALLOW_ORDER_DELETE"
+                    (change)="onSubmit()" />
+                  &nbsp;<span class="slider round"></span>
+                </label>&nbsp;
+                <label>{{'admin.store.enabled'|translate}}</label>
+              </div>
+            </div>
+          </div>
+          <div class="form-group row mb-3 mb-md-4">
+            <label
+              class="col-xl-4 col-lg-4 col-md-4 form-header">{{'admin.store.setting.automaticallyAcceptOrders'|translate}}</label>
+            <div class="col-md-5">
+              <div class="form-group">
+                <label>{{'admin.store.disabled'|translate}}</label>&nbsp;
+                <label class="switch pt-1 mb-0">
+                  <input type="checkbox" formControlName="AUTO_ACCEPT_ORDERS" id="AUTO_ACCEPT_ORDERS"
+                    (change)="onSubmit()" />
+                  &nbsp;<span class="slider round"></span>
+                </label>&nbsp;
+                <label>{{'admin.store.enabled'|translate}}</label>
+              </div>
+            </div>
+          </div>
+          <div class="form-group row mb-3 mb-md-4">
+            <label
+              class="col-xl-4 col-lg-4 col-md-4 form-header">{{'admin.store.setting.detailedOrderReceiptPdf'|translate}}</label>
+            <div class="col-md-5">
+              <div class="form-group">
+                <label>{{'admin.global.no'|translate}}</label>&nbsp;
+                <label class="switch pt-1 mb-0">
+                  <input type="checkbox" formControlName="DETAILED_ORDER_PDF" id="DETAILED_ORDER_PDF"
+                    (change)="onSubmit()" />
+                  &nbsp;<span class="slider round"></span>
+                </label>&nbsp;
+                <label>{{'admin.global.yes'|translate}}</label>
+              </div>
+            </div>
+          </div>
+          <div class="form-group row mb-3 mb-md-4">
+            <label for="RECEIPT_FONTS_OPTIONS"
+              class="col-xl-4 col-lg-4 col-md-4 form-header">{{'admin.store.setting.orderReceiptPdfFont'|translate}}</label>
+            <div class="col-md-5">
+              <div class="input-group cstm-lbl">
+                <select class="form-control" formControlName="RECEIPT_FONTS_OPTIONS" id="RECEIPT_FONTS_OPTIONS" (change)="onSubmit()">
+                  <option value="STANDARD">{{'admin.store.setting.default'|translate}}</option>
+                  <option value="NOTOSANS">{{'admin.store.setting.notoSans'|translate}}</option>
+                  <option value="UNIFONT">{{'admin.store.setting.unicode'|translate}}</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </form>
+		</div>
+      </div>
+    </div>
+  </div>
+

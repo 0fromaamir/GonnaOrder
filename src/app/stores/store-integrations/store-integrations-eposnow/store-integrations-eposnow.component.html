@@ -1,0 +1,130 @@
+<div class="card list mb-0">
+  <div class="card-body pt-1 py-0">
+    <div class="row">
+      <div class="col-xl-4 col-lg-4 mt-0 mt-lg-3">
+        <img class="eposnowimg" src="/assets/img/epos-now.png">
+        <app-help-icon [helpPageName]="helpUrl"></app-help-icon>
+      </div>
+      <div class="col-xl-8 col-lg-8">
+        <ng-container class="row"
+          *ngIf="eposNowSection === 'epos-now-dashboard' then eposNowDashboard else eposNowLogin">
+        </ng-container>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #eposNowDashboard>
+  <div class="row">
+    <div class="italic col-lg-12 mb-3">
+      {{ 'admin.store.setting.integrations.connectWithYourPOS' | translate }}
+    </div>
+    <div class="col-lg-12">
+      <div class="d-flex align-items-center justify-content-between p-0">
+        <button type="button" class="btn btn-primary mt-2" (click)="eposNowSection = 'epos-now-login';">
+          <i class="fa fa-link mr-2 link" title="link"></i>{{'admin.store.setting.connect' | translate}}
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #eposNowLogin>
+  <ng-container class="row" *ngIf="eposNowSection === 'epos-now-login'; else eposNowConnected">
+    <div class="row">
+      <div class="col-xl-12 col-lg-12 mt-2 mt-lg-0">
+        <div class="row">
+          <div class="col-lg-12">
+            <form [formGroup]="eposNowForm">
+              <div class="row mb-4">
+                <label class="col-xl-3 col-lg-3 col-md-12 col-sm-12 required" for="username">
+                  {{ 'admin.store.locationId' | translate }}
+                </label>
+                <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12">
+                  <input type="text" class="form-control" formControlName="EPOS_NOW_LOCATIONID" id="username"
+                    maxlength="100" />
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12"></div>
+      <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12">
+        <div class="float-right">
+          <button type="button" class="btn btn-primary" (click)="connectToEposNow()"
+            [disabled]="this.eposNowForm.invalid">
+            <i class="fa fa-link mr-2 link" title="link"></i>{{'admin.store.setting.connect' | translate}}
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </ng-container>
+
+</ng-template>
+
+<ng-template #eposNowConnected>
+  <div class="row">
+    <div class="col-xl-12 col-lg-12 mt-2 mt-lg-0">
+      <div class="row">
+        <div class="col-lg-12">
+          <form [formGroup]="eposNowForm">
+            <div class="row mb-4">
+              <label class="col-xl-3 col-lg-3 col-md-12 col-sm-12">
+                {{ 'admin.store.locationId' | translate }}
+              </label>
+              <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12">
+                <p>{{this.eposNowForm.controls.EPOS_NOW_LOCATIONID.value}}</p>
+              </div>
+            </div>
+            <div class="row" *ngIf="!eposNowForm.controls.EPOS_NOW_TOKEN.value">
+              <label class="col-xl-12">
+                <p>Please install the <a [href]="environment.eposNowInstallLink" target="_blank">eposnow GonnaOrder
+                    app</a></p>
+              </label>
+            </div>
+
+            <div class="row mb-4" *ngIf="this.eposNowForm.controls.EPOS_NOW_TOKEN.value">
+              <label class="col-xl-3 col-lg-3 col-md-12 col-sm-12">
+                API Key
+              </label>
+              <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12">
+                <p>{{this.eposNowForm.controls.EPOS_NOW_TOKEN.value}}</p>
+              </div>
+            </div>
+            <div class="row mb-4" *ngIf="this.eposNowForm.controls.EPOS_NOW_TOKEN.value">
+              <label class="col-xl-3 col-lg-3 col-md-12 col-sm-12" for="secretUrl">
+                {{ 'admin.store.enabled' | translate }}
+              </label>
+              <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12">
+                <label>{{'admin.global.no'|translate}}</label> &nbsp;
+                <label class="switch pt-1 mb-0">
+                  <input type="checkbox" formControlName="EPOS_NOW_ENABLED" id="EPOS_NOW_ENABLED"
+                    (change)="toggleEposDirect()" />
+                  &nbsp;<span class="slider round"></span>
+                </label>&nbsp;
+                <label>{{'admin.global.yes'|translate}}</label> &nbsp;
+              </div>
+            </div>
+          </form>
+
+          <div class="col-lg-12">
+            <div class="float-right">
+              <button type="button" class="btn btn-danger mt-3" (click)="disconnectToEposNow()">
+                <img src="assets/img/link-slash-solid.svg" class="mr-2 slashIcon" alt="">{{'admin.store.disconnect' |
+                translate}}
+              </button>
+            </div>
+          </div>
+
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+</ng-template>

@@ -1,0 +1,9 @@
+<form action="{{checkoutUrl}}" method="POST" #epayForm>
+  <input name="AcquirerId" type="hidden" value="{{acquirerId}}" />
+  <input name="MerchantId" type="hidden" value="{{merchantId}}" />
+  <input name="PosId" type="hidden" value="{{posId}}" />
+  <input name="User" type="hidden" value="{{user}}" />
+  <input name="LanguageCode" type="hidden" value="{{languageCode}}" />
+  <input name="MerchantReference" type="hidden" value="{{merchantReference}}" />
+  <input name="ParamBackLink" type="hidden" value="{{parameters}}" />
+</form>

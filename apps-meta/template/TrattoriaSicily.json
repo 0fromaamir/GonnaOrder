@@ -1,0 +1,17 @@
+{
+  "appName": "Trattoria Sicily",
+  "appDescription": "Customer ordering app for Trattoria Sicily",
+  "type": "TEMPLATE",
+  "tag": "PROD",
+  "bundleId": "com.gonnaorder.trattoriasicily",
+  "appleId": "1567834513",
+  "storeAlias": "trattoria-sicily",
+  "iconUrl": "resources/assets/mobile-apps/template/TrattoriaSicily/icon.png",
+  "iconBackgroundUrl": "resources/assets/mobile-apps/template/TrattoriaSicily/icon-background.png",
+  "iconForegroundUrl": "resources/assets/mobile-apps/template/TrattoriaSicily/icon-foreground.png",
+  "splashUrl": "resources/assets/mobile-apps/template/TrattoriaSicily/splash.png",
+  "splashBackgroundColor": "#393D46",
+  "googleServiceInfoUrl": "resources/assets/mobile-apps/template/TrattoriaSicily/GoogleService-Info.plist",
+  "defaultDeeplinkAppAndroidUrl": "https://play.google.com/store/apps/details?id=com.gonnaorder.trattoriasicily",
+  "defaultDeeplinkAppIOSUrl": "https://apps.apple.com/nl/app/gonnaorder/id1567834513?l=en"
+}
